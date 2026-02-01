@@ -7,7 +7,7 @@ interface SetupViewProps {
 }
 
 const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
-    const sender = "Habla"; 
+    const sender = "Argho"; 
     const recipient = "Petni"; 
     const [question, setQuestion] = useState('Will you be mine forever?');
     const [password, setPassword] = useState('');
