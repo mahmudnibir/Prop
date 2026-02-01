@@ -69,7 +69,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
   };
 
   useEffect(() => {
-    // The delay allows the certificate to fade in before the "Hammer" strikes
+    // The delay allows the certificate to fade in before the "Hammer" strikes in the center
     const timer = setTimeout(() => {
       setStamped(true);
       playStampThud();
@@ -93,6 +93,46 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             {/* Elegant Double Border */}
             <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
             <div className="absolute inset-6 sm:inset-10 border-[3px] border-[#D4AF37]/20 pointer-events-none"></div>
+
+            {/* THE SEAL - POSITIONED ABSOLUTELY IN THE CENTER OVER TEXT */}
+            <div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none select-none perspective-1000">
+                <div className={`relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center transform transition-all duration-[120ms] ease-in-impact mix-blend-multiply
+                  ${stamped 
+                    ? 'scale-100 opacity-80 rotate-[-12deg]' 
+                    : 'scale-[10] opacity-0 rotate-0 blur-lg translate-z-[200px]'}
+                `}>
+                    {/* Grunge texture overlay via mask - High Distress Green Ink */}
+                    <div className="absolute inset-0 bg-[#1B5E20] rounded-full" 
+                         style={{ maskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")', WebkitMaskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")' }}>
+                        
+                        {/* Inner distressed borders */}
+                        <div className="absolute inset-3 border-[6px] border-[#FFFFFF]/90 rounded-full"></div>
+                        <div className="absolute inset-6 border-[3px] border-[#FFFFFF]/80 rounded-full"></div>
+
+                        {/* Circular text logic - FIXED (No Rotation) */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <svg className="w-[85%] h-[85%]" viewBox="0 0 100 100">
+                            <path id="stampPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+                            <text className="text-[8.5px] font-sans font-black tracking-[0.38em] fill-white uppercase">
+                              <textPath xlinkHref="#stampPath" startOffset="0%">
+                                FINAL CONFIRMATION • {recipientName} & {senderName} • 
+                              </textPath>
+                            </text>
+                          </svg>
+                        </div>
+
+                        {/* Main Stamp Text */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <div className="px-6 py-2 border-y-[5px] border-white text-white font-sans font-black text-4xl sm:text-5xl tracking-tighter transform -rotate-2">
+                                ACCEPTED
+                            </div>
+                            <div className="text-white/90 font-mono text-[10px] font-bold tracking-[0.6em] mt-3 uppercase">
+                                OFFICIAL SEAL
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* Content Body */}
             <div className="relative z-10 space-y-16">
@@ -132,7 +172,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     </div>
                 </section>
 
-                {/* Signatures and Classic Grunge Stamp */}
+                {/* Signatures */}
                 <div className="pt-12 flex flex-col sm:flex-row items-end justify-between gap-12 sm:gap-4 relative">
                     <div className="w-full sm:w-1/2 space-y-10">
                         <div className="border-b-[1px] border-[#D4AF37]/30 pb-2 relative">
@@ -144,50 +184,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                             <span className="font-serif-display text-4xl text-[#1A1A1A] italic leading-none">{senderName}</span>
                         </div>
                     </div>
-
-                    {/* GREEN GRUNGE STAMP WITH HAMMER SLAM IMPACT */}
-                    <div className="relative w-44 h-44 sm:w-56 sm:h-56 flex items-center justify-center select-none perspective-1000">
-                        <div className={`relative w-full h-full flex items-center justify-center transform 
-                          ${stamped 
-                            ? 'scale-100 opacity-100 rotate-[-12deg]' 
-                            : 'scale-[8] opacity-0 rotate-0 blur-md translate-z-[100px]'} 
-                          transition-all duration-[120ms] ease-in-impact`}
-                        >
-                            {/* Grunge texture overlay via mask */}
-                            <div className="absolute inset-0 bg-[#2E7D32] rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.1)]" 
-                                 style={{ maskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")', WebkitMaskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")' }}>
-                                
-                                {/* Inner distressed borders */}
-                                <div className="absolute inset-2 border-[4px] border-[#FFFFFF]/90 rounded-full"></div>
-                                <div className="absolute inset-4 border-[2px] border-[#FFFFFF]/80 rounded-full"></div>
-
-                                {/* Circular text logic - FIXED (No Rotation) */}
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <svg className="w-[85%] h-[85%]" viewBox="0 0 100 100">
-                                    <path id="stampPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
-                                    <text className="text-[8.5px] font-sans font-black tracking-[0.35em] fill-white uppercase">
-                                      <textPath xlinkHref="#stampPath" startOffset="0%">
-                                        FINAL CONFIRMATION • {recipientName} & {senderName} • 
-                                      </textPath>
-                                    </text>
-                                  </svg>
-                                </div>
-
-                                {/* Main Stamp Text */}
-                                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <div className="px-4 py-1.5 border-y-[4px] border-white text-white font-sans font-black text-3xl sm:text-4xl tracking-tighter transform -rotate-1 shadow-sm">
-                                        ACCEPTED
-                                    </div>
-                                    <div className="text-white/90 font-mono text-[9px] font-bold tracking-[0.5em] mt-2 uppercase">
-                                        OFFICIAL SEAL
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            {/* Inner distressing shadow to give 2D depth after impact */}
-                            {stamped && <div className="absolute inset-0 rounded-full shadow-inner opacity-40 pointer-events-none"></div>}
-                        </div>
-                    </div>
+                    <div className="hidden sm:block w-1/2 h-20"></div>
                 </div>
             </div>
 
