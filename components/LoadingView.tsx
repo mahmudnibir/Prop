@@ -8,7 +8,7 @@ interface SetupViewProps {
 
 const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
     const sender = "Habla"; 
-    const recipient = "Petni"; 
+    const recipient = "Petna"; 
     const [question, setQuestion] = useState('Will you be mine forever?');
     const [password, setPassword] = useState('');
     const [link, setLink] = useState('');
@@ -128,7 +128,7 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
                                 type="text"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="e.g. PetniLover123"
+                                placeholder="e.g. PetnaLover123"
                                 className={`${inputClasses} pr-12`}
                             />
                             <LockIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-pink-200" />

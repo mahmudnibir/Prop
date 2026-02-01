@@ -11,7 +11,7 @@ interface ProposalViewProps {
 }
 
 const noButtonResponses = [
-  "No", "Petni, really?", "Think again ❤️", "Error: Try Yes", "So close!", "Not possible!", "Try again!", "Just give up", "Yes is better!"
+  "No", "Petna, really?", "Think again ❤️", "Error: Try Yes", "So close!", "Not possible!", "Try again!", "Just give up", "Yes is better!"
 ];
 
 const HeartShower: React.FC<{ heartKey: number }> = ({ heartKey }) => {
@@ -52,7 +52,7 @@ const Modal: React.FC<{onClose: () => void}> = ({onClose}) => {
     <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[100] p-6">
         <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 text-center max-w-sm w-full modal-fade-in relative overflow-hidden border border-pink-100 min-h-[300px] flex flex-col justify-center">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-200 via-pink-400 to-pink-200"></div>
-            <h2 className="text-3xl font-display font-bold text-[#5C1D2E]">Petni, wait!</h2>
+            <h2 className="text-3xl font-display font-bold text-[#5C1D2E]">Petna, wait!</h2>
             <p className="mt-4 text-[#8A4A5D] text-lg">Are you absolutely sure? This could be the most beautiful "Yes" ever!</p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4">
                 <button 
@@ -217,7 +217,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
                         <path d="M0 30 L50 30 L60 10 L80 50 L100 20 L120 40 L130 30 L250 30" stroke="#FF8FA3" strokeWidth="4" fill="none" className="ekg-path" />
                     </svg>
                     <div className="px-6 py-2 bg-pink-500/20 rounded-full border border-pink-500/30">
-                        <p className="text-sm md:text-base text-white font-mono tracking-tighter">AUTHENTICATED: PETNI</p>
+                        <p className="text-sm md:text-base text-white font-mono tracking-tighter">AUTHENTICATED: PETNA</p>
                     </div>
                 </div>
             );
@@ -231,7 +231,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
         case 'countdown':
              return (
                 <div className="fade-in-up text-center p-6">
-                    <p className="text-xl md:text-2xl mb-6 text-pink-300/60 font-medium">Ready for this, Petni?</p>
+                    <p className="text-xl md:text-2xl mb-6 text-pink-300/60 font-medium">Ready for this, Petna?</p>
                     <div className="w-40 h-40 md:w-56 md:h-56 bg-white/5 rounded-full flex items-center justify-center border border-white/10 mx-auto shadow-2xl">
                          <p className="text-7xl md:text-9xl font-display font-extrabold text-white">{countdown > 0 ? countdown : '❤️'}</p>
                     </div>
@@ -277,12 +277,12 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
       <HeartShower heartKey={heartKey} />
       
       <div className="absolute inset-0 pointer-events-none opacity-[0.02] flex items-center justify-center overflow-hidden select-none">
-          <span className="text-[25vw] font-display font-black whitespace-nowrap">PETNI ❤️ {sender.toUpperCase()}</span>
+          <span className="text-[25vw] font-display font-black whitespace-nowrap">PETNA ❤️ {sender.toUpperCase()}</span>
       </div>
 
       <div className="z-10 flex flex-col items-center w-full max-w-4xl px-2">
         <div className="mb-8 py-2.5 px-6 bg-white rounded-full shadow-md border border-pink-100 inline-block transform hover:scale-105 transition-transform">
-             <span className="text-xs md:text-sm font-bold text-[#FF8FA3] tracking-[0.3em] uppercase">To our beautiful Petni</span>
+             <span className="text-xs md:text-sm font-bold text-[#FF8FA3] tracking-[0.3em] uppercase">To our beautiful Petna</span>
         </div>
         
         <p className="text-lg md:text-3xl text-[#8A4A5D] font-display font-medium leading-relaxed mb-8">
@@ -325,7 +325,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
       
       <div className="absolute bottom-8 left-0 right-0 flex justify-center pointer-events-none">
            <div className="text-[#FF8FA3]/30 text-[10px] md:text-xs font-bold tracking-[0.6em] uppercase px-4 text-center">
-              Exclusive for Petni • Made with Love
+              Exclusive for Petna • Made with Love
           </div>
       </div>
     </div>

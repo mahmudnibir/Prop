@@ -8,7 +8,7 @@
     <title>An Important Question...</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600&family=Share+Tech+Mono&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;500;600&family=Share+Tech+Mono&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
       
       body {
         font-family: 'Inter', sans-serif;
@@ -21,20 +21,19 @@
       h1, h2, h3, .font-display {
         font-family: 'Baloo 2', cursive;
       }
+
+      .font-serif-classic {
+        font-family: 'Cormorant Garamond', serif;
+      }
+
+      .font-serif-display {
+        font-family: 'Playfair Display', serif;
+      }
       
       .font-mono {
         font-family: 'Share Tech Mono', monospace;
       }
 
-      .btn-wiggle:hover {
-        animation: wiggle 0.5s ease-in-out;
-      }
-
-      @keyframes wiggle {
-        0%, 100% { transform: rotate(-2deg) scale(var(--scale, 1.1)); }
-        50% { transform: rotate(2deg) scale(var(--scale, 1.1)); }
-      }
-      
       .heart-beat {
         animation: heart-beat 1.5s ease-in-out infinite;
       }
@@ -76,28 +75,14 @@
         to { width: 100%; }
       }
       
-      @keyframes pulsate {
-        0%, 100% { transform: scale(1); box-shadow: 0 0 20px 5px rgba(255, 143, 163, 0.4); }
-        50% { transform: scale(1.08); box-shadow: 0 0 40px 20px rgba(255, 143, 163, 0.2); }
+      .text-scramble::after {
+          content: "DECRYPTING...";
+          animation: text-scramble 1.5s steps(1) forwards;
       }
 
       @keyframes text-scramble {
         0% { content: "#*&@$!"; }
-        10% { content: "KX?&S!@"; }
-        20% { content: "9B1&!C@"; }
-        30% { content: "Z@L!S#&"; }
-        40% { content: "V#*&Q$@"; }
-        50% { content: "F@&W!X#"; }
-        60% { content: "P$!@*&T"; }
-        70% { content: "M@&!A$#"; }
-        80% { content: "E*!@#&R"; }
-        90% { content: "H@$!*&S"; }
         100% { content: "DECRYPTED"; }
-      }
-      
-      .text-scramble::after {
-          content: "DECRYPTING...";
-          animation: text-scramble 1.5s steps(1) forwards;
       }
       
       .fade-in-up {
@@ -117,33 +102,20 @@
       }
       
       @keyframes ekg-draw {
-          to {
-              stroke-dashoffset: 0;
-          }
+          to { stroke-dashoffset: 0; }
       }
 
       .stamp-in {
         opacity: 0;
         transform: scale(2.5) rotate(-30deg);
-        animation: stamp-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
+        animation: stamp-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards;
       }
 
       @keyframes stamp-in {
         to {
             opacity: 1;
-            transform: scale(1) rotate(-15deg);
+            transform: scale(1) rotate(-10deg);
         }
-      }
-
-      .shimmer {
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        background-size: 200% 100%;
-        animation: shimmer 2s infinite;
-      }
-
-      @keyframes shimmer {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
       }
 
       @keyframes shake {
