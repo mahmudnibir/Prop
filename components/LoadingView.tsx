@@ -8,7 +8,7 @@ interface SetupViewProps {
 
 const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
     const sender = "Habla"; 
-    const recipient = "Petna"; 
+    const recipient = "Petni"; 
     const [question, setQuestion] = useState('Will you be mine forever?');
     const [password, setPassword] = useState('');
     const [link, setLink] = useState('');
@@ -91,7 +91,7 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#FFF5F7]">
-            <div className="w-full max-w-md space-y-8 bg-white p-10 rounded-[3rem] shadow-2xl border border-pink-50">
+            <div className="w-full max-md:max-w-md space-y-8 bg-white p-10 rounded-[3rem] shadow-2xl border border-pink-50">
                 <div className="text-center">
                     <div className="inline-block p-4 bg-pink-50 rounded-full mb-4">
                         <HeartIcon className="w-10 h-10 text-[#FF8FA3]" />
@@ -128,7 +128,7 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
                                 type="text"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="e.g. PetnaLover123"
+                                placeholder="e.g. PetniLover123"
                                 className={`${inputClasses} pr-12`}
                             />
                             <LockIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-pink-200" />

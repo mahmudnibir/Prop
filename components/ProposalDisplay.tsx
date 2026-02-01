@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { ScrollIcon, EngravedHeartIcon, DownloadIcon } from './Icons';
+import React, { useEffect, useRef, useState } from 'react';
+import { ScrollIcon, DownloadIcon } from './Icons';
 
 interface AcceptedViewProps {
   recipientName: string;
@@ -8,6 +8,75 @@ interface AcceptedViewProps {
 }
 
 const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }) => {
+  const [stamped, setStamped] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
+
+  const playStampThud = () => {
+    try {
+      if (!audioContextRef.current) {
+        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      const ctx = audioContextRef.current;
+      
+      // Low frequency "Heavy Hammer" thud
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(80, ctx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(1, ctx.currentTime + 0.2);
+      
+      gainNode.gain.setValueAtTime(1.0, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + 0.2);
+
+      // Higher frequency "Mechanical Click/Hammer Contact"
+      const clickOsc = ctx.createOscillator();
+      const clickGain = ctx.createGain();
+      clickOsc.type = 'triangle';
+      clickOsc.frequency.setValueAtTime(600, ctx.currentTime);
+      clickOsc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.05);
+      
+      clickGain.gain.setValueAtTime(0.4, ctx.currentTime);
+      clickGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+      
+      clickOsc.connect(clickGain);
+      clickGain.connect(ctx.destination);
+      clickOsc.start();
+      clickOsc.stop(ctx.currentTime + 0.05);
+
+      // Paper snap noise
+      const noiseBufferSize = ctx.sampleRate * 0.15;
+      const noiseBuffer = ctx.createBuffer(1, noiseBufferSize, ctx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < noiseBufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+      const whiteNoise = ctx.createBufferSource();
+      whiteNoise.buffer = noiseBuffer;
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.15, ctx.currentTime);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+      whiteNoise.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+      whiteNoise.start();
+    } catch (e) {
+      console.warn("Audio context failed or blocked by browser", e);
+    }
+  };
+
+  useEffect(() => {
+    // The delay allows the certificate to fade in before the "Hammer" strikes
+    const timer = setTimeout(() => {
+      setStamped(true);
+      playStampThud();
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleDownload = () => {
     window.print();
   };
@@ -16,7 +85,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
     <div className="min-h-screen w-full bg-[#F2ECE4] overflow-y-auto overflow-x-hidden flex flex-col items-center py-6 sm:py-16 px-4 sm:px-6">
         
         {/* Old Money Premium Certificate */}
-        <div id="proposal-certificate" className="relative w-full max-w-2xl bg-[#FCFAF7] shadow-[0_60px_120px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/30 p-8 sm:p-20 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden">
+        <div id="proposal-certificate" className={`relative w-full max-w-2xl bg-[#FCFAF7] shadow-[0_60px_120px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/30 p-8 sm:p-20 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden transition-all duration-75 ${stamped ? 'animate-[impact_0.2s_ease-out]' : ''}`}>
             
             {/* Subtle Parchment Texture */}
             <div className="absolute inset-0 opacity-[0.12] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
@@ -24,12 +93,6 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             {/* Elegant Double Border */}
             <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
             <div className="absolute inset-6 sm:inset-10 border-[3px] border-[#D4AF37]/20 pointer-events-none"></div>
-
-            {/* Corner Decorative Elements */}
-            <div className="absolute top-8 left-8 text-[#D4AF37]/40 text-2xl">✧</div>
-            <div className="absolute top-8 right-8 text-[#D4AF37]/40 text-2xl">✧</div>
-            <div className="absolute bottom-8 left-8 text-[#D4AF37]/40 text-2xl">✧</div>
-            <div className="absolute bottom-8 right-8 text-[#D4AF37]/40 text-2xl">✧</div>
 
             {/* Content Body */}
             <div className="relative z-10 space-y-16">
@@ -69,10 +132,10 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     </div>
                 </section>
 
-                {/* Signatures and Classic Wax Seal */}
-                <div className="pt-12 flex flex-col sm:flex-row items-end justify-between gap-12 sm:gap-4">
+                {/* Signatures and Classic Grunge Stamp */}
+                <div className="pt-12 flex flex-col sm:flex-row items-end justify-between gap-12 sm:gap-4 relative">
                     <div className="w-full sm:w-1/2 space-y-10">
-                        <div className="border-b-[1px] border-[#D4AF37]/30 pb-2 relative group">
+                        <div className="border-b-[1px] border-[#D4AF37]/30 pb-2 relative">
                             <span className="text-[8px] uppercase font-bold text-[#8C7B6B] block mb-2 tracking-[0.3em] font-sans">The Beloved</span>
                             <span className="font-serif-display text-4xl text-[#1A1A1A] italic leading-none">{recipientName}</span>
                         </div>
@@ -80,33 +143,50 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                             <span className="text-[8px] uppercase font-bold text-[#8C7B6B] block mb-2 tracking-[0.3em] font-sans">The Devoted</span>
                             <span className="font-serif-display text-4xl text-[#1A1A1A] italic leading-none">{senderName}</span>
                         </div>
-                        <p className="text-[9px] text-[#A68F7B] uppercase tracking-[0.5em] font-medium font-sans">Authenticated by the Heart</p>
                     </div>
 
-                    {/* CLASSIC OLD MONEY WAX SEAL */}
-                    <div className="relative w-44 h-44 sm:w-52 sm:h-52 stamp-in select-none group cursor-pointer">
-                        {/* Realistic Poured Wax Shape */}
-                        <div className="absolute inset-0 bg-[#8B0000] shadow-[inset_-4px_-8px_12px_rgba(0,0,0,0.6),inset_2px_4px_10px_rgba(255,255,255,0.1),10px_20px_40px_rgba(0,0,0,0.4)] 
-                                      rounded-[55%_45%_52%_48%_/_47%_53%_45%_55%] transform rotate-[-5deg] group-hover:rotate-0 transition-all duration-1000">
-                            
-                            {/* Inner Stamp Detail */}
-                            <div className="absolute inset-4 border-[2px] border-[#660000]/60 rounded-full flex flex-col items-center justify-center bg-[#7A0000] shadow-[inset_4px_8px_12px_rgba(0,0,0,0.7),inset_-2px_-4px_6px_rgba(255,255,255,0.05)]">
-                                <div className="text-[#660000] font-sans text-[7px] font-black uppercase tracking-[0.4em] absolute top-5 opacity-40">SEALED</div>
+                    {/* GREEN GRUNGE STAMP WITH HAMMER SLAM IMPACT */}
+                    <div className="relative w-44 h-44 sm:w-56 sm:h-56 flex items-center justify-center select-none perspective-1000">
+                        <div className={`relative w-full h-full flex items-center justify-center transform 
+                          ${stamped 
+                            ? 'scale-100 opacity-100 rotate-[-12deg]' 
+                            : 'scale-[8] opacity-0 rotate-0 blur-md translate-z-[100px]'} 
+                          transition-all duration-[120ms] ease-in-impact`}
+                        >
+                            {/* Grunge texture overlay via mask */}
+                            <div className="absolute inset-0 bg-[#2E7D32] rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.1)]" 
+                                 style={{ maskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")', WebkitMaskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")' }}>
                                 
-                                <div className="relative flex items-center justify-center transform group-hover:scale-105 transition-transform">
-                                    <EngravedHeartIcon className="w-14 h-14 text-[#550000] opacity-90 drop-shadow-[1px_2px_1px_rgba(255,255,255,0.05)]" />
-                                    <span className="absolute text-[#330000]/40 font-serif-display italic font-black text-xl tracking-tighter mt-1">YES</span>
+                                {/* Inner distressed borders */}
+                                <div className="absolute inset-2 border-[4px] border-[#FFFFFF]/90 rounded-full"></div>
+                                <div className="absolute inset-4 border-[2px] border-[#FFFFFF]/80 rounded-full"></div>
+
+                                {/* Circular text logic - FIXED (No Rotation) */}
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <svg className="w-[85%] h-[85%]" viewBox="0 0 100 100">
+                                    <path id="stampPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+                                    <text className="text-[8.5px] font-sans font-black tracking-[0.35em] fill-white uppercase">
+                                      <textPath xlinkHref="#stampPath" startOffset="0%">
+                                        FINAL CONFIRMATION • {recipientName} & {senderName} • 
+                                      </textPath>
+                                    </text>
+                                  </svg>
                                 </div>
 
-                                <div className="text-[#660000] font-sans text-[7px] font-black uppercase tracking-[0.5em] absolute bottom-5 opacity-40">MMXXIV</div>
+                                {/* Main Stamp Text */}
+                                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                    <div className="px-4 py-1.5 border-y-[4px] border-white text-white font-sans font-black text-3xl sm:text-4xl tracking-tighter transform -rotate-1 shadow-sm">
+                                        ACCEPTED
+                                    </div>
+                                    <div className="text-white/90 font-mono text-[9px] font-bold tracking-[0.5em] mt-2 uppercase">
+                                        OFFICIAL SEAL
+                                    </div>
+                                </div>
                             </div>
                             
-                            {/* Wax Shine Reflection */}
-                            <div className="absolute top-4 left-10 w-1/3 h-1/4 bg-white/10 rounded-full blur-xl rotate-[-25deg] pointer-events-none"></div>
+                            {/* Inner distressing shadow to give 2D depth after impact */}
+                            {stamped && <div className="absolute inset-0 rounded-full shadow-inner opacity-40 pointer-events-none"></div>}
                         </div>
-                        
-                        {/* Ground Shadow */}
-                        <div className="absolute -bottom-4 left-10 right-10 h-4 bg-black/10 blur-xl rounded-full"></div>
                     </div>
                 </div>
             </div>
@@ -129,7 +209,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             <div className="flex flex-col items-center gap-3 opacity-30">
                 <div className="flex items-center gap-4">
                     <div className="w-8 h-[1px] bg-[#8C7B6B]"></div>
-                    <span className="text-[9px] font-bold text-[#8C7B6B] uppercase tracking-[0.5em]">For Petna, Always</span>
+                    <span className="text-[9px] font-bold text-[#8C7B6B] uppercase tracking-[0.5em]">For Petni, Always</span>
                     <div className="w-8 h-[1px] bg-[#8C7B6B]"></div>
                 </div>
             </div>
@@ -146,10 +226,20 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     height: 100vh !important;
                     max-width: none !important;
                     border: none !important;
-                    display: flex !important;
-                    flex-direction: column !important;
-                    justify-content: center !important;
                 }
+            }
+            .ease-in-impact {
+                transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            @keyframes impact {
+                0% { transform: scale(1); }
+                10% { transform: scale(0.96) translateY(2px); }
+                30% { transform: scale(1.04) translateY(-4px); }
+                50% { transform: scale(0.98) translateY(2px); }
+                100% { transform: scale(1) translateY(0); }
+            }
+            .perspective-1000 {
+                perspective: 1000px;
             }
         `}} />
     </div>
