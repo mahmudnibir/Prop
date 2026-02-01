@@ -68,15 +68,15 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
         {/* Certificate Container */}
         <div 
           id="proposal-certificate" 
-          className={`relative w-full max-w-2xl aspect-[1/1.41] bg-[#FCFAF7] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/30 p-8 sm:p-14 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
+          className={`relative w-full max-w-2xl aspect-[1/1.41] bg-[#FCFAF7] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/40 p-8 sm:p-14 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
         >
             
             {/* Subtle Parchment Texture */}
-            <div className="absolute inset-0 opacity-[0.15] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
+            <div className="absolute inset-0 opacity-[0.12] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
             
             {/* Elegant Double Border */}
-            <div className="absolute inset-2 sm:inset-4 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
-            <div className="absolute inset-4 sm:inset-6 border-[2px] border-[#D4AF37]/20 pointer-events-none"></div>
+            <div className="absolute inset-2 sm:inset-4 border-[1px] border-[#D4AF37]/50 pointer-events-none"></div>
+            <div className="absolute inset-4 sm:inset-6 border-[2px] border-[#D4AF37]/30 pointer-events-none"></div>
 
             {/* REFINED SMALL RUBBER STAMP */}
             <div className="absolute bottom-16 right-6 sm:bottom-20 sm:right-10 z-[50] pointer-events-none select-none opacity-90">
@@ -86,7 +86,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     : 'scale-[8] opacity-0 rotate-[30deg] blur-2xl translate-y-[-100px]'}
                 `}>
                     <div className="relative text-[#C41E3A] w-full h-full">
-                        <svg viewBox="0 0 200 200" className="w-full h-full filter drop-shadow-[0_1px_3px_rgba(196,30,58,0.2)]">
+                        <svg viewBox="0 0 200 200" className="w-full h-full filter drop-shadow-[0_1px_4px_rgba(196,30,58,0.3)]">
                             <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="40 5 60 2 30 8" />
                             <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
                             <path id="curveTop" d="M 35,100 A 65,65 0 0,1 165,100" fill="none" />
@@ -109,68 +109,80 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             </div>
 
             {/* Content Body */}
-            <div className="relative z-10 space-y-8 print:space-y-6">
+            <div className="relative z-10 space-y-10 print:space-y-8">
                 <header className="text-center space-y-4">
-                    <div className="space-y-1">
-                        <h2 className="text-[10px] font-bold text-[#8C7B6B] uppercase tracking-[0.6em] font-sans">Official Covenant of Perpetual Affection</h2>
-                        <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto"></div>
+                    <div className="space-y-2">
+                        <h2 className="text-[11px] font-black text-[#6B5A4B] uppercase tracking-[0.7em] font-sans">Official Covenant of Perpetual Affection</h2>
+                        <div className="w-24 h-[1.5px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto"></div>
                     </div>
                     <h1 className="text-4xl sm:text-5xl font-serif-display italic font-medium text-[#1A1A1A] tracking-tight leading-tight">
                         Decree of Lifelong Union
                     </h1>
                 </header>
 
-                <section className="space-y-6 py-2">
-                    <p className="text-center text-base sm:text-xl text-[#4A4A4A] font-light leading-relaxed max-w-lg mx-auto">
-                        This Agreement, entered into this day, witnesses the formal and unreserved acceptance of a proposal of hearts between:
+                <section className="space-y-8 py-2">
+                    <p className="text-center text-base sm:text-xl text-[#3D3D3D] font-light leading-relaxed max-w-lg mx-auto">
+                        This formal agreement witnesses the unreserved acceptance of a proposal between:
                     </p>
 
-                    <div className="text-center space-y-3">
-                        <p className="text-3xl sm:text-4xl font-serif-display font-bold text-[#1A1A1A] tracking-tighter uppercase">
-                            {recipientName}
-                        </p>
-                        <div className="flex items-center justify-center gap-3">
-                            <div className="w-8 h-[1px] bg-[#D4AF37]/40"></div>
-                            <span className="text-[8px] uppercase tracking-[0.5em] text-[#8C7B6B] font-bold">Party of the First Part</span>
-                            <div className="w-8 h-[1px] bg-[#D4AF37]/40"></div>
+                    <div className="text-center space-y-4">
+                        <div className="space-y-1">
+                            <p className="text-3xl sm:text-4xl font-serif-display font-bold text-[#1A1A1A] tracking-tighter uppercase">
+                                {recipientName}
+                            </p>
+                            <div className="flex items-center justify-center gap-3">
+                                <div className="w-8 h-[1px] bg-[#D4AF37]/60"></div>
+                                <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#5C4D3E] font-sans">The Beloved</span>
+                                <div className="w-8 h-[1px] bg-[#D4AF37]/60"></div>
+                            </div>
                         </div>
-                        <p className="text-3xl sm:text-4xl font-serif-display font-bold text-[#1A1A1A] tracking-tighter uppercase">
-                            {senderName}
-                        </p>
-                        <div className="flex items-center justify-center gap-3">
-                            <div className="w-8 h-[1px] bg-[#D4AF37]/40"></div>
-                            <span className="text-[8px] uppercase tracking-[0.5em] text-[#8C7B6B] font-bold">Party of the Second Part</span>
-                            <div className="w-8 h-[1px] bg-[#D4AF37]/40"></div>
+                        
+                        <div className="text-[#D4AF37] font-serif italic text-xl">&</div>
+
+                        <div className="space-y-1">
+                            <p className="text-3xl sm:text-4xl font-serif-display font-bold text-[#1A1A1A] tracking-tighter uppercase">
+                                {senderName}
+                            </p>
+                            <div className="flex items-center justify-center gap-3">
+                                <div className="w-8 h-[1px] bg-[#D4AF37]/60"></div>
+                                <span className="text-[9px] font-black uppercase tracking-[0.5em] text-[#5C4D3E] font-sans">The Devoted</span>
+                                <div className="w-8 h-[1px] bg-[#D4AF37]/60"></div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[11px] sm:text-[13px] text-[#5C5C5C] font-light border-t border-b border-[#D4AF37]/20 py-6">
-                    <div className="space-y-3">
-                        <p><strong>ARTICLE I: DEVOTION.</strong> The Parties hereby agree to prioritize each other’s happiness above all material acquisitions, pledging a surplus of laughter and a lifetime of shared dreams.</p>
-                        <p><strong>ARTICLE II: FORBEARANCE.</strong> In the event of minor disagreements, the Parties shall employ "The 5-Second Rule" of immediate forgiveness and the administration of a mandatory hug.</p>
+                {/* Simplified Articles Section */}
+                <section className="space-y-6 text-[12px] sm:text-[14px] text-[#4A4A4A] font-light border-t border-b border-[#D4AF37]/30 py-8">
+                    <div className="flex gap-4">
+                        <span className="font-bold text-[#1A1A1A] whitespace-nowrap">ART. I</span>
+                        <p>The Parties pledge to prioritize each other’s happiness above all material gains, promising a lifetime of support, loyalty, and shared dreams.</p>
                     </div>
-                    <div className="space-y-3">
-                        <p><strong>ARTICLE III: PERPETUITY.</strong> This covenant shall remain in full force and effect across all timelines, dimensions, and rainy Sunday mornings, without expiration or amendment.</p>
-                        <p><strong>ARTICLE IV: COFFEE & SUNSETS.</strong> The Parties commit to providing a minimum of one sincere compliment daily and witnessing at least one sunset together per fortnight.</p>
+                    <div className="flex gap-4">
+                        <span className="font-bold text-[#1A1A1A] whitespace-nowrap">ART. II</span>
+                        <p>All minor grievances shall be settled with immediate forgiveness, a mandatory hug, and an unwavering commitment to kindness.</p>
+                    </div>
+                    <div className="flex gap-4">
+                        <span className="font-bold text-[#1A1A1A] whitespace-nowrap">ART. III</span>
+                        <p>This covenant remains in full force across all timelines and dimensions, witnessed by the stars and sealed by unshakeable choice.</p>
                     </div>
                 </section>
 
-                <div className="text-center max-w-md mx-auto">
-                    <p className="text-sm italic text-[#8C7B6B] leading-relaxed">
-                        "Bound by choice, sealed by love, and witnessed by the stars above."
+                <div className="text-center pt-2">
+                    <p className="text-sm italic text-[#5C4D3E] leading-relaxed font-serif">
+                        "Two hearts, one journey, starting this very moment."
                     </p>
                 </div>
 
                 {/* Signatures Section */}
-                <div className="pt-4 flex flex-col items-start justify-end gap-4 relative print:pt-4">
-                    <div className="w-full sm:w-1/2 space-y-6">
-                        <div className="border-b-[1px] border-[#D4AF37]/30 pb-1">
-                            <span className="text-[7px] uppercase font-bold text-[#8C7B6B] block mb-1 tracking-[0.3em] font-sans">Executed by the Beloved</span>
+                <div className="pt-6 flex flex-col items-center sm:items-start w-full">
+                    <div className="w-full sm:w-2/3 space-y-6">
+                        <div className="border-b-[1.5px] border-[#D4AF37]/40 pb-1 w-full">
+                            <span className="text-[8px] uppercase font-black text-[#5C4D3E] block mb-1 tracking-[0.35em] font-sans">Hand-signed by the Beloved</span>
                             <span className="font-serif-display text-2xl text-[#1A1A1A] italic leading-none">{recipientName}</span>
                         </div>
-                        <div className="border-b-[1px] border-[#D4AF37]/30 pb-1">
-                            <span className="text-[7px] uppercase font-bold text-[#8C7B6B] block mb-1 tracking-[0.3em] font-sans">Executed by the Devoted</span>
+                        <div className="border-b-[1.5px] border-[#D4AF37]/40 pb-1 w-full">
+                            <span className="text-[8px] uppercase font-black text-[#5C4D3E] block mb-1 tracking-[0.35em] font-sans">Hand-signed by the Devoted</span>
                             <span className="font-serif-display text-2xl text-[#1A1A1A] italic leading-none">{senderName}</span>
                         </div>
                     </div>
@@ -178,7 +190,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             </div>
 
             {/* Faint Decorative Background Scroll */}
-            <div className="absolute -bottom-16 -left-16 text-[#EFE7DC] pointer-events-none opacity-[0.2] -rotate-12 z-0">
+            <div className="absolute -bottom-16 -left-16 text-[#EFE7DC] pointer-events-none opacity-[0.25] -rotate-12 z-0">
                 <ScrollIcon className="w-64 h-64 sm:w-80 sm:h-80" />
             </div>
         </div>
@@ -187,16 +199,16 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
         <div className="mt-8 flex flex-col items-center gap-6 z-10 no-print pb-12">
             <button 
                 onClick={handleDownload}
-                className="group flex items-center gap-6 px-12 py-5 bg-[#1A1A1A] text-[#F2ECE4] font-medium rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
+                className="group flex items-center gap-6 px-14 py-5 bg-[#1A1A1A] text-[#F2ECE4] font-medium rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
             >
-                <DownloadIcon className="w-5 h-5 group-hover:translate-y-1 transition-transform opacity-70" />
-                <span className="tracking-[0.5em] text-[10px] uppercase font-bold">Download This Decree</span>
+                <DownloadIcon className="w-5 h-5 group-hover:translate-y-1 transition-transform opacity-90" />
+                <span className="tracking-[0.5em] text-[11px] uppercase font-black">Download Certificate</span>
             </button>
-            <div className="flex flex-col items-center gap-3 opacity-30">
-                <div className="flex items-center gap-4">
-                    <div className="w-8 h-[1px] bg-[#8C7B6B]"></div>
-                    <span className="text-[9px] font-bold text-[#8C7B6B] uppercase tracking-[0.5em]">For Petni, Always</span>
-                    <div className="w-8 h-[1px] bg-[#8C7B6B]"></div>
+            <div className="flex flex-col items-center gap-3">
+                <div className="flex items-center gap-4 opacity-40">
+                    <div className="w-10 h-[1.5px] bg-[#6B5A4B]"></div>
+                    <span className="text-[10px] font-black text-[#6B5A4B] uppercase tracking-[0.6em]">For Petni, Always</span>
+                    <div className="w-10 h-[1.5px] bg-[#6B5A4B]"></div>
                 </div>
             </div>
         </div>
@@ -229,11 +241,6 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     justify-content: center !important;
                     padding: 3cm !important;
                 }
-            }
-            @keyframes shake {
-                0%, 100% { transform: translate(0, 0); }
-                25% { transform: translate(-2px, 2px); }
-                50% { transform: translate(2px, -2px); }
             }
         `}} />
     </div>
