@@ -33,7 +33,6 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       oscillator.start();
       oscillator.stop(ctx.currentTime + 0.3);
 
-      // Noise for the paper impact
       const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
       for (let i = 0; i < ctx.sampleRate * 0.15; i++) {
@@ -80,45 +79,47 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             <div className="absolute inset-2 sm:inset-4 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
             <div className="absolute inset-4 sm:inset-6 border-[2px] border-[#D4AF37]/20 pointer-events-none"></div>
 
-            {/* CLASSIC RUBBER STAMP - "APPROVED" STYLE */}
-            <div className="absolute bottom-24 right-10 sm:bottom-40 sm:right-16 z-[50] pointer-events-none select-none opacity-80">
-                <div className={`relative w-48 h-48 sm:w-64 sm:h-64 flex items-center justify-center transform transition-all duration-[250ms] ease-[cubic-bezier(0.175,0.885,0.32,1.275)]
+            {/* REFINED SMALL RUBBER STAMP */}
+            <div className="absolute bottom-16 right-6 sm:bottom-24 sm:right-12 z-[50] pointer-events-none select-none opacity-90">
+                <div className={`relative w-32 h-32 sm:w-44 sm:h-44 flex items-center justify-center transform transition-all duration-[250ms] ease-[cubic-bezier(0.175,0.885,0.32,1.275)]
                   ${stamped 
-                    ? 'scale-100 opacity-100 rotate-[-12deg]' 
-                    : 'scale-[6] opacity-0 rotate-[20deg] blur-2xl translate-y-[-150px]'}
+                    ? 'scale-100 opacity-100 rotate-[-15deg]' 
+                    : 'scale-[8] opacity-0 rotate-[30deg] blur-2xl translate-y-[-100px]'}
                 `}>
-                    {/* Distressed Stamp SVG */}
-                    <div className="relative text-[#C41E3A]">
-                        <svg viewBox="0 0 200 200" className="w-full h-full filter drop-shadow-[0_2px_4px_rgba(196,30,58,0.3)]">
-                            {/* Inner and Outer Circles */}
-                            <circle cx="100" cy="100" r="85" fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray="10 2 15 3" />
-                            <circle cx="100" cy="100" r="76" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.8" />
+                    <div className="relative text-[#C41E3A] w-full h-full">
+                        <svg viewBox="0 0 200 200" className="w-full h-full filter drop-shadow-[0_1px_3px_rgba(196,30,58,0.2)]">
+                            {/* Double Outer Rings with deliberate "ink-bleed" gaps */}
+                            <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="40 5 60 2 30 8" />
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
                             
-                            {/* Curved Text - Top */}
-                            <path id="curveTop" d="M 30,100 A 70,70 0 0,1 170,100" fill="none" />
-                            <text className="font-sans font-black uppercase tracking-[0.2em] text-[18px] fill-current">
+                            {/* Curved Text - Top: Larger & Clearer */}
+                            <path id="curveTop" d="M 35,100 A 65,65 0 0,1 165,100" fill="none" />
+                            <text className="font-sans font-black uppercase tracking-[0.25em] text-[18px] fill-current">
                                 <textPath xlinkHref="#curveTop" startOffset="50%" textAnchor="middle">APPROVED</textPath>
                             </text>
 
-                            {/* Curved Text - Bottom */}
-                            <path id="curveBottom" d="M 30,100 A 70,70 0 0,0 170,100" fill="none" />
-                            <text className="font-sans font-black uppercase tracking-[0.2em] text-[18px] fill-current">
+                            {/* Curved Text - Bottom: Larger & Clearer */}
+                            <path id="curveBottom" d="M 35,100 A 65,65 0 0,0 165,100" fill="none" />
+                            <text className="font-sans font-black uppercase tracking-[0.25em] text-[18px] fill-current">
                                 <textPath xlinkHref="#curveBottom" startOffset="50%" textAnchor="middle">APPROVED</textPath>
                             </text>
 
-                            {/* Center Bar with main text */}
-                            <rect x="15" y="78" width="170" height="44" fill="white" stroke="currentColor" strokeWidth="4" />
-                            <text x="100" y="112" textAnchor="middle" className="font-sans font-black uppercase tracking-tight text-[32px] fill-current">
+                            {/* Side Dots */}
+                            <circle cx="32" cy="100" r="3" fill="currentColor" />
+                            <circle cx="168" cy="100" r="3" fill="currentColor" />
+
+                            {/* Center Section */}
+                            <rect x="18" y="78" width="164" height="44" fill="white" stroke="currentColor" strokeWidth="4" />
+                            <text x="100" y="112" textAnchor="middle" className="font-sans font-extrabold uppercase tracking-tight text-[30px] fill-current">
                                 APPROVED
                             </text>
 
-                            {/* Distressing Overlays (Simulating ink skips) */}
-                            <g className="opacity-40 pointer-events-none">
-                                <circle cx="40" cy="40" r="2" fill="white" />
-                                <circle cx="150" cy="140" r="3" fill="white" />
-                                <rect x="90" y="85" width="20" height="1" fill="white" />
-                                <rect x="30" y="110" width="10" height="1" fill="white" />
-                                <circle cx="100" cy="100" r="85" fill="none" stroke="white" strokeWidth="2" strokeDasharray="1 15" />
+                            {/* Subtle ink distress that doesn't hide text */}
+                            <g className="opacity-25" fill="white">
+                                <circle cx="50" cy="50" r="1.5" />
+                                <circle cx="140" cy="150" r="2" />
+                                <rect x="90" y="80" width="15" height="1.2" />
+                                <rect x="40" y="115" width="8" height="1" />
                             </g>
                         </svg>
                     </div>
@@ -233,8 +234,8 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             }
             @keyframes shake {
                 0%, 100% { transform: translate(0, 0); }
-                25% { transform: translate(-3px, 3px); }
-                50% { transform: translate(3px, -3px); }
+                25% { transform: translate(-2px, 2px); }
+                50% { transform: translate(2px, -2px); }
             }
         `}} />
     </div>
