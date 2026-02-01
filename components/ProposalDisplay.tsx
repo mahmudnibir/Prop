@@ -18,38 +18,36 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       }
       const ctx = audioContextRef.current;
       
-      // Low frequency "Heavy Hammer" thud
+      // Heavy mechanical thud sound
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
       oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(70, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(1, ctx.currentTime + 0.25);
+      oscillator.frequency.setValueAtTime(60, ctx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(1, ctx.currentTime + 0.3);
       
       gainNode.gain.setValueAtTime(1.0, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
       
       oscillator.connect(gainNode);
       gainNode.connect(ctx.destination);
       oscillator.start();
-      oscillator.stop(ctx.currentTime + 0.25);
+      oscillator.stop(ctx.currentTime + 0.3);
 
-      // Higher frequency contact sound
-      const clickOsc = ctx.createOscillator();
-      const clickGain = ctx.createGain();
-      clickOsc.type = 'triangle';
-      clickOsc.frequency.setValueAtTime(500, ctx.currentTime);
-      clickOsc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.08);
-      
-      clickGain.gain.setValueAtTime(0.5, ctx.currentTime);
-      clickGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
-      
-      clickOsc.connect(clickGain);
-      clickGain.connect(ctx.destination);
-      clickOsc.start();
-      clickOsc.stop(ctx.currentTime + 0.08);
+      // Metal on metal impact (hammer head hitting paper/table)
+      const metalOsc = ctx.createOscillator();
+      const metalGain = ctx.createGain();
+      metalOsc.type = 'square';
+      metalOsc.frequency.setValueAtTime(400, ctx.currentTime);
+      metalOsc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.05);
+      metalGain.gain.setValueAtTime(0.3, ctx.currentTime);
+      metalGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+      metalOsc.connect(metalGain);
+      metalGain.connect(ctx.destination);
+      metalOsc.start();
+      metalOsc.stop(ctx.currentTime + 0.05);
 
-      // Paper rattle
-      const noiseBufferSize = ctx.sampleRate * 0.2;
+      // Paper snap
+      const noiseBufferSize = ctx.sampleRate * 0.1;
       const noiseBuffer = ctx.createBuffer(1, noiseBufferSize, ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
       for (let i = 0; i < noiseBufferSize; i++) {
@@ -58,21 +56,22 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       const whiteNoise = ctx.createBufferSource();
       whiteNoise.buffer = noiseBuffer;
       const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.2, ctx.currentTime);
-      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      noiseGain.gain.setValueAtTime(0.1, ctx.currentTime);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
       whiteNoise.connect(noiseGain);
       noiseGain.connect(ctx.destination);
       whiteNoise.start();
     } catch (e) {
-      console.warn("Audio context playback inhibited", e);
+      console.warn("Audio Context playback inhibited or failed", e);
     }
   };
 
   useEffect(() => {
+    // Delayed impact to allow page to load
     const timer = setTimeout(() => {
       setStamped(true);
       playStampThud();
-    }, 1200);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -81,43 +80,43 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#F2ECE4] overflow-y-auto overflow-x-hidden flex flex-col items-center py-6 sm:py-16 px-4 sm:px-6 no-print-bg">
+    <div className="min-h-screen w-full bg-[#F2ECE4] overflow-y-auto overflow-x-hidden flex flex-col items-center py-4 sm:py-12 px-4 sm:px-6 no-print-bg">
         
         {/* Old Money Premium Certificate */}
         <div 
           id="proposal-certificate" 
-          className={`relative w-full max-w-2xl bg-[#FCFAF7] shadow-[0_60px_120px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/30 p-8 sm:p-20 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-full print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[impact_0.25s_ease-out]' : ''}`}
+          className={`relative w-full max-w-2xl bg-[#FCFAF7] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/30 p-8 sm:p-16 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-full print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
         >
             
             {/* Subtle Parchment Texture */}
             <div className="absolute inset-0 opacity-[0.12] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
             
             {/* Elegant Double Border */}
-            <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
-            <div className="absolute inset-6 sm:inset-10 border-[3px] border-[#D4AF37]/20 pointer-events-none"></div>
+            <div className="absolute inset-3 sm:inset-4 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
+            <div className="absolute inset-5 sm:inset-7 border-[2px] border-[#D4AF37]/20 pointer-events-none"></div>
 
-            {/* THE SEAL - CENTERED IN THE MIDDLE OF THE CERTIFICATE BODY */}
-            <div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none select-none">
-                <div className={`relative w-64 h-64 sm:w-96 sm:h-96 flex items-center justify-center transition-all duration-[150ms] ease-out
+            {/* THE SEAL - PLACED AT THE BOTTOM RIGHT */}
+            <div className="absolute bottom-4 right-4 sm:bottom-12 sm:right-12 z-[100] pointer-events-none select-none">
+                <div className={`relative w-48 h-48 sm:w-64 sm:h-64 flex items-center justify-center transform transition-all duration-[100ms] ease-in-impact
                   ${stamped 
-                    ? 'scale-100 opacity-90 rotate-[-12deg]' 
-                    : 'scale-[5] opacity-0 rotate-0 blur-md translate-y-[-50px]'}
+                    ? 'scale-100 opacity-100 rotate-[-15deg]' 
+                    : 'scale-[12] opacity-0 rotate-[10deg] blur-xl translate-y-[-100px]'}
                 `}>
-                    {/* Dark Green Ink Circle */}
-                    <div className="absolute inset-0 bg-[#06402B] rounded-full border-[8px] border-[#06402B] shadow-[0_10px_30px_rgba(0,0,0,0.2)]" 
+                    {/* Dark Green Ink Circle - Enhanced visibility colors */}
+                    <div className="absolute inset-0 bg-[#0A3D2D] rounded-full border-[6px] border-[#0A3D2D] shadow-[0_15px_40px_rgba(0,0,0,0.3)]" 
                          style={{ maskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")', WebkitMaskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")' }}>
                         
-                        {/* Inner distressed white rings for classic stamp look */}
-                        <div className="absolute inset-2 border-[4px] border-[#FFFFFF]/60 rounded-full"></div>
-                        <div className="absolute inset-5 border-[1px] border-[#FFFFFF]/40 rounded-full"></div>
+                        {/* Inner distressed rings */}
+                        <div className="absolute inset-2 border-[4px] border-white/60 rounded-full"></div>
+                        <div className="absolute inset-4 border-[1px] border-white/30 rounded-full"></div>
 
                         {/* Circular Text */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <svg className="w-[88%] h-[88%]" viewBox="0 0 100 100">
-                            <path id="stampPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
-                            <text className="text-[9px] font-sans font-black tracking-[0.42em] fill-white uppercase">
-                              <textPath xlinkHref="#stampPath" startOffset="0%">
-                                OFFICIAL DECREE • {recipientName} & {senderName} • 
+                            <path id="sealCirclePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+                            <text className="text-[9px] font-sans font-black tracking-[0.45em] fill-white uppercase">
+                              <textPath xlinkHref="#sealCirclePath" startOffset="0%">
+                                OFFICIAL DECREE • {recipientName.toUpperCase()} & {senderName.toUpperCase()} • 
                               </textPath>
                             </text>
                           </svg>
@@ -125,11 +124,11 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
 
                         {/* Main Center Stamp Text */}
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <div className="px-5 py-2 border-y-[6px] border-white text-white font-sans font-black text-4xl sm:text-6xl tracking-tighter transform -rotate-1">
+                            <div className="px-5 py-2 border-y-[6px] border-white text-white font-sans font-black text-3xl sm:text-5xl tracking-tighter transform -rotate-1">
                                 ACCEPTED
                             </div>
-                            <div className="text-white/90 font-mono text-[10px] sm:text-[12px] font-bold tracking-[0.7em] mt-4 uppercase">
-                                PETNI'S CHOICE
+                            <div className="text-white/80 font-mono text-[9px] font-bold tracking-[0.6em] mt-3 uppercase">
+                                SEALED FOREVER
                             </div>
                         </div>
                     </div>
@@ -137,73 +136,72 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             </div>
 
             {/* Content Body */}
-            <div className="relative z-10 space-y-16 print:space-y-12">
-                <header className="text-center space-y-6">
-                    <div className="space-y-2">
-                        <h2 className="text-[10px] font-bold text-[#8C7B6B] uppercase tracking-[0.8em] font-sans">Formal Proclamation</h2>
-                        <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto"></div>
+            <div className="relative z-10 space-y-12 print:space-y-8">
+                <header className="text-center space-y-4">
+                    <div className="space-y-1">
+                        <h2 className="text-[9px] font-bold text-[#8C7B6B] uppercase tracking-[0.8em] font-sans">Formal Proclamation</h2>
+                        <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto"></div>
                     </div>
-                    <h1 className="text-5xl sm:text-7xl font-serif-display italic font-medium text-[#1A1A1A] tracking-tight leading-tight">
+                    <h1 className="text-4xl sm:text-6xl font-serif-display italic font-medium text-[#1A1A1A] tracking-tight leading-tight">
                         Decree of Union
                     </h1>
                 </header>
 
-                <section className="text-center space-y-12 py-4 print:py-2">
-                    <p className="text-xl sm:text-2xl text-[#4A4A4A] font-light leading-relaxed max-w-lg mx-auto">
+                <section className="text-center space-y-10 py-2 print:py-0">
+                    <p className="text-lg sm:text-2xl text-[#4A4A4A] font-light leading-relaxed max-w-lg mx-auto">
                         Be it known to all that on this exceptional day, a sacred bond of affection has been established between:
                     </p>
 
-                    <div className="space-y-6">
-                        <p className="text-4xl sm:text-6xl font-serif-display font-bold text-[#1A1A1A] tracking-tighter uppercase">
+                    <div className="space-y-4">
+                        <p className="text-3xl sm:text-5xl font-serif-display font-bold text-[#1A1A1A] tracking-tighter uppercase">
                             {recipientName}
                         </p>
                         <div className="flex items-center justify-center gap-4">
-                            <div className="w-12 h-[1px] bg-[#D4AF37]/40"></div>
-                            <span className="text-[11px] uppercase tracking-[0.4em] text-[#8C7B6B] font-bold">and</span>
-                            <div className="w-12 h-[1px] bg-[#D4AF37]/40"></div>
+                            <div className="w-10 h-[1px] bg-[#D4AF37]/40"></div>
+                            <span className="text-[10px] uppercase tracking-[0.4em] text-[#8C7B6B] font-bold">and</span>
+                            <div className="w-10 h-[1px] bg-[#D4AF37]/40"></div>
                         </div>
-                        <p className="text-4xl sm:text-6xl font-serif-display font-bold text-[#1A1A1A] tracking-tighter uppercase">
+                        <p className="text-3xl sm:text-5xl font-serif-display font-bold text-[#1A1A1A] tracking-tighter uppercase">
                             {senderName}
                         </p>
                     </div>
 
-                    <div className="max-w-md mx-auto space-y-4">
-                        <p className="text-lg text-[#5C5C5C] italic leading-relaxed font-light">
+                    <div className="max-w-md mx-auto space-y-2">
+                        <p className="text-base sm:text-lg text-[#5C5C5C] italic leading-relaxed font-light">
                             "A testament to a future filled with shared wisdom, enduring patience, and unconditional love."
                         </p>
                     </div>
                 </section>
 
                 {/* Signatures */}
-                <div className="pt-12 flex flex-col sm:flex-row items-end justify-between gap-12 sm:gap-4 relative print:pt-6">
-                    <div className="w-full sm:w-1/2 space-y-10 print:space-y-6">
+                <div className="pt-8 flex flex-col sm:flex-row items-end justify-between gap-8 sm:gap-4 relative print:pt-4">
+                    <div className="w-full sm:w-1/2 space-y-8 print:space-y-4">
                         <div className="border-b-[1px] border-[#D4AF37]/30 pb-2 relative">
-                            <span className="text-[8px] uppercase font-bold text-[#8C7B6B] block mb-2 tracking-[0.3em] font-sans">The Beloved</span>
-                            <span className="font-serif-display text-4xl text-[#1A1A1A] italic leading-none">{recipientName}</span>
+                            <span className="text-[7px] uppercase font-bold text-[#8C7B6B] block mb-1 tracking-[0.3em] font-sans">The Beloved</span>
+                            <span className="font-serif-display text-3xl text-[#1A1A1A] italic leading-none">{recipientName}</span>
                         </div>
                         <div className="border-b-[1px] border-[#D4AF37]/30 pb-2">
-                            <span className="text-[8px] uppercase font-bold text-[#8C7B6B] block mb-2 tracking-[0.3em] font-sans">The Devoted</span>
-                            <span className="font-serif-display text-4xl text-[#1A1A1A] italic leading-none">{senderName}</span>
+                            <span className="text-[7px] uppercase font-bold text-[#8C7B6B] block mb-1 tracking-[0.3em] font-sans">The Devoted</span>
+                            <span className="font-serif-display text-3xl text-[#1A1A1A] italic leading-none">{senderName}</span>
                         </div>
                     </div>
-                    <div className="hidden sm:block w-1/2 h-20"></div>
                 </div>
             </div>
 
             {/* Faint Decorative Background Scroll */}
-            <div className="absolute -bottom-16 -left-16 text-[#EFE7DC] pointer-events-none opacity-20 -rotate-12 z-0">
-                <ScrollIcon className="w-96 h-96" />
+            <div className="absolute -bottom-16 -left-16 text-[#EFE7DC] pointer-events-none opacity-[0.15] -rotate-12 z-0">
+                <ScrollIcon className="w-72 h-72 sm:w-96 sm:h-96" />
             </div>
         </div>
         
         {/* Actions UI */}
-        <div className="mt-16 flex flex-col items-center gap-8 z-10 no-print">
+        <div className="mt-8 sm:mt-12 flex flex-col items-center gap-6 z-10 no-print">
             <button 
                 onClick={handleDownload}
-                className="group flex items-center gap-6 px-16 py-7 bg-[#1A1A1A] text-[#F2ECE4] font-medium rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
+                className="group flex items-center gap-6 px-12 py-5 bg-[#1A1A1A] text-[#F2ECE4] font-medium rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
             >
                 <DownloadIcon className="w-5 h-5 group-hover:translate-y-1 transition-transform opacity-70" />
-                <span className="tracking-[0.5em] text-[10px] uppercase font-bold">Archive This Decree</span>
+                <span className="tracking-[0.5em] text-[10px] uppercase font-bold">Download This Decree</span>
             </button>
             <div className="flex flex-col items-center gap-3 opacity-30">
                 <div className="flex items-center gap-4">
@@ -231,14 +229,17 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     max-width: none !important;
                     border: none !important;
                     border-radius: 0 !important;
+                    padding: 10% !important;
                 }
             }
-            @keyframes impact {
-                0% { transform: scale(1); }
-                15% { transform: scale(0.95) translateY(4px); }
-                40% { transform: scale(1.05) translateY(-6px); }
-                60% { transform: scale(0.97) translateY(2px); }
-                100% { transform: scale(1) translateY(0); }
+            .ease-in-impact {
+                transition-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.33);
+            }
+            @keyframes shake {
+                0%, 100% { transform: translate(0, 0); }
+                25% { transform: translate(-4px, 4px); }
+                50% { transform: translate(4px, -4px); }
+                75% { transform: translate(-2px, 2px); }
             }
         `}} />
     </div>
