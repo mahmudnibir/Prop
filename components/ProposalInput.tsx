@@ -86,7 +86,6 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
   const [noPosition, setNoPosition] = useState<React.CSSProperties>({ position: 'relative' });
   const [hoverCount, setHoverCount] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [pageTilt, setPageTilt] = useState('');
   const [heartKey, setHeartKey] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -120,10 +119,6 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
   const handleNoInteraction = (e: React.MouseEvent | React.TouchEvent) => {
     if (isModalVisible) return;
     
-    const tilt = (Math.random() - 0.5) * 6;
-    setPageTilt(`rotate(${tilt}deg) scale(1.02)`);
-    setTimeout(() => setPageTilt(''), 300);
-
     setHeartKey(prev => prev + 1);
     
     setHoverCount(prev => prev + 1);
@@ -180,7 +175,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
     switch(introStage) {
         case 'verify':
             return (
-                <div className="flex flex-col items-center justify-center p-6 fade-in-up w-full max-w-sm">
+                <div className="flex flex-col items-center justify-center p-6 fade-in-up w-full max-sm:max-w-xs">
                     <p className="text-lg md:text-xl text-pink-300/80 mb-8 font-display font-bold tracking-[0.3em] uppercase">Security Clearance Required</p>
                     <div className="bg-white/10 backdrop-blur-lg p-8 rounded-[2.5rem] border border-white/20 w-full shadow-2xl">
                         <div className="mb-8 flex justify-center">
@@ -276,8 +271,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
   return (
     <div 
         ref={containerRef}
-        className="min-h-screen w-full flex flex-col items-center justify-center text-center p-6 bg-[#FFF5F7] overflow-hidden relative transition-transform duration-300 ease-out"
-        style={{ transform: pageTilt }}
+        className="min-h-screen w-full flex flex-col items-center justify-center text-center p-6 bg-[#FFF5F7] overflow-hidden relative"
     >
       {isModalVisible && <Modal onClose={() => setModalVisible(false)} />}
       <HeartShower heartKey={heartKey} />
