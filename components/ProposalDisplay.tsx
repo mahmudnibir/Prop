@@ -22,34 +22,34 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
       oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(80, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(1, ctx.currentTime + 0.2);
+      oscillator.frequency.setValueAtTime(70, ctx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(1, ctx.currentTime + 0.25);
       
       gainNode.gain.setValueAtTime(1.0, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
       
       oscillator.connect(gainNode);
       gainNode.connect(ctx.destination);
       oscillator.start();
-      oscillator.stop(ctx.currentTime + 0.2);
+      oscillator.stop(ctx.currentTime + 0.25);
 
-      // Higher frequency "Mechanical Click/Hammer Contact"
+      // Higher frequency contact sound
       const clickOsc = ctx.createOscillator();
       const clickGain = ctx.createGain();
       clickOsc.type = 'triangle';
-      clickOsc.frequency.setValueAtTime(600, ctx.currentTime);
-      clickOsc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.05);
+      clickOsc.frequency.setValueAtTime(500, ctx.currentTime);
+      clickOsc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.08);
       
-      clickGain.gain.setValueAtTime(0.4, ctx.currentTime);
-      clickGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+      clickGain.gain.setValueAtTime(0.5, ctx.currentTime);
+      clickGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
       
       clickOsc.connect(clickGain);
       clickGain.connect(ctx.destination);
       clickOsc.start();
-      clickOsc.stop(ctx.currentTime + 0.05);
+      clickOsc.stop(ctx.currentTime + 0.08);
 
-      // Paper snap noise
-      const noiseBufferSize = ctx.sampleRate * 0.15;
+      // Paper rattle
+      const noiseBufferSize = ctx.sampleRate * 0.2;
       const noiseBuffer = ctx.createBuffer(1, noiseBufferSize, ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
       for (let i = 0; i < noiseBufferSize; i++) {
@@ -58,18 +58,17 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       const whiteNoise = ctx.createBufferSource();
       whiteNoise.buffer = noiseBuffer;
       const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.15, ctx.currentTime);
-      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+      noiseGain.gain.setValueAtTime(0.2, ctx.currentTime);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
       whiteNoise.connect(noiseGain);
       noiseGain.connect(ctx.destination);
       whiteNoise.start();
     } catch (e) {
-      console.warn("Audio context failed or blocked by browser", e);
+      console.warn("Audio context playback inhibited", e);
     }
   };
 
   useEffect(() => {
-    // The delay allows the certificate to fade in before the "Hammer" strikes in the center
     const timer = setTimeout(() => {
       setStamped(true);
       playStampThud();
@@ -82,10 +81,13 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#F2ECE4] overflow-y-auto overflow-x-hidden flex flex-col items-center py-6 sm:py-16 px-4 sm:px-6">
+    <div className="min-h-screen w-full bg-[#F2ECE4] overflow-y-auto overflow-x-hidden flex flex-col items-center py-6 sm:py-16 px-4 sm:px-6 no-print-bg">
         
         {/* Old Money Premium Certificate */}
-        <div id="proposal-certificate" className={`relative w-full max-w-2xl bg-[#FCFAF7] shadow-[0_60px_120px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/30 p-8 sm:p-20 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden transition-all duration-75 ${stamped ? 'animate-[impact_0.2s_ease-out]' : ''}`}>
+        <div 
+          id="proposal-certificate" 
+          className={`relative w-full max-w-2xl bg-[#FCFAF7] shadow-[0_60px_120px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/30 p-8 sm:p-20 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-full print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[impact_0.25s_ease-out]' : ''}`}
+        >
             
             {/* Subtle Parchment Texture */}
             <div className="absolute inset-0 opacity-[0.12] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
@@ -94,40 +96,40 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
             <div className="absolute inset-6 sm:inset-10 border-[3px] border-[#D4AF37]/20 pointer-events-none"></div>
 
-            {/* THE SEAL - POSITIONED ABSOLUTELY IN THE CENTER OVER TEXT */}
-            <div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none select-none perspective-1000">
-                <div className={`relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center transform transition-all duration-[120ms] ease-in-impact mix-blend-multiply
+            {/* THE SEAL - CENTERED IN THE MIDDLE OF THE CERTIFICATE BODY */}
+            <div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none select-none">
+                <div className={`relative w-64 h-64 sm:w-96 sm:h-96 flex items-center justify-center transition-all duration-[150ms] ease-out
                   ${stamped 
-                    ? 'scale-100 opacity-80 rotate-[-12deg]' 
-                    : 'scale-[10] opacity-0 rotate-0 blur-lg translate-z-[200px]'}
+                    ? 'scale-100 opacity-90 rotate-[-12deg]' 
+                    : 'scale-[5] opacity-0 rotate-0 blur-md translate-y-[-50px]'}
                 `}>
-                    {/* Grunge texture overlay via mask - High Distress Green Ink */}
-                    <div className="absolute inset-0 bg-[#1B5E20] rounded-full" 
+                    {/* Dark Green Ink Circle */}
+                    <div className="absolute inset-0 bg-[#06402B] rounded-full border-[8px] border-[#06402B] shadow-[0_10px_30px_rgba(0,0,0,0.2)]" 
                          style={{ maskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")', WebkitMaskImage: 'url("https://www.transparenttextures.com/patterns/p6.png")' }}>
                         
-                        {/* Inner distressed borders */}
-                        <div className="absolute inset-3 border-[6px] border-[#FFFFFF]/90 rounded-full"></div>
-                        <div className="absolute inset-6 border-[3px] border-[#FFFFFF]/80 rounded-full"></div>
+                        {/* Inner distressed white rings for classic stamp look */}
+                        <div className="absolute inset-2 border-[4px] border-[#FFFFFF]/60 rounded-full"></div>
+                        <div className="absolute inset-5 border-[1px] border-[#FFFFFF]/40 rounded-full"></div>
 
-                        {/* Circular text logic - FIXED (No Rotation) */}
+                        {/* Circular Text */}
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <svg className="w-[85%] h-[85%]" viewBox="0 0 100 100">
+                          <svg className="w-[88%] h-[88%]" viewBox="0 0 100 100">
                             <path id="stampPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
-                            <text className="text-[8.5px] font-sans font-black tracking-[0.38em] fill-white uppercase">
+                            <text className="text-[9px] font-sans font-black tracking-[0.42em] fill-white uppercase">
                               <textPath xlinkHref="#stampPath" startOffset="0%">
-                                FINAL CONFIRMATION • {recipientName} & {senderName} • 
+                                OFFICIAL DECREE • {recipientName} & {senderName} • 
                               </textPath>
                             </text>
                           </svg>
                         </div>
 
-                        {/* Main Stamp Text */}
+                        {/* Main Center Stamp Text */}
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <div className="px-6 py-2 border-y-[5px] border-white text-white font-sans font-black text-4xl sm:text-5xl tracking-tighter transform -rotate-2">
+                            <div className="px-5 py-2 border-y-[6px] border-white text-white font-sans font-black text-4xl sm:text-6xl tracking-tighter transform -rotate-1">
                                 ACCEPTED
                             </div>
-                            <div className="text-white/90 font-mono text-[10px] font-bold tracking-[0.6em] mt-3 uppercase">
-                                OFFICIAL SEAL
+                            <div className="text-white/90 font-mono text-[10px] sm:text-[12px] font-bold tracking-[0.7em] mt-4 uppercase">
+                                PETNI'S CHOICE
                             </div>
                         </div>
                     </div>
@@ -135,7 +137,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             </div>
 
             {/* Content Body */}
-            <div className="relative z-10 space-y-16">
+            <div className="relative z-10 space-y-16 print:space-y-12">
                 <header className="text-center space-y-6">
                     <div className="space-y-2">
                         <h2 className="text-[10px] font-bold text-[#8C7B6B] uppercase tracking-[0.8em] font-sans">Formal Proclamation</h2>
@@ -146,7 +148,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     </h1>
                 </header>
 
-                <section className="text-center space-y-12 py-4">
+                <section className="text-center space-y-12 py-4 print:py-2">
                     <p className="text-xl sm:text-2xl text-[#4A4A4A] font-light leading-relaxed max-w-lg mx-auto">
                         Be it known to all that on this exceptional day, a sacred bond of affection has been established between:
                     </p>
@@ -173,8 +175,8 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </section>
 
                 {/* Signatures */}
-                <div className="pt-12 flex flex-col sm:flex-row items-end justify-between gap-12 sm:gap-4 relative">
-                    <div className="w-full sm:w-1/2 space-y-10">
+                <div className="pt-12 flex flex-col sm:flex-row items-end justify-between gap-12 sm:gap-4 relative print:pt-6">
+                    <div className="w-full sm:w-1/2 space-y-10 print:space-y-6">
                         <div className="border-b-[1px] border-[#D4AF37]/30 pb-2 relative">
                             <span className="text-[8px] uppercase font-bold text-[#8C7B6B] block mb-2 tracking-[0.3em] font-sans">The Beloved</span>
                             <span className="font-serif-display text-4xl text-[#1A1A1A] italic leading-none">{recipientName}</span>
@@ -188,7 +190,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </div>
             </div>
 
-            {/* Faint Decorative Background */}
+            {/* Faint Decorative Background Scroll */}
             <div className="absolute -bottom-16 -left-16 text-[#EFE7DC] pointer-events-none opacity-20 -rotate-12 z-0">
                 <ScrollIcon className="w-96 h-96" />
             </div>
@@ -214,8 +216,13 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
 
         <style dangerouslySetInnerHTML={{ __html: `
             @media print {
-                body { background: white !important; padding: 0 !important; margin: 0 !important; }
+                @page {
+                  size: auto;
+                  margin: 0;
+                }
+                body { background: white !important; margin: 0 !important; padding: 0 !important; }
                 .no-print { display: none !important; }
+                .no-print-bg { background: white !important; padding: 0 !important; }
                 #proposal-certificate { 
                     box-shadow: none !important; 
                     margin: 0 !important; 
@@ -223,20 +230,15 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     height: 100vh !important;
                     max-width: none !important;
                     border: none !important;
+                    border-radius: 0 !important;
                 }
-            }
-            .ease-in-impact {
-                transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
             }
             @keyframes impact {
                 0% { transform: scale(1); }
-                10% { transform: scale(0.96) translateY(2px); }
-                30% { transform: scale(1.04) translateY(-4px); }
-                50% { transform: scale(0.98) translateY(2px); }
+                15% { transform: scale(0.95) translateY(4px); }
+                40% { transform: scale(1.05) translateY(-6px); }
+                60% { transform: scale(0.97) translateY(2px); }
                 100% { transform: scale(1) translateY(0); }
-            }
-            .perspective-1000 {
-                perspective: 1000px;
             }
         `}} />
     </div>
