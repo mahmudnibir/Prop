@@ -9,132 +9,156 @@ interface AcceptedViewProps {
 
 const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }) => {
   const handleDownload = () => {
-    // Standard print function is the most reliable way to "download" a high-res PDF or image preview
     window.print();
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#FFF5F7] overflow-y-auto overflow-x-hidden flex flex-col items-center py-4 sm:py-10 px-4 sm:px-6">
+    <div className="min-h-screen w-full bg-[#FFF5F7] overflow-y-auto overflow-x-hidden flex flex-col items-center py-6 sm:py-10 px-4 sm:px-6">
         
-        {/* The Paper Document */}
-        <div id="proposal-certificate" className="relative w-full max-w-xl bg-[#FCFAF7] shadow-[0_20px_60px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.05)] rounded-md border-t-[12px] border-pink-200 p-6 sm:p-12 font-serif text-[#2D2D2D] leading-relaxed overflow-hidden">
+        {/* Traditional Paper Document */}
+        <div id="proposal-certificate" className="relative w-full max-w-xl bg-[#FDFBF9] shadow-[0_30px_80px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] rounded-sm border-double border-[12px] border-[#E8D9C9] p-8 sm:p-12 font-serif text-[#333] leading-relaxed overflow-hidden">
             
-            {/* Subtle Paper Texture Overlay */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
-
-            {/* Header / Letterhead */}
+            {/* Background Texture Overlay */}
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
+            
+            {/* Elegant Header */}
             <div className="text-center mb-8 relative z-10">
                 <div className="flex justify-center mb-4">
-                    <div className="p-2 border border-pink-100 rounded-full">
-                        <HeartIcon className="w-8 h-8 text-[#FF8FA3]" />
+                    <div className="w-12 h-12 flex items-center justify-center rounded-full border border-[#D9C4AF] bg-white shadow-sm">
+                        <HeartIcon className="w-6 h-6 text-[#FF8FA3]" />
                     </div>
                 </div>
-                <h2 className="text-[10px] font-bold text-[#A88C94] uppercase tracking-[0.5em] mb-1">Office of Eternal Affection</h2>
-                <div className="w-full h-px bg-gradient-to-r from-transparent via-pink-100 to-transparent mb-6"></div>
+                <h2 className="text-[10px] font-bold text-[#998675] uppercase tracking-[0.6em] mb-2 italic">Ministry of Eternal Devotion</h2>
+                <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-[#D9C4AF] to-transparent mx-auto mb-6"></div>
                 
-                <h1 className="text-3xl sm:text-4xl font-display font-bold text-[#5C1D2E] tracking-tight mb-1">
-                    Official Declaration
+                <h1 className="text-4xl sm:text-5xl font-display font-bold text-[#4A2D35] tracking-tight mb-2">
+                    Decree of Union
                 </h1>
-                <p className="text-[10px] font-mono text-pink-300 uppercase tracking-widest">Certificate No: PETNI-{Math.floor(Math.random() * 1000000)}</p>
+                <p className="text-[9px] font-mono text-[#C4A484] uppercase tracking-widest font-bold">Document Registry ID: {Date.now().toString().slice(-8)}</p>
             </div>
 
-            {/* Main Content Body - Condensed for one-shot screenshotting */}
-            <div className="relative z-10 space-y-6">
-                <section>
-                    <p className="text-sm sm:text-lg text-[#4A4A4A] text-center px-4">
-                        This digital testament confirms that on this day, a bond of significant emotional magnitude has been formally established.
+            {/* Content Body */}
+            <div className="relative z-10 space-y-8">
+                <section className="text-center px-4">
+                    <p className="text-sm sm:text-lg text-[#555] font-medium italic leading-relaxed">
+                        By mutual resonance of heart and spirit, let it be entered into the record that:
                     </p>
                 </section>
 
-                <section className="bg-white/40 p-5 sm:p-8 border-l-4 border-pink-200 rounded-r-lg shadow-sm text-center">
-                    <p className="text-base sm:text-xl italic leading-snug">
-                        "I, <strong className="font-sans font-black text-[#D63384] not-italic underline decoration-pink-100">{recipientName}</strong>, do hereby acknowledge and accept the proposal brought forth by <strong className="font-sans font-bold text-[#8A4A5D] not-italic">{senderName}</strong>."
-                    </p>
+                <section className="relative py-4">
+                    <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#E8D9C9] opacity-40"></div>
+                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#E8D9C9] opacity-40"></div>
+                    
+                    <div className="text-center py-6 px-4">
+                        <p className="text-2xl sm:text-4xl font-display font-black text-[#8E44AD] tracking-tight leading-tight mb-4 drop-shadow-sm uppercase">
+                            {recipientName}
+                        </p>
+                        <p className="text-[10px] text-[#777] uppercase tracking-[0.5em] font-bold mb-4">has graciously accepted the hand of</p>
+                        <p className="text-2xl sm:text-4xl font-display font-black text-[#D63384] tracking-tight leading-tight drop-shadow-sm uppercase">
+                            {senderName}
+                        </p>
+                    </div>
                 </section>
 
-                <section className="space-y-3">
-                    <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#5C1D2E] border-b border-pink-50 pb-1 inline-block">Provisions of Bond</h3>
-                    <ul className="space-y-2 text-[11px] sm:text-sm text-[#5A5A5A]">
-                        <li className="flex gap-3">
-                            <span className="text-pink-300 font-bold">•</span>
-                            <span>The recipient is formally recognized as the world's most precious person.</span>
-                        </li>
-                        <li className="flex gap-3">
-                            <span className="text-pink-300 font-bold">•</span>
-                            <span>Mandatory daily quotas of hugs and sweet whispers are now in effect.</span>
-                        </li>
-                        <li className="flex gap-3">
-                            <span className="text-pink-300 font-bold">•</span>
-                            <span>This agreement is eternal, irrevocable, and powered by pure devotion.</span>
-                        </li>
-                    </ul>
+                <section className="text-center space-y-4">
+                    <div className="h-px w-24 bg-[#E8D9C9] mx-auto opacity-30"></div>
+                    <div className="text-[12px] sm:text-base text-[#555] italic leading-loose max-w-sm mx-auto px-4">
+                        "From this digital epoch forward, a life of shared joy, infinite tenderness, and an unbreakable covenant of love is established."
+                    </div>
                 </section>
 
-                <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-6">
-                    {/* Signatures */}
-                    <div className="w-full sm:w-1/2 space-y-4">
-                        <div className="border-b border-gray-200 pb-1">
-                            <span className="text-[8px] uppercase font-bold text-gray-400 block mb-1">Authorized Recipient</span>
-                            <span className="font-display text-xl text-[#D63384] italic">{recipientName} ❤️</span>
+                {/* Signature Area with Wax Seal */}
+                <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-10 relative">
+                    {/* Official Signatures */}
+                    <div className="w-full sm:w-1/2 space-y-6">
+                        <div className="border-b-2 border-[#D9C4AF] pb-1 relative">
+                            <span className="text-[8px] uppercase font-bold text-[#A88C94] block mb-1">Authenticated Recipient</span>
+                            <span className="font-display text-2xl text-[#8E44AD] italic leading-none">{recipientName}</span>
+                            <span className="absolute -top-6 -right-2 text-3xl text-pink-200 opacity-30 select-none">✍️</span>
                         </div>
-                        <div className="border-b border-gray-200 pb-1">
-                            <span className="text-[8px] uppercase font-bold text-gray-400 block mb-1">Chief Petitioner</span>
-                            <span className="font-display text-xl text-[#8A4A5D] italic">{senderName}</span>
+                        <div className="border-b-2 border-[#D9C4AF] pb-1 relative">
+                            <span className="text-[8px] uppercase font-bold text-[#A88C94] block mb-1">Chief Petitioner</span>
+                            <span className="font-display text-2xl text-[#D63384] italic leading-none">{senderName}</span>
                         </div>
+                        <p className="text-[8px] text-[#C4A484] italic mt-2 uppercase tracking-tighter">This bond is eternal and legally adorable.</p>
                     </div>
 
-                    {/* THE SEAL - Overlapping slightly */}
-                    <div className="relative w-36 h-36 sm:w-44 sm:h-44 z-20 stamp-in shrink-0">
-                        <div className="absolute inset-0 bg-[#FF4D6D]/5 rounded-full blur-xl"></div>
-                        <div className="absolute inset-0 flex items-center justify-center transform rotate-[-8deg] hover:rotate-0 transition-all duration-500">
-                            <div className="w-full h-full border-2 border-[#FF4D6D]/40 rounded-full p-1.5">
-                                <div className="w-full h-full border-[4px] border-[#FF4D6D] rounded-full flex flex-col items-center justify-center bg-white shadow-lg">
-                                    <div className="text-[#FF4D6D] font-display font-black text-[10px] tracking-[0.2em] uppercase">Validated</div>
-                                    <div className="h-px w-1/2 bg-[#FF4D6D]/30 my-1"></div>
-                                    <div className="text-[#FF4D6D] font-display font-black text-3xl sm:text-4xl leading-none">YES!</div>
-                                    <div className="h-px w-1/2 bg-[#FF4D6D]/30 my-1"></div>
-                                    <HeartIcon className="w-4 h-4 text-[#FF4D6D]" />
+                    {/* TRADITIONAL RED WAX SEAL - Overlapping signatures for realism */}
+                    <div className="relative w-44 h-44 sm:w-52 sm:h-52 z-30 stamp-in -mt-12 sm:-mt-0 sm:-mr-10">
+                        {/* Glow/Shadow */}
+                        <div className="absolute inset-0 bg-[#A61C2E]/10 rounded-full blur-2xl"></div>
+                        
+                        {/* Seal Body */}
+                        <div className="absolute inset-0 flex items-center justify-center transform rotate-[-8deg] hover:rotate-0 transition-transform duration-700 select-none">
+                            <div className="relative w-full h-full p-2 group cursor-pointer drop-shadow-2xl">
+                                {/* The irregular wax puddle edge */}
+                                <div className="absolute inset-0 bg-[#9A192A] shadow-[inset_-4px_-4px_10px_rgba(0,0,0,0.5),inset_4px_4px_10px_rgba(255,255,255,0.2),5px_15px_30px_rgba(0,0,0,0.4)] 
+                                              rounded-[48%_52%_45%_55%_/_52%_48%_55%_45%] border-[3px] border-[#821422] group-hover:scale-105 transition-transform duration-500"></div>
+                                
+                                {/* Inner Stamp Impression */}
+                                <div className="absolute inset-4 border-[2px] border-[#821422] rounded-full flex flex-col items-center justify-center shadow-inner overflow-hidden">
+                                     <div className="text-white/10 font-serif text-[9px] uppercase tracking-widest absolute top-5">AUTHORIZED</div>
+                                     
+                                     {/* Center Symbol */}
+                                     <div className="relative flex flex-col items-center">
+                                        <HeartIcon className="w-14 h-14 text-[#75121F] drop-shadow-[0_2px_2px_rgba(255,255,255,0.1)] opacity-80" />
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <span className="text-white font-display font-black text-3xl drop-shadow-[2px_4px_6px_rgba(0,0,0,0.6)] tracking-tighter">YES</span>
+                                        </div>
+                                     </div>
+
+                                     <div className="text-white/20 font-serif text-[8px] uppercase tracking-[0.3em] absolute bottom-5">EST. 2024</div>
                                 </div>
+                                
+                                {/* Realistic Highlights */}
+                                <div className="absolute top-4 left-8 w-1/4 h-1/6 bg-white/10 rounded-full blur-lg rotate-[-30deg] pointer-events-none"></div>
+                                <div className="absolute bottom-6 right-8 w-1/5 h-1/10 bg-white/5 rounded-full blur-md rotate-[45deg] pointer-events-none"></div>
                             </div>
                         </div>
-                        <div className="absolute inset-0 rounded-full overflow-hidden opacity-20 pointer-events-none">
-                            <div className="w-full h-full shimmer"></div>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Subtle Corner Decoration */}
-            <div className="absolute -bottom-10 -left-10 text-pink-50/20 pointer-events-none -rotate-12 z-0">
-                <ScrollIcon className="w-40 h-40" />
+            {/* Background Icon Detail */}
+            <div className="absolute -bottom-16 -left-16 text-[#E8D9C9] pointer-events-none opacity-20 -rotate-45 z-0">
+                <ScrollIcon className="w-64 h-64" />
             </div>
         </div>
         
-        {/* Actions for the user */}
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 z-10 no-print">
+        {/* Interaction Actions */}
+        <div className="mt-10 flex flex-col items-center gap-5 z-10 no-print">
             <button 
                 onClick={handleDownload}
-                className="flex items-center gap-2 px-8 py-4 bg-[#FF8FA3] text-white font-bold rounded-full shadow-lg hover:bg-[#FF758F] transform transition-all active:scale-95"
+                className="group flex items-center gap-3 px-12 py-5 bg-[#4A2D35] text-white font-bold rounded-full shadow-2xl hover:bg-[#331F25] transform transition-all active:scale-95"
             >
-                <DownloadIcon className="w-5 h-5" />
-                <span>DOWNLOAD CERTIFICATE</span>
+                <DownloadIcon className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+                <span className="tracking-widest text-sm">ARCHIVE MY DECREE</span>
             </button>
-            <p className="text-[10px] text-[#A88C94] font-bold text-center sm:text-left mt-2 flex items-center justify-center gap-1 uppercase tracking-widest">
-                <span>Tip: Take a screenshot for the world!</span>
-                <HeartIcon className="w-3 h-3" />
-            </p>
+            <div className="flex flex-col items-center gap-1">
+                <p className="text-[11px] text-[#998675] font-black uppercase tracking-[0.3em]">One-Shot Screenshot Ready</p>
+                <div className="flex items-center gap-1.5 opacity-60">
+                    <span className="text-[9px] font-bold text-[#A88C94] uppercase tracking-tighter italic">"Forever starts today"</span>
+                    <HeartIcon className="w-3 h-3 text-[#FF8FA3]" />
+                </div>
+            </div>
         </div>
 
-        {/* Global styles for printing to ensure "one shot" PDF generation */}
+        {/* CSS for specialized Print / Screenshot view */}
         <style dangerouslySetInnerHTML={{ __html: `
             @media print {
-                body { background: white !important; }
+                body { background: white !important; padding: 0 !important; margin: 0 !important; }
                 .no-print { display: none !important; }
                 #proposal-certificate { 
                     box-shadow: none !important; 
                     margin: 0 !important; 
-                    width: 100% !important;
+                    width: 100vw !important;
+                    height: 100vh !important;
+                    max-width: none !important;
                     border: none !important;
+                    border-top: 15px solid #E8D9C9 !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    justify-content: center !important;
                 }
                 .min-h-screen { min-height: auto !important; height: auto !important; }
             }

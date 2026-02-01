@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import SetupView from './components/LoadingView';
 import ProposalView from './components/ProposalInput';
@@ -8,6 +9,7 @@ type ProposalDetails = {
   question: string;
   recipient: string;
   sender: string;
+  password?: string;
 };
 
 const App: React.FC = () => {
@@ -19,9 +21,10 @@ const App: React.FC = () => {
     const question = params.get('q');
     const recipient = params.get('r');
     const sender = params.get('s');
+    const password = params.get('p') || undefined;
 
     if (question && recipient && sender) {
-      setDetails({ question, recipient, sender });
+      setDetails({ question, recipient, sender, password });
       setAppState('proposal');
     } else {
       setAppState('setup');
@@ -30,15 +33,6 @@ const App: React.FC = () => {
 
   const handleCreate = (newDetails: ProposalDetails) => {
     setDetails(newDetails);
-    // In a real app, you'd navigate to the new URL. Here, we'll simulate it.
-    const params = new URLSearchParams({
-        q: newDetails.question,
-        r: newDetails.recipient,
-        s: newDetails.sender,
-    });
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    // We can't change the browser URL in this environment, so we just switch the state
-    // and show what the user should do.
     setAppState('proposal');
   };
   
@@ -52,12 +46,12 @@ const App: React.FC = () => {
         if (details) {
           return <ProposalView {...details} onAccept={handleAccept} />;
         }
-        return <SetupView onCreate={handleCreate} />; // Fallback
+        return <SetupView onCreate={handleCreate} />; 
       case 'accepted':
         if (details) {
           return <AcceptedView recipientName={details.recipient} senderName={details.sender} />;
         }
-        return <SetupView onCreate={handleCreate} />; // Fallback
+        return <SetupView onCreate={handleCreate} />; 
       case 'setup':
       default:
         return <SetupView onCreate={handleCreate} />;

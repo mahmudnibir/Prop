@@ -1,15 +1,16 @@
 
 import React, { useState } from 'react';
-import { HeartIcon, ClipboardIcon } from './Icons';
+import { HeartIcon, ClipboardIcon, LockIcon } from './Icons';
 
 interface SetupViewProps {
-  onCreate: (details: { question: string, recipient: string, sender: string }) => void;
+  onCreate: (details: { question: string, recipient: string, sender: string, password?: string }) => void;
 }
 
 const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
-    const sender = "Habla"; // Updated sender name
-    const recipient = "Petni"; // Dedicated recipient
+    const sender = "Habla"; 
+    const recipient = "Petni"; 
     const [question, setQuestion] = useState('Will you be mine forever?');
+    const [password, setPassword] = useState('');
     const [link, setLink] = useState('');
     const [copyStatus, setCopyStatus] = useState<'idle' | 'copied'>('idle');
 
@@ -23,13 +24,15 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
             r: recipient,
             s: sender,
         });
+        if (password) {
+            params.append('p', password);
+        }
         const generatedLink = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
         setLink(generatedLink);
-        // We don't call onCreate immediately here so the user can see the link first
     };
 
     const handleGoToProposal = () => {
-        onCreate({ question, recipient, sender });
+        onCreate({ question, recipient, sender, password: password || undefined });
     };
     
     const handleCopy = () => {
@@ -114,8 +117,22 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
                             placeholder="e.g. Will you be mine forever?"
-                            className={`${inputClasses} resize-none h-32`}
+                            className={`${inputClasses} resize-none h-24`}
                         />
+                    </div>
+
+                    <div>
+                        <label className={labelClasses}>Privacy Password (Optional)</label>
+                        <div className="relative">
+                            <input 
+                                type="text"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="e.g. PetniLover123"
+                                className={`${inputClasses} pr-12`}
+                            />
+                            <LockIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-pink-200" />
+                        </div>
                     </div>
 
                     <button 

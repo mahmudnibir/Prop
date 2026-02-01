@@ -1,11 +1,12 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { HeartIcon, FingerprintIcon } from './Icons';
+import { HeartIcon, LockIcon } from './Icons';
 
 interface ProposalViewProps {
   question: string;
   recipient: string;
   sender: string;
+  password?: string;
   onAccept: () => void;
 }
 
@@ -78,7 +79,7 @@ const Modal: React.FC<{onClose: () => void}> = ({onClose}) => {
 
 type IntroStage = 'verify' | 'syncing' | 'decrypting' | 'countdown' | 'done';
 
-const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender, onAccept }) => {
+const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender, password, onAccept }) => {
   const [noButtonIndex, setNoButtonIndex] = useState(0);
   const [yesButtonScale, setYesButtonScale] = useState(1);
   const [noScale, setNoScale] = useState(1);
@@ -89,8 +90,10 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
   const [heartKey, setHeartKey] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   
-  const [introStage, setIntroStage] = useState<IntroStage>('verify');
+  const [introStage, setIntroStage] = useState<IntroStage>(password ? 'verify' : 'countdown');
   const [countdown, setCountdown] = useState(3);
+  const [inputPassword, setInputPassword] = useState('');
+  const [passError, setPassError] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -115,7 +118,6 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
 
 
   const handleNoInteraction = (e: React.MouseEvent | React.TouchEvent) => {
-    // Only handle if not already processing or modal open
     if (isModalVisible) return;
     
     const tilt = (Math.random() - 0.5) * 6;
@@ -164,22 +166,49 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
       }, 2500);
   }
 
+  const handleVerifyPassword = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (inputPassword === password) {
+          setIntroStage('syncing');
+      } else {
+          setPassError(true);
+          setTimeout(() => setPassError(false), 2000);
+      }
+  }
+
   const renderIntro = () => {
     switch(introStage) {
         case 'verify':
             return (
                 <div className="flex flex-col items-center justify-center p-6 fade-in-up w-full max-w-sm">
-                    <p className="text-lg md:text-xl text-pink-300/80 mb-12 font-display font-bold tracking-[0.3em] uppercase">Private Access for Petni</p>
-                    <button 
-                        onClick={() => setIntroStage('syncing')} 
-                        className="relative p-1 w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-[#FF8FA3] to-[#FF4D6D] group active:scale-90 transition-transform shadow-[0_0_50px_rgba(255,77,109,0.3)]"
-                        style={{ animation: `pulsate 2.5s infinite ease-in-out` }}
-                    >
-                        <div className="w-full h-full rounded-full bg-[#2D0A14] flex items-center justify-center border-2 border-[#FF8FA3]/30">
-                            <FingerprintIcon className="w-16 h-16 md:w-20 md:h-20 text-[#FF8FA3] group-hover:scale-110 transition-transform"/>
+                    <p className="text-lg md:text-xl text-pink-300/80 mb-8 font-display font-bold tracking-[0.3em] uppercase">Security Clearance Required</p>
+                    <div className="bg-white/10 backdrop-blur-lg p-8 rounded-[2.5rem] border border-white/20 w-full shadow-2xl">
+                        <div className="mb-8 flex justify-center">
+                            <div className="p-4 bg-pink-500/20 rounded-full">
+                                <LockIcon className="w-10 h-10 text-[#FF8FA3]" />
+                            </div>
                         </div>
-                    </button>
-                    <p className="mt-12 text-sm text-pink-100/40 animate-pulse font-mono tracking-widest">TAP TO VERIFY IDENTITY</p>
+                        <form onSubmit={handleVerifyPassword} className="space-y-6">
+                            <div>
+                                <input 
+                                    autoFocus
+                                    type="password"
+                                    value={inputPassword}
+                                    onChange={(e) => setInputPassword(e.target.value)}
+                                    placeholder="Enter Private Pass..."
+                                    className={`w-full p-4 bg-black/30 text-white rounded-2xl border-2 transition-all outline-none text-center font-mono tracking-widest ${passError ? 'border-red-500 animate-shake' : 'border-pink-500/30 focus:border-pink-500'}`}
+                                />
+                                {passError && <p className="text-red-400 text-xs mt-2 font-mono">INCORRECT ACCESS CODE</p>}
+                            </div>
+                            <button 
+                                type="submit"
+                                className="w-full py-4 bg-[#FF8FA3] text-white font-bold font-display rounded-2xl hover:bg-[#FF4D6D] transition-all transform active:scale-95 shadow-lg"
+                            >
+                                UNLOCK PROPOSAL
+                            </button>
+                        </form>
+                    </div>
+                    <p className="mt-8 text-xs text-pink-100/30 font-mono tracking-widest">PRIVATE ENCRYPTION ACTIVE</p>
                 </div>
             );
         case 'syncing':
