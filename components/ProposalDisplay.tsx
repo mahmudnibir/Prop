@@ -18,14 +18,14 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       }
       const ctx = audioContextRef.current;
       
-      // Heavy mechanical thud sound
+      // Heavier mechanical thud for a rubber stamp
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
       oscillator.type = 'sine';
       oscillator.frequency.setValueAtTime(60, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(1, ctx.currentTime + 0.3);
+      oscillator.frequency.exponentialRampToValueAtTime(10, ctx.currentTime + 0.3);
       
-      gainNode.gain.setValueAtTime(1.0, ctx.currentTime);
+      gainNode.gain.setValueAtTime(0.8, ctx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
       
       oscillator.connect(gainNode);
@@ -33,25 +33,26 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       oscillator.start();
       oscillator.stop(ctx.currentTime + 0.3);
 
-      // Metal impact click
-      const metalOsc = ctx.createOscillator();
-      const metalGain = ctx.createGain();
-      metalOsc.type = 'square';
-      metalOsc.frequency.setValueAtTime(400, ctx.currentTime);
-      metalOsc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.05);
-      metalGain.gain.setValueAtTime(0.3, ctx.currentTime);
-      metalGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
-      metalOsc.connect(metalGain);
-      metalGain.connect(ctx.destination);
-      metalOsc.start();
-      metalOsc.stop(ctx.currentTime + 0.05);
+      // Noise for the paper impact
+      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < ctx.sampleRate * 0.15; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = noiseBuffer;
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.2, ctx.currentTime);
+      noiseGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+      noise.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+      noise.start();
     } catch (e) {
       console.warn("Audio Context playback failed", e);
     }
   };
 
   useEffect(() => {
-    // Immediate trigger for visual feedback, slight delay for the impact effect
     const timer = setTimeout(() => {
       setStamped(true);
       playStampThud();
@@ -66,7 +67,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
   return (
     <div className="min-h-screen w-full bg-[#F2ECE4] overflow-y-auto flex flex-col items-center py-4 sm:py-8 px-4 no-print-bg">
         
-        {/* Old Money Premium Certificate */}
+        {/* Certificate Container */}
         <div 
           id="proposal-certificate" 
           className={`relative w-full max-w-2xl aspect-[1/1.4] bg-[#FCFAF7] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] rounded-sm border-[1px] border-[#D4AF37]/30 p-8 sm:p-12 font-serif-classic text-[#2C2C2C] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
@@ -79,41 +80,47 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             <div className="absolute inset-2 sm:inset-4 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
             <div className="absolute inset-4 sm:inset-6 border-[2px] border-[#D4AF37]/20 pointer-events-none"></div>
 
-            {/* THE SEAL - POSITIONED BOTTOM RIGHT IN OPEN SPACE */}
-            <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 z-[100] pointer-events-none select-none">
-                <div className={`relative w-40 h-40 sm:w-56 sm:h-56 flex items-center justify-center transform transition-all duration-[150ms] ease-out
+            {/* CLASSIC RUBBER STAMP - "APPROVED" STYLE */}
+            <div className="absolute bottom-24 right-10 sm:bottom-40 sm:right-16 z-[50] pointer-events-none select-none opacity-80">
+                <div className={`relative w-48 h-48 sm:w-64 sm:h-64 flex items-center justify-center transform transition-all duration-[250ms] ease-[cubic-bezier(0.175,0.885,0.32,1.275)]
                   ${stamped 
                     ? 'scale-100 opacity-100 rotate-[-12deg]' 
-                    : 'scale-[6] opacity-0 rotate-[10deg] blur-md translate-y-[-50px]'}
+                    : 'scale-[6] opacity-0 rotate-[20deg] blur-2xl translate-y-[-150px]'}
                 `}>
-                    {/* High Visibility Dark Green Stamp - Solid colors to prevent disappearance */}
-                    <div className="absolute inset-0 bg-[#06402B] rounded-full border-[8px] border-[#06402B] shadow-[0_12px_35px_rgba(0,0,0,0.4)] flex items-center justify-center overflow-hidden">
-                        
-                        {/* Internal Borders */}
-                        <div className="absolute inset-2 border-[3px] border-white/40 rounded-full"></div>
-                        <div className="absolute inset-4 border-[1px] border-white/20 rounded-full"></div>
-
-                        {/* Circular Text */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <svg className="w-[88%] h-[88%] overflow-visible" viewBox="0 0 100 100">
-                            <path id="sealPath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
-                            <text className="text-[9px] font-sans font-black tracking-[0.4em] fill-white uppercase">
-                              <textPath xlinkHref="#sealPath" startOffset="0%">
-                                DECREE OF UNION • {recipientName.toUpperCase()} & {senderName.toUpperCase()} • 
-                              </textPath>
+                    {/* Distressed Stamp SVG */}
+                    <div className="relative text-[#C41E3A]">
+                        <svg viewBox="0 0 200 200" className="w-full h-full filter drop-shadow-[0_2px_4px_rgba(196,30,58,0.3)]">
+                            {/* Inner and Outer Circles */}
+                            <circle cx="100" cy="100" r="85" fill="none" stroke="currentColor" strokeWidth="4" strokeDasharray="10 2 15 3" />
+                            <circle cx="100" cy="100" r="76" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.8" />
+                            
+                            {/* Curved Text - Top */}
+                            <path id="curveTop" d="M 30,100 A 70,70 0 0,1 170,100" fill="none" />
+                            <text className="font-sans font-black uppercase tracking-[0.2em] text-[18px] fill-current">
+                                <textPath xlinkHref="#curveTop" startOffset="50%" textAnchor="middle">APPROVED</textPath>
                             </text>
-                          </svg>
-                        </div>
 
-                        {/* Main Stamp Center */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                            <div className="px-4 py-1.5 border-y-[4px] border-white text-white font-sans font-black text-3xl sm:text-4xl tracking-tighter transform -rotate-2">
-                                ACCEPTED
-                            </div>
-                            <div className="text-white/80 font-mono text-[9px] font-bold tracking-[0.5em] mt-3 uppercase">
-                                OFFICIAL SEAL
-                            </div>
-                        </div>
+                            {/* Curved Text - Bottom */}
+                            <path id="curveBottom" d="M 30,100 A 70,70 0 0,0 170,100" fill="none" />
+                            <text className="font-sans font-black uppercase tracking-[0.2em] text-[18px] fill-current">
+                                <textPath xlinkHref="#curveBottom" startOffset="50%" textAnchor="middle">APPROVED</textPath>
+                            </text>
+
+                            {/* Center Bar with main text */}
+                            <rect x="15" y="78" width="170" height="44" fill="white" stroke="currentColor" strokeWidth="4" />
+                            <text x="100" y="112" textAnchor="middle" className="font-sans font-black uppercase tracking-tight text-[32px] fill-current">
+                                APPROVED
+                            </text>
+
+                            {/* Distressing Overlays (Simulating ink skips) */}
+                            <g className="opacity-40 pointer-events-none">
+                                <circle cx="40" cy="40" r="2" fill="white" />
+                                <circle cx="150" cy="140" r="3" fill="white" />
+                                <rect x="90" y="85" width="20" height="1" fill="white" />
+                                <rect x="30" y="110" width="10" height="1" fill="white" />
+                                <circle cx="100" cy="100" r="85" fill="none" stroke="white" strokeWidth="2" strokeDasharray="1 15" />
+                            </g>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -156,7 +163,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     </div>
                 </section>
 
-                {/* Signatures Section - Kept on left to leave right side open for seal */}
+                {/* Signatures Section */}
                 <div className="pt-8 flex flex-col items-start justify-end gap-6 relative print:pt-4 min-h-[160px]">
                     <div className="w-full sm:w-1/2 space-y-8 print:space-y-4">
                         <div className="border-b-[1px] border-[#D4AF37]/30 pb-2 relative">
