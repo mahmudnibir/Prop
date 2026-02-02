@@ -2,6 +2,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HeartIcon, LockIcon } from './Icons';
 
+// Access confetti from window (loaded in index.html)
+declare const confetti: any;
+
 interface ProposalViewProps {
   question: string;
   recipient: string;
@@ -11,7 +14,7 @@ interface ProposalViewProps {
 }
 
 const noButtonResponses = [
-  "No", "Petni, really?", "Think again ❤️", "Error: Try Yes", "So close!", "Not possible!", "Try again!", "Just give up", "Yes is better!"
+  "No", "Petni, really?", "Think again ❤️", "Error: Try Yes", "So close!", "Not possible!", "Try again!", "Just give up", "Yes is better!", "Stop it! 😂", "Wait... no!", "Click Yes pls", "You can't catch me", "Almost had it!"
 ];
 
 const HeartShower: React.FC<{ heartKey: number }> = ({ heartKey }) => {
@@ -39,6 +42,7 @@ const Modal: React.FC<{onClose: () => void}> = ({onClose}) => {
     const [confirmPos, setConfirmPos] = useState<React.CSSProperties>({ position: 'relative' });
 
     const handleConfirmHover = () => {
+        if ('vibrate' in navigator) navigator.vibrate(20);
         setConfirmPos({
             position: 'absolute',
             top: `${20 + Math.random() * 60}%`,
@@ -89,13 +93,30 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
   const [heartKey, setHeartKey] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   
+  // Typewriter states
+  const [displayText, setDisplayText] = useState('');
+  const [isTypingDone, setIsTypingDone] = useState(false);
+  
   const [introStage, setIntroStage] = useState<IntroStage>(password ? 'verify' : 'countdown');
   const [countdown, setCountdown] = useState(3);
   const [inputPassword, setInputPassword] = useState('');
   const [passError, setPassError] = useState(false);
   
   const containerRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   
+  useEffect(() => {
+    // Background Music
+    audioRef.current = new Audio('https://www.chosic.com/wp-content/uploads/2021/04/Warm-Memories-Emotional-Inspiring-Piano.mp3');
+    audioRef.current.loop = true;
+    audioRef.current.volume = 0.4;
+    
+    return () => {
+      audioRef.current?.pause();
+      audioRef.current = null;
+    };
+  }, []);
+
   useEffect(() => {
     if (introStage === 'syncing') {
         const timer = setTimeout(() => setIntroStage('decrypting'), 2500);
@@ -110,31 +131,55 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
         return () => clearTimeout(timer);
     }
     if (introStage === 'countdown' && countdown === 0) {
-        const transitionTimer = setTimeout(() => setIntroStage('done'), 1000);
+        const transitionTimer = setTimeout(() => {
+            setIntroStage('done');
+            audioRef.current?.play().catch(e => console.log("Audio play deferred till interaction"));
+        }, 1000);
         return () => clearTimeout(transitionTimer);
     }
   }, [introStage, countdown]);
 
+  // Typewriter effect
+  useEffect(() => {
+    if (introStage === 'done' && !isTypingDone) {
+        let i = 0;
+        const interval = setInterval(() => {
+            setDisplayText(question.substring(0, i + 1));
+            i++;
+            if (i === question.length) {
+                clearInterval(interval);
+                setIsTypingDone(true);
+            }
+        }, 60);
+        return () => clearInterval(interval);
+    }
+  }, [introStage, question, isTypingDone]);
 
   const handleNoInteraction = (e: React.MouseEvent | React.TouchEvent) => {
     if (isModalVisible) return;
     
+    // Haptic feedback
+    if ('vibrate' in navigator) navigator.vibrate(50);
+    
     setHeartKey(prev => prev + 1);
     
     setHoverCount(prev => prev + 1);
+    
+    // Trigger modal if she's too persistent on "No"
     if(hoverCount > 4 && !isModalVisible) {
         setModalVisible(true);
         setHoverCount(0);
         return;
     }
 
-    setYesButtonScale((prev) => Math.min(prev + 0.12, 3));
-    setNoScale(prev => Math.max(0.4, prev - 0.06));
+    // Evolution logic: Yes grows, No shrinks and becomes erratic
+    setYesButtonScale((prev) => Math.min(prev + 0.15, 4));
+    setNoScale(prev => Math.max(0.2, prev - 0.08));
     setNoButtonIndex((prev) => (prev + 1) % noButtonResponses.length);
 
     if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        const padding = 60;
+        const padding = 100;
         const buttonWidth = 120;
         const buttonHeight = 50;
 
@@ -148,17 +193,37 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
             position: 'absolute',
             top: `${newTop}px`,
             left: `${newLeft}px`,
-            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
             zIndex: 50
         });
+    }
+
+    // Ultimate evolution: No becomes Yes if clicked too much
+    if (hoverCount > 12) {
+        setNoButtonIndex(noButtonResponses.length - 1); // "Click Yes pls" or similar
     }
   };
 
   const handleAcceptClick = () => {
+      // Confetti Explosion
+      const duration = 5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+      const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+      const interval: any = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
+        const particleCount = 50 * (timeLeft / duration);
+        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+      }, 250);
+
       setIsLoading(true);
       setTimeout(() => {
           onAccept();
-      }, 2500);
+      }, 3000);
   }
 
   const handleVerifyPassword = (e: React.FormEvent) => {
@@ -167,6 +232,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
           setIntroStage('syncing');
       } else {
           setPassError(true);
+          if ('vibrate' in navigator) navigator.vibrate([100, 50, 100]);
           setTimeout(() => setPassError(false), 2000);
       }
   }
@@ -260,7 +326,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
                   <HeartIcon className="relative w-24 h-24 text-[#FF8FA3] mb-8 animate-bounce" />
               </div>
               <h2 className="text-3xl md:text-5xl font-display font-bold text-[#5C1D2E] mb-2">Sealing the promise...</h2>
-              <p className="text-[#8A4A5D] mb-8">This is going to be amazing!</p>
+              <p className="text-[#8A4A5D] mb-8 font-serif-classic italic text-xl">Creating our forever memory.</p>
               <div className="w-full max-w-xs bg-[#FFC2D1]/30 rounded-full h-3 overflow-hidden shadow-inner border border-pink-100">
                   <div className="bg-gradient-to-r from-[#FF8FA3] to-[#FF4D6D] h-3 rounded-full loading-progress"></div>
               </div>
@@ -276,7 +342,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
       {isModalVisible && <Modal onClose={() => setModalVisible(false)} />}
       <HeartShower heartKey={heartKey} />
       
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02] flex items-center justify-center overflow-hidden select-none">
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] flex items-center justify-center overflow-hidden select-none">
           <span className="text-[25vw] font-display font-black whitespace-nowrap">PETNI ❤️ {sender.toUpperCase()}</span>
       </div>
 
@@ -285,15 +351,15 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
              <span className="text-xs md:text-sm font-bold text-[#FF8FA3] tracking-[0.3em] uppercase">To our beautiful Petni</span>
         </div>
         
-        <p className="text-lg md:text-3xl text-[#8A4A5D] font-display font-medium leading-relaxed mb-8">
+        <p className="text-lg md:text-2xl text-[#8A4A5D] font-serif-classic italic leading-relaxed mb-6 px-4">
           {sender} has been waiting for the perfect moment <br className="hidden md:block" /> to ask you this...
         </p>
 
-        <h1 className="text-4xl md:text-8xl font-display font-extrabold text-[#5C1D2E] tracking-tight drop-shadow-sm mb-12 md:mb-20 leading-[1.1] max-w-3xl">
-          {question}
+        <h1 className={`text-4xl md:text-7xl font-serif-display italic font-extrabold text-[#5C1D2E] tracking-tight drop-shadow-sm mb-12 md:mb-20 leading-[1.2] max-w-3xl min-h-[120px] ${!isTypingDone ? 'typewriter-cursor' : ''}`}>
+          {displayText}
         </h1>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full" style={{ minHeight: '280px' }}>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full" style={{ minHeight: '300px' }}>
           <button
             onClick={handleAcceptClick}
             className="px-10 md:px-16 py-5 md:py-8 bg-[#FF8FA3] text-white font-bold font-display rounded-[2.5rem] shadow-[0_25px_50px_-12px_rgba(255,143,163,0.5)] transform transition-all duration-300 ease-in-out hover:bg-[#FF758F] active:scale-95"
@@ -311,7 +377,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
             onMouseEnter={handleNoInteraction}
             onTouchStart={(e) => { e.preventDefault(); handleNoInteraction(e as any); }}
             onClick={(e) => { e.preventDefault(); handleNoInteraction(e as any); }}
-            className="px-8 py-4 bg-white text-[#FF8FA3] font-bold rounded-2xl border border-pink-100 shadow-lg transition-all duration-300 ease-in-out whitespace-nowrap"
+            className={`px-8 py-4 bg-white text-[#FF8FA3] font-bold rounded-2xl border border-pink-100 shadow-lg transition-all duration-300 ease-in-out whitespace-nowrap ${noScale < 0.3 ? 'opacity-40 blur-[1px]' : ''}`}
             style={{ 
               ...noPosition,
               transform: `scale(${noScale})`,

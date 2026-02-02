@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { ScrollIcon, DownloadIcon, HeartIcon } from './Icons';
+import { generateFuturePrediction } from '../services/geminiService';
 
 interface AcceptedViewProps {
   recipientName: string;
@@ -10,6 +11,9 @@ interface AcceptedViewProps {
 const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }) => {
   const [stamped, setStamped] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
+  const [prediction, setPrediction] = useState<string>("Gazing into the stars to find your destiny...");
+  const [isLoadingPrediction, setIsLoadingPrediction] = useState(true);
+  
   const audioContextRef = useRef<AudioContext | null>(null);
 
   const playStampThud = () => {
@@ -56,9 +60,16 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       setStamped(true);
       setShowParticles(true);
       playStampThud();
-    }, 800);
+    }, 1200);
+
+    // AI Prediction
+    generateFuturePrediction(senderName, recipientName).then(text => {
+      setPrediction(text);
+      setIsLoadingPrediction(false);
+    });
+
     return () => clearTimeout(timer);
-  }, []);
+  }, [recipientName, senderName]);
 
   const handleDownload = () => {
     window.print();
@@ -73,74 +84,48 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             {/* Certificate Container */}
             <div 
               id="proposal-certificate" 
-              className={`relative w-full min-h-[600px] h-auto aspect-auto sm:aspect-[1/1.41] bg-[#FCFAF7] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.12)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
+              className={`relative w-full min-h-[600px] h-auto aspect-auto sm:aspect-[1/1.41] bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
             >
                 
                 {/* Subtle Parchment Texture */}
-                <div className="absolute inset-0 opacity-[0.18] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
+                <div className="absolute inset-0 opacity-[0.25] pointer-events-none select-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
                 
                 {/* Elegant Double Border */}
-                <div className="absolute inset-2 sm:inset-4 border-[1.5px] border-[#D4AF37]/70 pointer-events-none"></div>
-                <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/50 pointer-events-none"></div>
+                <div className="absolute inset-2 sm:inset-4 border-[2px] border-[#D4AF37]/70 pointer-events-none"></div>
+                <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
 
                 {/* ENHANCED APPROVED SEAL */}
                 <div className="absolute bottom-24 right-4 sm:bottom-28 sm:right-10 z-[50] pointer-events-none select-none">
-                    {showParticles && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            {[...Array(8)].map((_, i) => (
-                                <div 
-                                    key={i}
-                                    className="absolute w-1 h-1 bg-[#C41E3A] rounded-full animate-ping opacity-0"
-                                    style={{
-                                        animation: `ping 0.6s cubic-bezier(0, 0, 0.2, 1) forwards`,
-                                        transform: `rotate(${i * 45}deg) translateX(${stamped ? '40px' : '0px'})`,
-                                        opacity: 0.6
-                                    }}
-                                />
-                            ))}
-                        </div>
-                    )}
-                    <div className={`relative w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center transform transition-all duration-[250ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
+                    <div className={`relative w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center transform transition-all duration-[400ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
-                        ? 'scale-100 opacity-90 rotate-[-12deg]' 
-                        : 'scale-[5] opacity-0 rotate-[15deg] blur-3xl translate-y-[-120px]'}
+                        ? 'scale-100 opacity-90 rotate-[-15deg]' 
+                        : 'scale-[8] opacity-0 rotate-[25deg] blur-3xl translate-y-[-200px]'}
                     `}>
-                        <div className="relative text-[#C41E3A] w-full h-full drop-shadow-[0_4px_8px_rgba(196,30,58,0.3)]">
+                        <div className="relative text-[#C41E3A] w-full h-full drop-shadow-[0_10px_15px_rgba(196,30,58,0.4)]">
                             <svg viewBox="0 0 200 200" className="w-full h-full">
                                 <defs>
                                     <filter id="roughInk">
                                         <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
-                                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+                                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
                                     </filter>
-                                    <path id="circlePath" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+                                    <path id="circlePathSeal" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
                                 </defs>
                                 
                                 <g filter="url(#roughInk)">
-                                    {/* Outer decorative borders */}
-                                    <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="1 3" opacity="0.4" />
-                                    <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" strokeWidth="4" />
-                                    <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" strokeWidth="1" />
+                                    <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="2 4" opacity="0.5" />
+                                    <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" strokeWidth="5" />
+                                    <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" strokeWidth="1.5" />
                                     
-                                    {/* Inner circular text */}
-                                    <text className="fill-current text-[10px] font-black tracking-[0.2em] uppercase">
-                                        <textPath href="#circlePath" startOffset="0%">
-                                            Official Decree • Sealed with Devotion • Perpetual Covenant •
+                                    <text className="fill-current text-[11px] font-black tracking-[0.2em] uppercase">
+                                        <textPath href="#circlePathSeal" startOffset="0%">
+                                            Forever Bound • Forever Yours • Forever Bound •
                                         </textPath>
                                     </text>
 
-                                    {/* Center box */}
-                                    <rect x="25" y="78" width="150" height="44" fill="white" stroke="currentColor" strokeWidth="3" />
-                                    <text x="100" y="110" textAnchor="middle" className="font-sans font-black uppercase tracking-tighter text-[30px] fill-current">
+                                    <rect x="20" y="75" width="160" height="50" fill="white" stroke="currentColor" strokeWidth="4" />
+                                    <text x="100" y="112" textAnchor="middle" className="font-sans font-black uppercase tracking-tighter text-[32px] fill-current">
                                         APPROVED
                                     </text>
-
-                                    {/* Hearts decoration */}
-                                    <g transform="translate(100, 62) scale(0.6)" className="fill-current">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                    </g>
-                                    <g transform="translate(100, 138) scale(0.6)" className="fill-current">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                    </g>
                                 </g>
                             </svg>
                         </div>
@@ -151,72 +136,72 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="relative z-10 flex flex-col h-full space-y-8 sm:space-y-10 py-2 sm:py-4 print:py-0">
                     <header className="text-center space-y-3">
                         <div className="space-y-1.5">
-                            <h2 className="text-[10px] sm:text-[11px] font-black text-[#4A3D2E] uppercase tracking-[0.7em] font-sans">Covenant of Perpetual Affection</h2>
+                            <h2 className="text-[10px] sm:text-[11px] font-black text-[#4A3D2E] uppercase tracking-[0.7em] font-sans">Eternal Decree</h2>
                             <div className="w-20 h-[2px] bg-[#D4AF37]/70 mx-auto"></div>
                         </div>
-                        <h1 className="text-3xl sm:text-5xl font-serif-display italic font-medium text-[#000000] tracking-tight leading-tight">
-                            Decree of Lifelong Union
+                        <h1 className="text-4xl sm:text-6xl font-cursive font-bold text-[#000000] tracking-tight leading-tight">
+                            A Covenant of Love
                         </h1>
                     </header>
 
                     <section className="space-y-6 text-center">
-                        <p className="text-sm sm:text-lg text-[#1A1A1A] font-bold leading-relaxed max-w-md mx-auto">
-                            This agreement witnesses the unreserved acceptance of a proposal between:
+                        <p className="text-sm sm:text-lg text-[#1A1A1A] font-medium italic leading-relaxed max-w-md mx-auto">
+                            Let it be known that on this day, the question of a lifetime was met with the most beautiful answer.
                         </p>
 
                         <div className="space-y-4">
                             <div className="space-y-1">
-                                <p className="text-2xl sm:text-4xl font-serif-display font-black text-[#000000] uppercase">
+                                <p className="text-3xl sm:text-5xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
                                     {recipientName}
                                 </p>
-                                <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.5em] text-[#2C241B] font-sans">The Beloved</span>
+                                <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.5em] text-[#B48F00] font-sans">The Beloved</span>
                             </div>
                             
-                            <div className="text-[#B48F00] font-serif italic text-xl sm:text-2xl font-bold">&</div>
+                            <div className="text-[#D4AF37] font-serif italic text-2xl sm:text-3xl font-bold">&</div>
 
                             <div className="space-y-1">
-                                <p className="text-2xl sm:text-4xl font-serif-display font-black text-[#000000] uppercase">
+                                <p className="text-3xl sm:text-5xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
                                     {senderName}
                                 </p>
-                                <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.5em] text-[#2C241B] font-sans">The Devoted</span>
+                                <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.5em] text-[#B48F00] font-sans">The Devoted</span>
                             </div>
                         </div>
                     </section>
 
-                    {/* Articles */}
-                    <section className="space-y-4 sm:space-y-5 text-[12px] sm:text-[14px] text-[#1A1A1A] font-medium border-t border-b border-[#D4AF37]/50 py-6 sm:py-8">
-                        <div className="flex gap-4">
-                            <span className="font-black text-[#000000] min-w-[40px]">ART. I</span>
-                            <p>Lifelong devotion, unyielding support, and the prioritization of shared happiness.</p>
+                    {/* AI FUTURE PREDICTION BOX */}
+                    <div className="relative p-6 sm:p-8 border border-dashed border-[#D4AF37]/40 bg-white/40 backdrop-blur-sm rounded-xl overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-2 opacity-10">
+                            <HeartIcon className="w-12 h-12 rotate-12" />
                         </div>
-                        <div className="flex gap-4">
-                            <span className="font-black text-[#000000] min-w-[40px]">ART. II</span>
-                            <p>Immediate forgiveness for all minor grievances and a commitment to daily kindness.</p>
-                        </div>
-                        <div className="flex gap-4">
-                            <span className="font-black text-[#000000] min-w-[40px]">ART. III</span>
-                            <p>A covenant sealed by unshakeable choice, witnessed by the stars, for all time.</p>
-                        </div>
-                    </section>
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4AF37] mb-3 font-sans">Vision of the Future</h3>
+                        <p className={`text-sm sm:text-lg italic leading-relaxed text-[#4A3D2E] transition-opacity duration-500 ${isLoadingPrediction ? 'opacity-30' : 'opacity-100'}`}>
+                            "{prediction}"
+                        </p>
+                        {isLoadingPrediction && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-white/20">
+                                <div className="w-4 h-4 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        )}
+                    </div>
 
                     {/* Signatures Section */}
-                    <div className="flex flex-col items-center sm:items-start w-full mt-auto pt-6 pb-4">
+                    <div className="flex flex-col items-center sm:items-start w-full mt-auto pt-6">
                         <div className="w-full sm:w-2/3 space-y-6 sm:space-y-8">
-                            <div className="border-b-[2px] border-[#D4AF37]/60 pb-2 w-full">
-                                <span className="text-[9px] uppercase font-black text-[#2C241B] block mb-2 tracking-[0.4em] font-sans">Signed by the Beloved</span>
-                                <span className="font-serif-display text-2xl sm:text-3xl text-[#000000] italic leading-tight block">{recipientName}</span>
+                            <div className="border-b-[1.5px] border-[#D4AF37]/50 pb-2 w-full">
+                                <span className="text-[9px] uppercase font-black text-[#2C241B] block mb-2 tracking-[0.4em] font-sans opacity-60">Verified Acceptance</span>
+                                <span className="font-cursive text-3xl sm:text-4xl text-[#000000] leading-tight block">{recipientName}</span>
                             </div>
-                            <div className="border-b-[2px] border-[#D4AF37]/60 pb-2 w-full">
-                                <span className="text-[9px] uppercase font-black text-[#2C241B] block mb-2 tracking-[0.4em] font-sans">Signed by the Devoted</span>
-                                <span className="font-serif-display text-2xl sm:text-3xl text-[#000000] italic leading-tight block">{senderName}</span>
+                            <div className="border-b-[1.5px] border-[#D4AF37]/50 pb-2 w-full">
+                                <span className="text-[9px] uppercase font-black text-[#2C241B] block mb-2 tracking-[0.4em] font-sans opacity-60">Attested by</span>
+                                <span className="font-cursive text-3xl sm:text-4xl text-[#000000] leading-tight block">{senderName}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Decorative Background Scroll Icon */}
-                <div className="absolute -bottom-12 -left-12 text-[#EFE7DC] pointer-events-none opacity-[0.35] -rotate-12 z-0">
-                    <ScrollIcon className="w-48 h-48 sm:w-64 sm:h-64" />
+                {/* Background Decor */}
+                <div className="absolute -bottom-16 -left-16 text-[#EFE7DC] pointer-events-none opacity-[0.25] -rotate-12 z-0">
+                    <ScrollIcon className="w-64 h-64 sm:w-80 sm:h-80" />
                 </div>
             </div>
         </div>
@@ -228,12 +213,14 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 className="group flex items-center gap-6 px-12 py-5 bg-[#1A1A1A] text-[#F2ECE4] font-bold rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
             >
                 <DownloadIcon className="w-5 h-5 group-hover:translate-y-1 transition-transform opacity-100 stroke-[3]" />
-                <span className="tracking-[0.5em] text-[11px] sm:text-[12px] uppercase font-black">Download Certificate</span>
+                <span className="tracking-[0.5em] text-[11px] sm:text-[12px] uppercase font-black">Secure Keepsake</span>
             </button>
-            <div className="flex flex-col items-center gap-2">
-                <div className="flex items-center gap-4 opacity-70">
+            
+            <div className="flex flex-col items-center gap-4">
+                 <p className="text-xs text-[#8A4A5D] font-serif-classic font-bold opacity-60 italic">Share this page to keep our moment alive.</p>
+                 <div className="flex items-center gap-4 opacity-70">
                     <div className="w-8 h-[2px] bg-[#4A3D2E]"></div>
-                    <span className="text-[10px] font-black text-[#4A3D2E] uppercase tracking-[0.6em]">For Petni, Always</span>
+                    <span className="text-[10px] font-black text-[#4A3D2E] uppercase tracking-[0.6em]">A Legacy of Love</span>
                     <div className="w-8 h-[2px] bg-[#4A3D2E]"></div>
                 </div>
             </div>
@@ -241,31 +228,15 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
 
         <style dangerouslySetInnerHTML={{ __html: `
             @media print {
-                @page {
-                  size: portrait;
-                  margin: 0;
-                }
-                html, body { 
-                  margin: 0 !important; 
-                  padding: 0 !important; 
-                  width: 100% !important; 
-                  height: 100% !important; 
-                  overflow: hidden !important;
-                }
+                @page { size: portrait; margin: 0; }
+                html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
                 .no-print { display: none !important; }
                 .no-print-bg { background: white !important; padding: 0 !important; }
                 #proposal-certificate { 
-                    box-shadow: none !important; 
-                    margin: 0 !important; 
-                    width: 100vw !important;
-                    height: 100vh !important;
-                    max-width: none !important;
-                    border: none !important;
-                    border-radius: 0 !important;
-                    display: flex !important;
-                    flex-direction: column !important;
-                    justify-content: center !important;
-                    padding: 2.5cm !important;
+                    box-shadow: none !important; margin: 0 !important; 
+                    width: 100vw !important; height: 100vh !important;
+                    max-width: none !important; border: none !important;
+                    border-radius: 0 !important; padding: 2.5cm !important;
                 }
             }
         `}} />
