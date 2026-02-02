@@ -75,7 +75,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             {/* Certificate Container */}
             <div 
               id="proposal-certificate" 
-              className={`relative w-full min-h-[620px] sm:min-h-[700px] h-auto aspect-auto sm:aspect-[1/1.41] bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-5 sm:p-10 md:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
+              className={`relative w-full min-h-[640px] sm:min-h-[720px] h-auto aspect-auto sm:aspect-[1/1.41] bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-5 sm:p-10 md:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
             >
                 
                 {/* Subtle Parchment Texture */}
@@ -85,8 +85,8 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="absolute inset-2 sm:inset-4 border-[2px] border-[#D4AF37]/70 pointer-events-none"></div>
                 <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
 
-                {/* SEAL - Positioned for impact */}
-                <div className="absolute top-1/2 right-2 sm:top-[60%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none">
+                {/* SEAL - Adjusted depth and position for mobile clearance */}
+                <div className="absolute top-[48%] right-2 sm:top-[55%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none">
                     <div className={`relative w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center transform transition-all duration-[400ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
                         ? 'scale-100 opacity-90 rotate-[-12deg]' 
@@ -124,7 +124,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </div>
 
                 {/* Content Body */}
-                <div className="relative z-10 flex flex-col h-full space-y-3 sm:space-y-6 md:space-y-8 py-2 sm:py-6 print:py-0">
+                <div className="relative z-10 flex flex-col h-full space-y-3 sm:space-y-6 md:space-y-8 py-4 sm:py-6 print:py-0">
                     <header className="text-center space-y-1 sm:space-y-3 pt-4 sm:pt-6">
                         <div className="space-y-1 sm:space-y-1.5">
                             <h2 className="text-[7px] sm:text-[11px] font-black text-[#4A3D2E] uppercase tracking-[0.4em] sm:tracking-[0.7em] font-sans">Eternal Decree</h2>
@@ -159,30 +159,27 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* NEW TERMS SECTION - Replaced the vision box */}
-                    <div className="relative p-3 sm:p-5 md:p-6 border border-dotted border-[#D4AF37]/60 bg-white/40 backdrop-blur-sm rounded-lg overflow-hidden">
-                        <h3 className="text-[8px] sm:text-[11px] font-black uppercase tracking-[0.3em] text-[#D4AF37] mb-2 font-sans text-center">Terms of Eternal Affection</h3>
-                        <ul className="text-[8px] sm:text-xs text-[#4A3D2E] space-y-1 list-none font-medium text-center italic">
-                            <li>I. The subject (Petni) is entitled to unlimited Forehead Kisses.</li>
-                            <li>II. The guardian (Argho) must provide high-quality snacks upon request.</li>
-                            <li>III. Both parties agree that laughter is the only required currency.</li>
-                            <li>IV. This covenant is non-transferable and valid across all lifetimes.</li>
-                        </ul>
+                    {/* NEW FORMAL CONDITIONS SECTION */}
+                    <div className="relative p-4 sm:p-6 border border-double border-[#D4AF37]/50 bg-white/30 backdrop-blur-sm rounded-lg overflow-hidden">
+                        <h3 className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.3em] text-[#D4AF37] mb-2 font-sans text-center">Conditions of Agreement</h3>
+                        <div className="text-[7px] sm:text-[11px] text-[#4A3D2E] text-center italic font-medium leading-relaxed px-1 sm:px-4">
+                            "By mutual consent, both parties commit to a partnership defined by unwavering support, shared laughter, and an infinite supply of affection. This agreement ensures that every joy is doubled and every burden is shared, remaining valid throughout all lifetimes and dimensions known and unknown. This covenant is sealed with a promise that transcends time itself."
+                        </div>
                         <div className="absolute top-0 right-0 p-1 opacity-5">
                             <HeartIcon className="w-4 h-4 sm:w-6 sm:h-6" />
                         </div>
                     </div>
 
-                    {/* Signatures Section */}
+                    {/* Signatures Section - Adjusted for better mobile height */}
                     <div className="flex flex-col items-center sm:items-start w-full mt-auto pb-6 sm:pb-8">
                         <div className="w-full sm:w-2/3 space-y-4 sm:space-y-6 px-2">
-                            <div className="border-b-[1px] border-[#D4AF37]/30 pb-1 w-full">
+                            <div className="border-b-[1px] border-[#D4AF37]/30 pb-1 w-full relative">
                                 <span className="text-[6px] sm:text-[9px] uppercase font-black text-[#2C241B] block mb-0.5 tracking-[0.1em] sm:tracking-[0.2em] font-sans opacity-60">Verified Acceptance</span>
-                                <span className="font-cursive text-xl sm:text-3xl text-[#000000] leading-tight block">{recipientName}</span>
+                                <span className="font-cursive text-xl sm:text-3xl text-[#000000] leading-tight block truncate pr-10">{recipientName}</span>
                             </div>
-                            <div className="border-b-[1px] border-[#D4AF37]/30 pb-1 w-full">
+                            <div className="border-b-[1px] border-[#D4AF37]/30 pb-1 w-full relative">
                                 <span className="text-[6px] sm:text-[9px] uppercase font-black text-[#2C241B] block mb-0.5 tracking-[0.1em] sm:tracking-[0.2em] font-sans opacity-60">Attested by</span>
-                                <span className="font-cursive text-xl sm:text-3xl text-[#000000] leading-tight block">{senderName}</span>
+                                <span className="font-cursive text-xl sm:text-3xl text-[#000000] leading-tight block truncate pr-10">{senderName}</span>
                             </div>
                         </div>
                     </div>
