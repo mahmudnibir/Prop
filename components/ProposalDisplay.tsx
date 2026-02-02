@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollIcon, DownloadIcon } from './Icons';
+import { ScrollIcon, DownloadIcon, HeartIcon } from './Icons';
 
 interface AcceptedViewProps {
   recipientName: string;
@@ -9,6 +9,7 @@ interface AcceptedViewProps {
 
 const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }) => {
   const [stamped, setStamped] = useState(false);
+  const [showParticles, setShowParticles] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
 
   const playStampThud = () => {
@@ -53,6 +54,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
   useEffect(() => {
     const timer = setTimeout(() => {
       setStamped(true);
+      setShowParticles(true);
       playStampThud();
     }, 800);
     return () => clearTimeout(timer);
@@ -65,10 +67,10 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
   return (
     <div className="min-h-screen w-full bg-[#F2ECE4] flex flex-col items-center py-4 sm:py-10 px-4 no-print-bg">
         
-        {/* Certificate Wrapper for screen sizing and scrolling */}
+        {/* Certificate Wrapper */}
         <div className="w-full max-w-xl flex flex-col items-center justify-start relative">
             
-            {/* Certificate Container - Adjusted for better mobile fit */}
+            {/* Certificate Container */}
             <div 
               id="proposal-certificate" 
               className={`relative w-full min-h-[600px] h-auto aspect-auto sm:aspect-[1/1.41] bg-[#FCFAF7] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.12)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
@@ -81,20 +83,65 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="absolute inset-2 sm:inset-4 border-[1.5px] border-[#D4AF37]/70 pointer-events-none"></div>
                 <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/50 pointer-events-none"></div>
 
-                {/* APPROVED STAMP - Repositioned to not block bottom content */}
-                <div className="absolute bottom-28 right-4 sm:bottom-32 sm:right-12 z-[50] pointer-events-none select-none">
-                    <div className={`relative w-24 h-24 sm:w-40 sm:h-40 flex items-center justify-center transform transition-all duration-[250ms] ease-[cubic-bezier(0.175,0.885,0.32,1.275)]
+                {/* ENHANCED APPROVED SEAL */}
+                <div className="absolute bottom-24 right-4 sm:bottom-28 sm:right-10 z-[50] pointer-events-none select-none">
+                    {showParticles && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            {[...Array(8)].map((_, i) => (
+                                <div 
+                                    key={i}
+                                    className="absolute w-1 h-1 bg-[#C41E3A] rounded-full animate-ping opacity-0"
+                                    style={{
+                                        animation: `ping 0.6s cubic-bezier(0, 0, 0.2, 1) forwards`,
+                                        transform: `rotate(${i * 45}deg) translateX(${stamped ? '40px' : '0px'})`,
+                                        opacity: 0.6
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    )}
+                    <div className={`relative w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center transform transition-all duration-[250ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
-                        ? 'scale-100 opacity-90 rotate-[-15deg]' 
-                        : 'scale-[6] opacity-0 rotate-[20deg] blur-2xl translate-y-[-80px]'}
+                        ? 'scale-100 opacity-90 rotate-[-12deg]' 
+                        : 'scale-[5] opacity-0 rotate-[15deg] blur-3xl translate-y-[-120px]'}
                     `}>
-                        <div className="relative text-[#C41E3A] w-full h-full">
-                            <svg viewBox="0 0 200 200" className="w-full h-full filter drop-shadow-[0_2px_4px_rgba(196,30,58,0.4)]">
-                                <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="30 10" />
-                                <rect x="18" y="78" width="164" height="44" fill="white" stroke="currentColor" strokeWidth="4" />
-                                <text x="100" y="112" textAnchor="middle" className="font-sans font-black uppercase tracking-tight text-[32px] fill-current">
-                                    APPROVED
-                                </text>
+                        <div className="relative text-[#C41E3A] w-full h-full drop-shadow-[0_4px_8px_rgba(196,30,58,0.3)]">
+                            <svg viewBox="0 0 200 200" className="w-full h-full">
+                                <defs>
+                                    <filter id="roughInk">
+                                        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+                                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+                                    </filter>
+                                    <path id="circlePath" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+                                </defs>
+                                
+                                <g filter="url(#roughInk)">
+                                    {/* Outer decorative borders */}
+                                    <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="1 3" opacity="0.4" />
+                                    <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" strokeWidth="4" />
+                                    <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" strokeWidth="1" />
+                                    
+                                    {/* Inner circular text */}
+                                    <text className="fill-current text-[10px] font-black tracking-[0.2em] uppercase">
+                                        <textPath href="#circlePath" startOffset="0%">
+                                            Official Decree • Sealed with Devotion • Perpetual Covenant •
+                                        </textPath>
+                                    </text>
+
+                                    {/* Center box */}
+                                    <rect x="25" y="78" width="150" height="44" fill="white" stroke="currentColor" strokeWidth="3" />
+                                    <text x="100" y="110" textAnchor="middle" className="font-sans font-black uppercase tracking-tighter text-[30px] fill-current">
+                                        APPROVED
+                                    </text>
+
+                                    {/* Hearts decoration */}
+                                    <g transform="translate(100, 62) scale(0.6)" className="fill-current">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                    </g>
+                                    <g transform="translate(100, 138) scale(0.6)" className="fill-current">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                    </g>
+                                </g>
                             </svg>
                         </div>
                     </div>
@@ -136,7 +183,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* Highly Condensed Articles */}
+                    {/* Articles */}
                     <section className="space-y-4 sm:space-y-5 text-[12px] sm:text-[14px] text-[#1A1A1A] font-medium border-t border-b border-[#D4AF37]/50 py-6 sm:py-8">
                         <div className="flex gap-4">
                             <span className="font-black text-[#000000] min-w-[40px]">ART. I</span>
@@ -152,7 +199,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* Signatures Section - Improved spacing to prevent overflow */}
+                    {/* Signatures Section */}
                     <div className="flex flex-col items-center sm:items-start w-full mt-auto pt-6 pb-4">
                         <div className="w-full sm:w-2/3 space-y-6 sm:space-y-8">
                             <div className="border-b-[2px] border-[#D4AF37]/60 pb-2 w-full">
@@ -167,7 +214,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     </div>
                 </div>
 
-                {/* Faint Decorative Background Scroll */}
+                {/* Decorative Background Scroll Icon */}
                 <div className="absolute -bottom-12 -left-12 text-[#EFE7DC] pointer-events-none opacity-[0.35] -rotate-12 z-0">
                     <ScrollIcon className="w-48 h-48 sm:w-64 sm:h-64" />
                 </div>

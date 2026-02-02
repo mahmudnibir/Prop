@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { HeartIcon, ClipboardIcon, LockIcon, SparklesIcon } from './Icons';
+import { HeartIcon, ClipboardIcon, LockIcon } from './Icons';
 
 interface SetupViewProps {
   onCreate: (details: { question: string, recipient: string, sender: string, password?: string }) => void;
@@ -77,7 +77,7 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
                 
                 <div className="bg-white/80 backdrop-blur-xl p-8 md:p-14 rounded-[3.5rem] shadow-[0_32px_64px_-16px_rgba(255,143,163,0.25)] max-w-lg w-full border border-white/50 relative z-10 text-center modal-fade-in">
                     <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-[#FF8FA3] rounded-3xl rotate-12 flex items-center justify-center shadow-xl">
-                        <SparklesIcon className="w-10 h-10 text-white animate-pulse" />
+                        <HeartIcon className="w-10 h-10 text-white animate-pulse" />
                     </div>
                     
                     <h2 className="text-4xl font-serif-display italic font-bold text-[#5C1D2E] mt-6 mb-3">Pure Magic.</h2>
@@ -204,7 +204,7 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
                         className="w-full py-6 bg-[#FF8FA3] text-white font-bold font-display rounded-[2.5rem] shadow-[0_20px_40px_-10px_rgba(255,143,163,0.5)] hover:shadow-[0_25px_50px_-12px_rgba(255,143,163,0.6)] hover:bg-[#FF758F] hover:-translate-y-1 transform transition-all active:scale-95 flex items-center justify-center gap-4 group"
                     >
                         <span className="tracking-[0.2em] text-sm uppercase">Create The Moment</span>
-                        <SparklesIcon className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+                        <HeartIcon className="w-6 h-6 group-hover:rotate-12 transition-transform" />
                     </button>
                 </div>
 
