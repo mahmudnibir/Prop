@@ -48,9 +48,16 @@ const App: React.FC = () => {
   
   const handleAccept = () => {
     // Update URL to include accepted state for shareable keepsake
-    const params = new URLSearchParams(window.location.search);
-    params.set('a', 'true');
-    window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+    try {
+      const params = new URLSearchParams(window.location.search);
+      params.set('a', 'true');
+      // Using a relative query string to avoid origin mismatches in blob/sandboxed environments
+      const newUrl = window.location.pathname + '?' + params.toString();
+      window.history.replaceState({}, '', newUrl);
+    } catch (e) {
+      // Silently fail or log warning if the environment (like a blob origin) prevents history manipulation
+      console.warn("URL history state could not be updated due to environment restrictions.", e);
+    }
     setAppState('accepted');
   };
 
