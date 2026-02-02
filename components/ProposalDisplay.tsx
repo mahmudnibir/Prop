@@ -24,27 +24,27 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
       oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(60, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(10, ctx.currentTime + 0.3);
+      oscillator.frequency.setValueAtTime(80, ctx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 0.4);
       
-      gainNode.gain.setValueAtTime(0.8, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+      gainNode.gain.setValueAtTime(0.5, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
       
       oscillator.connect(gainNode);
       gainNode.connect(ctx.destination);
       oscillator.start();
-      oscillator.stop(ctx.currentTime + 0.3);
+      oscillator.stop(ctx.currentTime + 0.4);
 
-      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate);
+      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
-      for (let i = 0; i < ctx.sampleRate * 0.15; i++) {
+      for (let i = 0; i < ctx.sampleRate * 0.2; i++) {
         output[i] = Math.random() * 2 - 1;
       }
       const noise = ctx.createBufferSource();
       noise.buffer = noiseBuffer;
       const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.2, ctx.currentTime);
-      noiseGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+      noiseGain.gain.setValueAtTime(0.15, ctx.currentTime);
+      noiseGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
       noise.connect(noiseGain);
       noiseGain.connect(ctx.destination);
       noise.start();
@@ -85,38 +85,51 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="absolute inset-2 sm:inset-4 border-[2px] border-[#D4AF37]/70 pointer-events-none"></div>
                 <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
 
-                {/* SEAL - Adjusted depth and position for mobile clearance */}
+                {/* GOLD FOIL SEAL - Redesigned to be aligned with the golden theme */}
                 <div className="absolute top-[52%] right-2 sm:top-[58%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none">
-                    <div className={`relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center transform transition-all duration-[400ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
+                    <div className={`relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 flex items-center justify-center transform transition-all duration-[600ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
-                        ? 'scale-100 opacity-90 rotate-[-12deg]' 
-                        : 'scale-[8] opacity-0 rotate-[25deg] blur-3xl translate-y-[-200px]'}
+                        ? 'scale-100 opacity-100 rotate-[-15deg]' 
+                        : 'scale-[8] opacity-0 rotate-[45deg] blur-3xl translate-y-[-300px]'}
                     `}>
-                        <div className="relative text-[#C41E3A] w-full h-full drop-shadow-[0_10px_15px_rgba(196,30,58,0.4)]">
+                        <div className="relative text-[#D4AF37] w-full h-full drop-shadow-[0_15px_25px_rgba(212,175,55,0.4)]">
                             <svg viewBox="0 0 200 200" className="w-full h-full">
                                 <defs>
-                                    <filter id="roughInk">
-                                        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
-                                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+                                    <filter id="goldGlow">
+                                        <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+                                        <feOffset in="blur" dx="1" dy="1" result="offsetBlur" />
+                                        <feSpecularLighting in="blur" surfaceScale="5" specularConstant="1" specularExponent="20" lightingColor="#ffd700" result="specOut">
+                                            <fePointLight x="-5000" y="-10000" z="20000" />
+                                        </feSpecularLighting>
+                                        <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut" />
+                                        <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litPaint" />
                                     </filter>
                                     <path id="circlePathSeal" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
                                 </defs>
                                 
-                                <g filter="url(#roughInk)">
-                                    <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="2 4" opacity="0.5" />
-                                    <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" strokeWidth="5" />
-                                    <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                                <g filter="url(#goldGlow)">
+                                    {/* Outer Decorative Circles */}
+                                    <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="1 3" opacity="0.6" />
+                                    <circle cx="100" cy="100" r="88" fill="white" fillOpacity="0.05" stroke="currentColor" strokeWidth="4" />
+                                    <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="1" />
                                     
-                                    <text className="fill-current text-[11px] font-black tracking-[0.2em] uppercase">
+                                    {/* Circular Text */}
+                                    <text className="fill-current text-[12px] font-black tracking-[0.25em] uppercase font-sans">
                                         <textPath href="#circlePathSeal" startOffset="0%">
-                                            Forever Bound • Forever Yours • Forever Bound •
+                                            OFFICIALLY SEALED • ETERNAL PROMISE • OFFICIALLY SEALED •
                                         </textPath>
                                     </text>
 
-                                    <rect x="20" y="75" width="160" height="50" fill="white" stroke="currentColor" strokeWidth="4" />
-                                    <text x="100" y="112" textAnchor="middle" className="font-sans font-black uppercase tracking-tighter text-[26px] sm:text-[32px] fill-current">
-                                        APPROVED
+                                    {/* Center Design */}
+                                    <circle cx="100" cy="100" r="60" fill="white" fillOpacity="0.1" stroke="currentColor" strokeWidth="1" />
+                                    <path d="M70,100 L130,100" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+                                    <text x="100" y="92" textAnchor="middle" className="font-serif-display italic font-black uppercase tracking-[0.1em] text-[18px] sm:text-[22px] fill-current">
+                                        Bonded
                                     </text>
+                                    <text x="100" y="118" textAnchor="middle" className="font-sans font-black uppercase tracking-[0.4em] text-[14px] sm:text-[18px] fill-current">
+                                        FOREVER
+                                    </text>
+                                    <HeartIcon className="w-6 h-6 text-current absolute top-[125px] left-[88px]" x="88" y="125" width="24" height="24" />
                                 </g>
                             </svg>
                         </div>
