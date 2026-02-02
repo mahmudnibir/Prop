@@ -17,6 +17,25 @@ const noButtonResponses = [
   "No", "Petni, really?", "Think again ❤️", "Error: Try Yes", "So close!", "Not possible!", "Try again!", "Just give up", "Yes is better!", "Stop it! 😂", "Wait... no!", "Click Yes pls", "You can't catch me", "Almost had it!"
 ];
 
+const Stardust: React.FC = () => (
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {[...Array(30)].map((_, i) => (
+            <div 
+                key={i}
+                className="absolute rounded-full bg-white opacity-20 animate-pulse"
+                style={{
+                    width: Math.random() * 2 + 'px',
+                    height: Math.random() * 2 + 'px',
+                    top: Math.random() * 100 + '%',
+                    left: Math.random() * 100 + '%',
+                    animationDelay: Math.random() * 5 + 's',
+                    animationDuration: 2 + Math.random() * 3 + 's'
+                }}
+            />
+        ))}
+    </div>
+);
+
 const HeartShower: React.FC<{ heartKey: number }> = ({ heartKey }) => {
     if (heartKey === 0) return null;
     return (
@@ -31,7 +50,7 @@ const HeartShower: React.FC<{ heartKey: number }> = ({ heartKey }) => {
                         animationDuration: `${1.5 + Math.random()}s`,
                     }}
                 >
-                    <HeartIcon className="w-6 h-6 md:w-10 md:h-10" style={{ color: `rgba(255, 143, 163, ${Math.random() * 0.4 + 0.3})`}} />
+                    <HeartIcon className="w-6 h-6 md:w-10 md:h-10 text-pink-400/40" />
                 </div>
             ))}
         </div>
@@ -53,15 +72,15 @@ const Modal: React.FC<{onClose: () => void}> = ({onClose}) => {
     }
 
     return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[100] p-6">
-        <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 text-center max-w-sm w-full modal-fade-in relative overflow-hidden border border-pink-100 min-h-[300px] flex flex-col justify-center">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-200 via-pink-400 to-pink-200"></div>
-            <h2 className="text-3xl font-display font-bold text-[#5C1D2E]">Petni, wait!</h2>
-            <p className="mt-4 text-[#8A4A5D] text-lg">Are you absolutely sure? This could be the most beautiful "Yes" ever!</p>
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-[100] p-6">
+        <div className="bg-[#1A050D] rounded-[2.5rem] shadow-2xl p-8 text-center max-w-sm w-full modal-fade-in relative overflow-hidden border border-pink-500/20 min-h-[300px] flex flex-col justify-center">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
+            <h2 className="text-3xl font-serif-display italic font-bold text-[#FFE5EC]">Petni, wait!</h2>
+            <p className="mt-4 text-pink-200/60 text-lg font-serif-classic">Are you absolutely sure? This could be the most beautiful "Yes" ever!</p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4">
                 <button 
                     onClick={onClose}
-                    className="w-full px-6 py-4 bg-[#FF8FA3] text-white font-bold font-display rounded-2xl shadow-lg transform transition-transform hover:scale-105 active:scale-95"
+                    className="w-full px-6 py-4 bg-[#FF4D6D] text-white font-bold rounded-2xl shadow-[0_10px_30px_rgba(255,77,109,0.4)] transform transition-transform hover:scale-105 active:scale-95"
                 >
                     I'll say Yes!
                 </button>
@@ -71,7 +90,7 @@ const Modal: React.FC<{onClose: () => void}> = ({onClose}) => {
                         onTouchStart={handleConfirmHover}
                         onClick={onClose}
                         style={confirmPos as React.CSSProperties}
-                        className="text-sm text-pink-300 hover:text-pink-500 underline px-4 py-2 whitespace-nowrap"
+                        className="text-sm text-pink-400/40 hover:text-pink-400 underline px-4 py-2 whitespace-nowrap font-mono uppercase tracking-widest"
                     >
                         Confirm heartbreak
                     </button>
@@ -93,7 +112,6 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
   const [heartKey, setHeartKey] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   
-  // Typewriter states
   const [displayText, setDisplayText] = useState('');
   const [isTypingDone, setIsTypingDone] = useState(false);
   
@@ -106,7 +124,6 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
   useEffect(() => {
-    // Background Music
     audioRef.current = new Audio('https://www.chosic.com/wp-content/uploads/2021/04/Warm-Memories-Emotional-Inspiring-Piano.mp3');
     audioRef.current.loop = true;
     audioRef.current.volume = 0.4;
@@ -133,13 +150,12 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
     if (introStage === 'countdown' && countdown === 0) {
         const transitionTimer = setTimeout(() => {
             setIntroStage('done');
-            audioRef.current?.play().catch(e => console.log("Audio play deferred till interaction"));
+            audioRef.current?.play().catch(() => {});
         }, 1000);
         return () => clearTimeout(transitionTimer);
     }
   }, [introStage, countdown]);
 
-  // Typewriter effect
   useEffect(() => {
     if (introStage === 'done' && !isTypingDone) {
         let i = 0;
@@ -157,22 +173,16 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
 
   const handleNoInteraction = (e: React.MouseEvent | React.TouchEvent) => {
     if (isModalVisible) return;
-    
-    // Haptic feedback
     if ('vibrate' in navigator) navigator.vibrate(50);
-    
     setHeartKey(prev => prev + 1);
-    
     setHoverCount(prev => prev + 1);
     
-    // Trigger modal if she's too persistent on "No"
     if(hoverCount > 4 && !isModalVisible) {
         setModalVisible(true);
         setHoverCount(0);
         return;
     }
 
-    // Evolution logic: Yes grows, No shrinks and becomes erratic
     setYesButtonScale((prev) => Math.min(prev + 0.15, 4));
     setNoScale(prev => Math.max(0.2, prev - 0.08));
     setNoButtonIndex((prev) => (prev + 1) % noButtonResponses.length);
@@ -182,10 +192,8 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
         const padding = 100;
         const buttonWidth = 120;
         const buttonHeight = 50;
-
         const availableWidth = rect.width - buttonWidth - padding * 2;
         const availableHeight = rect.height - buttonHeight - padding * 2;
-
         const newTop = padding + Math.random() * availableHeight;
         const newLeft = padding + Math.random() * availableWidth;
 
@@ -197,19 +205,12 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
             zIndex: 50
         });
     }
-
-    // Ultimate evolution: No becomes Yes if clicked too much
-    if (hoverCount > 12) {
-        setNoButtonIndex(noButtonResponses.length - 1); // "Click Yes pls" or similar
-    }
   };
 
   const handleAcceptClick = () => {
-      // Confetti Explosion
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
       const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
       const interval: any = setInterval(function() {
@@ -241,65 +242,68 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
     switch(introStage) {
         case 'verify':
             return (
-                <div className="flex flex-col items-center justify-center p-6 fade-in-up w-full max-sm:max-w-xs">
-                    <p className="text-lg md:text-xl text-pink-300/80 mb-8 font-display font-bold tracking-[0.3em] uppercase">Security Clearance Required</p>
-                    <div className="bg-white/10 backdrop-blur-lg p-8 rounded-[2.5rem] border border-white/20 w-full shadow-2xl">
-                        <div className="mb-8 flex justify-center">
-                            <div className="p-4 bg-pink-500/20 rounded-full">
-                                <LockIcon className="w-10 h-10 text-[#FF8FA3]" />
+                <div className="flex flex-col items-center justify-center p-6 fade-in-up w-full max-w-sm">
+                    <p className="text-[10px] text-pink-500/40 mb-10 font-mono font-bold tracking-[0.5em] uppercase">Private Encryption Protocol</p>
+                    <div className="bg-white/5 backdrop-blur-3xl p-8 rounded-[3rem] border border-white/10 w-full shadow-2xl relative">
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <div className="p-5 bg-[#FF4D6D] rounded-3xl shadow-[0_10px_30px_rgba(255,77,109,0.3)]">
+                                <LockIcon className="w-8 h-8 text-white" />
                             </div>
                         </div>
-                        <form onSubmit={handleVerifyPassword} className="space-y-6">
-                            <div>
+                        <form onSubmit={handleVerifyPassword} className="space-y-8 mt-6">
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-mono text-pink-300/30 tracking-[0.3em] uppercase block text-center">Identity Verification Required</label>
                                 <input 
                                     autoFocus
                                     type="password"
                                     value={inputPassword}
                                     onChange={(e) => setInputPassword(e.target.value)}
-                                    placeholder="Enter Private Pass..."
-                                    className={`w-full p-4 bg-black/30 text-white rounded-2xl border-2 transition-all outline-none text-center font-mono tracking-widest ${passError ? 'border-red-500 animate-shake' : 'border-pink-500/30 focus:border-pink-500'}`}
+                                    placeholder="••••••••"
+                                    className={`w-full p-5 bg-black/40 text-white rounded-2xl border transition-all outline-none text-center font-mono tracking-widest text-2xl ${passError ? 'border-red-500/50 animate-shake' : 'border-white/10 focus:border-pink-500/50'}`}
                                 />
-                                {passError && <p className="text-red-400 text-xs mt-2 font-mono">INCORRECT ACCESS CODE</p>}
                             </div>
                             <button 
                                 type="submit"
-                                className="w-full py-4 bg-[#FF8FA3] text-white font-bold font-display rounded-2xl hover:bg-[#FF4D6D] transition-all transform active:scale-95 shadow-lg"
+                                className="w-full py-5 bg-[#FF8FA3] text-white font-bold rounded-2xl hover:bg-[#FF4D6D] transition-all transform active:scale-95 shadow-xl uppercase tracking-widest text-xs"
                             >
-                                UNLOCK PROPOSAL
+                                Access Heartbeat
                             </button>
                         </form>
                     </div>
-                    <p className="mt-8 text-xs text-pink-100/30 font-mono tracking-widest">PRIVATE ENCRYPTION ACTIVE</p>
                 </div>
             );
         case 'syncing':
             return (
                 <div className="w-full max-w-2xl flex flex-col items-center p-6 fade-in-up">
-                    <p className="text-xl md:text-2xl text-pink-200 font-display mb-8 font-bold tracking-widest uppercase">Checking Bio-Signals...</p>
-                    <div className="relative mb-8">
-                        <HeartIcon className="w-24 h-24 text-[#FF8FA3] drop-shadow-[0_0_15px_rgba(255,143,163,0.5)]" style={{ animation: `heart-beat 0.8s infinite`}}/>
+                    <p className="text-sm text-pink-200/40 font-mono mb-16 font-bold tracking-[0.6em] uppercase">Syncing Hearts...</p>
+                    <div className="relative mb-16">
+                        <HeartIcon className="w-24 h-24 text-[#FF4D6D] drop-shadow-[0_0_40px_rgba(255,77,109,0.5)]" style={{ animation: `heart-beat 0.8s infinite`}}/>
+                        <div className="absolute inset-0 scale-150 blur-3xl bg-pink-500/10 rounded-full"></div>
                     </div>
-                    <svg width="200" height="40" viewBox="0 0 250 60" className="mb-8 opacity-60">
-                        <path d="M0 30 L50 30 L60 10 L80 50 L100 20 L120 40 L130 30 L250 30" stroke="#FF8FA3" strokeWidth="4" fill="none" className="ekg-path" />
+                    <svg width="200" height="60" viewBox="0 0 250 60" className="mb-12 opacity-30">
+                        <path d="M0 30 L50 30 L60 10 L80 50 L100 20 L120 40 L130 30 L250 30" stroke="#FF4D6D" strokeWidth="3" fill="none" className="ekg-path" />
                     </svg>
-                    <div className="px-6 py-2 bg-pink-500/20 rounded-full border border-pink-500/30">
-                        <p className="text-sm md:text-base text-white font-mono tracking-tighter">AUTHENTICATED: PETNI</p>
+                    <div className="px-8 py-3 bg-white/5 backdrop-blur-md rounded-full border border-white/5">
+                        <p className="text-[10px] text-pink-100/40 font-mono tracking-[0.4em]">PETNI_VIBRATION_MATCH</p>
                     </div>
                 </div>
             );
         case 'decrypting':
             return (
                  <div className="text-center fade-in-up p-6">
-                    <p className="text-3xl md:text-5xl text-[#FFB3C1] font-display font-bold mb-4 text-scramble"></p>
-                    <p className="text-pink-300/40 text-xs font-mono uppercase">Unlocking secure layer...</p>
+                    <p className="text-4xl md:text-6xl text-white font-serif-display italic font-bold mb-6 text-scramble opacity-60 tracking-widest"></p>
+                    <p className="text-pink-300/10 text-[10px] font-mono tracking-[0.8em] uppercase">Manifesting Moment...</p>
                 </div>
             );
         case 'countdown':
              return (
-                <div className="fade-in-up text-center p-6">
-                    <p className="text-xl md:text-2xl mb-6 text-pink-300/60 font-medium">Ready for this, Petni?</p>
-                    <div className="w-40 h-40 md:w-56 md:h-56 bg-white/5 rounded-full flex items-center justify-center border border-white/10 mx-auto shadow-2xl">
-                         <p className="text-7xl md:text-9xl font-display font-extrabold text-white">{countdown > 0 ? countdown : '❤️'}</p>
+                <div className="fade-in-up text-center p-6 flex flex-col items-center">
+                    <p className="text-lg md:text-xl mb-16 text-pink-200/30 font-serif-classic italic tracking-[0.3em]">Ready for your destiny, Petni?</p>
+                    <div className="w-48 h-48 md:w-64 md:h-64 rounded-full flex items-center justify-center relative">
+                         <div className="absolute inset-0 bg-white/5 rounded-full blur-2xl border border-white/10 scale-110"></div>
+                         <p className="text-8xl md:text-9xl font-serif-display italic font-extrabold text-white relative z-10 transition-all duration-500 scale-125 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                            {countdown > 0 ? countdown : '❤️'}
+                         </p>
                     </div>
                 </div>
             );
@@ -311,8 +315,9 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
 
   if (introStage !== 'done') {
     return (
-        <div className="min-h-screen w-full flex flex-col items-center justify-center text-center p-4 bg-gradient-to-b from-[#3D0C1A] via-[#2D0A14] to-[#1A050D] text-white">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,143,163,0.05)_0%,transparent_70%)] pointer-events-none"></div>
+        <div className="min-h-screen w-full flex flex-col items-center justify-center text-center p-4 bg-[#0A050A] text-white overflow-hidden relative">
+            <Stardust />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1A050D] to-black opacity-60"></div>
             {renderIntro()}
         </div>
     );
@@ -320,15 +325,16 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
 
   if(isLoading) {
       return (
-          <div className="min-h-screen w-full flex flex-col items-center justify-center text-center p-6 bg-[#FFF5F7]">
+          <div className="min-h-screen w-full flex flex-col items-center justify-center text-center p-6 bg-[#0A050A]">
+              <Stardust />
               <div className="relative">
-                  <div className="absolute inset-0 blur-2xl bg-pink-200/50 rounded-full"></div>
-                  <HeartIcon className="relative w-24 h-24 text-[#FF8FA3] mb-8 animate-bounce" />
+                  <div className="absolute inset-0 blur-3xl bg-pink-500/20 rounded-full scale-150"></div>
+                  <HeartIcon className="relative w-20 h-20 text-[#FF4D6D] mb-10 animate-bounce drop-shadow-[0_0_20px_rgba(255,77,109,0.5)]" />
               </div>
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-[#5C1D2E] mb-2">Sealing the promise...</h2>
-              <p className="text-[#8A4A5D] mb-8 font-serif-classic italic text-xl">Creating our forever memory.</p>
-              <div className="w-full max-w-xs bg-[#FFC2D1]/30 rounded-full h-3 overflow-hidden shadow-inner border border-pink-100">
-                  <div className="bg-gradient-to-r from-[#FF8FA3] to-[#FF4D6D] h-3 rounded-full loading-progress"></div>
+              <h2 className="text-3xl md:text-5xl font-serif-display italic font-bold text-white mb-4">Sealing the promise...</h2>
+              <p className="text-pink-200/40 mb-12 font-serif-classic italic text-lg tracking-widest">Writing our names in the stars.</p>
+              <div className="w-full max-w-xs bg-white/5 rounded-full h-1.5 overflow-hidden border border-white/10">
+                  <div className="bg-gradient-to-r from-[#FF8FA3] to-[#FF4D6D] h-full rounded-full loading-progress shadow-[0_0_15px_rgba(255,143,163,0.5)]"></div>
               </div>
           </div>
       );
@@ -337,35 +343,42 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
   return (
     <div 
         ref={containerRef}
-        className="min-h-screen w-full flex flex-col items-center justify-center text-center p-6 bg-[#FFF5F7] overflow-hidden relative"
+        className="min-h-screen w-full flex flex-col items-center justify-center text-center p-6 bg-[#0A050A] overflow-hidden relative transition-colors duration-1000"
     >
+      <Stardust />
+      {/* Cinematic Letterboxing */}
+      <div className="fixed top-0 left-0 w-full h-[8vh] bg-black z-50"></div>
+      <div className="fixed bottom-0 left-0 w-full h-[8vh] bg-black z-50"></div>
+      
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1A050D] via-transparent to-black opacity-80 pointer-events-none"></div>
+
       {isModalVisible && <Modal onClose={() => setModalVisible(false)} />}
       <HeartShower heartKey={heartKey} />
       
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] flex items-center justify-center overflow-hidden select-none">
-          <span className="text-[25vw] font-display font-black whitespace-nowrap">PETNI ❤️ {sender.toUpperCase()}</span>
+      <div className="absolute inset-0 pointer-events-none opacity-[0.05] flex items-center justify-center overflow-hidden select-none">
+          <span className="text-[22vw] font-serif-display italic font-black text-white whitespace-nowrap blur-[2px]">PETNI ❤️ {sender.toUpperCase()}</span>
       </div>
 
       <div className="z-10 flex flex-col items-center w-full max-w-4xl px-2">
-        <div className="mb-8 py-2.5 px-6 bg-white rounded-full shadow-md border border-pink-100 inline-block transform hover:scale-105 transition-transform">
-             <span className="text-xs md:text-sm font-bold text-[#FF8FA3] tracking-[0.3em] uppercase">To our beautiful Petni</span>
+        <div className="mb-10 py-2.5 px-8 bg-white/5 backdrop-blur-md rounded-full border border-white/10 inline-block transform hover:scale-105 transition-all shadow-xl">
+             <span className="text-[10px] md:text-xs font-bold text-pink-300/60 tracking-[0.5em] uppercase">For our eternal Petni</span>
         </div>
         
-        <p className="text-lg md:text-2xl text-[#8A4A5D] font-serif-classic italic leading-relaxed mb-6 px-4">
-          {sender} has been waiting for the perfect moment <br className="hidden md:block" /> to ask you this...
+        <p className="text-lg md:text-3xl text-pink-100/60 font-serif-classic italic leading-relaxed mb-8 px-4 tracking-wide">
+          {sender} has been waiting for this exact heartbeat <br className="hidden md:block" /> to ask you...
         </p>
 
-        <h1 className={`text-4xl md:text-7xl font-serif-display italic font-extrabold text-[#5C1D2E] tracking-tight drop-shadow-sm mb-12 md:mb-20 leading-[1.2] max-w-3xl min-h-[120px] ${!isTypingDone ? 'typewriter-cursor' : ''}`}>
+        <h1 className={`text-4xl md:text-7xl font-serif-display italic font-extrabold text-[#FFE5EC] tracking-tight drop-shadow-[0_0_20px_rgba(255,229,236,0.2)] mb-12 md:mb-24 leading-[1.3] max-w-4xl min-h-[120px] ${!isTypingDone ? 'typewriter-cursor' : ''}`}>
           {displayText}
         </h1>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full" style={{ minHeight: '300px' }}>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full" style={{ minHeight: '350px' }}>
           <button
             onClick={handleAcceptClick}
-            className="px-10 md:px-16 py-5 md:py-8 bg-[#FF8FA3] text-white font-bold font-display rounded-[2.5rem] shadow-[0_25px_50px_-12px_rgba(255,143,163,0.5)] transform transition-all duration-300 ease-in-out hover:bg-[#FF758F] active:scale-95"
+            className="px-12 md:px-20 py-6 md:py-10 bg-[#FF4D6D] text-white font-bold rounded-[3rem] shadow-[0_0_50px_rgba(255,77,109,0.5)] transform transition-all duration-300 ease-in-out hover:bg-[#FF1A46] hover:scale-110 active:scale-95 border border-pink-400/30"
             style={{ 
               transform: `scale(${yesButtonScale})`,
-              fontSize: `${1.2 + yesButtonScale * 0.15}rem`,
+              fontSize: `${1.3 + yesButtonScale * 0.15}rem`,
               zIndex: 60,
               animation: 'heart-beat 2s ease-in-out infinite'
             } as React.CSSProperties}
@@ -377,7 +390,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
             onMouseEnter={handleNoInteraction}
             onTouchStart={(e) => { e.preventDefault(); handleNoInteraction(e as any); }}
             onClick={(e) => { e.preventDefault(); handleNoInteraction(e as any); }}
-            className={`px-8 py-4 bg-white text-[#FF8FA3] font-bold rounded-2xl border border-pink-100 shadow-lg transition-all duration-300 ease-in-out whitespace-nowrap ${noScale < 0.3 ? 'opacity-40 blur-[1px]' : ''}`}
+            className={`px-10 py-5 bg-white/5 backdrop-blur-md text-pink-200/40 font-bold rounded-2xl border border-white/10 shadow-2xl transition-all duration-300 ease-in-out whitespace-nowrap uppercase tracking-widest text-xs ${noScale < 0.3 ? 'opacity-20 blur-[2px]' : ''}`}
             style={{ 
               ...noPosition,
               transform: `scale(${noScale})`,
@@ -389,9 +402,9 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
         </div>
       </div>
       
-      <div className="absolute bottom-8 left-0 right-0 flex justify-center pointer-events-none">
-           <div className="text-[#FF8FA3]/30 text-[10px] md:text-xs font-bold tracking-[0.6em] uppercase px-4 text-center">
-              Exclusive for Petni • Made with Love
+      <div className="absolute bottom-12 left-0 right-0 flex justify-center pointer-events-none z-[60]">
+           <div className="text-white/10 text-[9px] md:text-[11px] font-black tracking-[1em] uppercase px-4 text-center">
+              A Private Destiny • Shared with Love
           </div>
       </div>
     </div>
