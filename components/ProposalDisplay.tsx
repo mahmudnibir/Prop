@@ -7,6 +7,16 @@ interface AcceptedViewProps {
   senderName: string;
 }
 
+const DecorativeDivider = () => (
+  <div className="flex items-center justify-center gap-3 my-2 opacity-40">
+    <div className="w-8 h-[0.5px] bg-[#D4AF37]"></div>
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="5" y="0" width="7.07" height="7.07" transform="rotate(45 5 0)" fill="#D4AF37" />
+    </svg>
+    <div className="w-8 h-[0.5px] bg-[#D4AF37]"></div>
+  </div>
+);
+
 const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }) => {
   const [stamped, setStamped] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -75,7 +85,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             {/* Certificate Container */}
             <div 
               id="proposal-certificate" 
-              className={`relative w-full min-h-[820px] sm:min-h-[950px] h-auto aspect-auto bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-8 md:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
+              className={`relative w-full min-h-[850px] sm:min-h-[1000px] h-auto aspect-auto bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-8 md:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
             >
                 
                 {/* Subtle Parchment Texture */}
@@ -143,7 +153,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </h1>
                     </header>
 
-                    <section className="space-y-3 sm:space-y-6 text-center mb-8">
+                    <section className="space-y-3 sm:space-y-6 text-center mb-10">
                         <p className="text-[11px] sm:text-lg text-[#1A1A1A] font-medium italic leading-relaxed max-w-[280px] sm:max-w-lg mx-auto opacity-80">
                             Let it be known that on this day, the question of a lifetime was met with the most beautiful answer.
                         </p>
@@ -171,51 +181,80 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* FORMAL CONDITIONS SECTION - Clean, Cluster-free Poetic Layout */}
-                    <div className="relative py-6 px-4 sm:px-8 border-y-[1px] border-[#D4AF37]/40 bg-[#FCFAF7]/50 mx-1 sm:mx-6 mb-10">
-                        <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-[#B48F00] mb-6 font-sans text-center">Pacts of Love</h3>
+                    {/* REFINED PACTS OF LOVE SECTION */}
+                    <div className="relative py-8 px-6 sm:px-12 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-12 shadow-inner group">
+                        {/* Decorative Corner Accents */}
+                        <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[#D4AF37]/40"></div>
+                        <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#D4AF37]/40"></div>
+                        <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[#D4AF37]/40"></div>
+                        <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#D4AF37]/40"></div>
+
+                        <div className="text-center space-y-1 mb-8">
+                            <h3 className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.5em] text-[#4A3D2E] font-sans">Pacts of Love</h3>
+                            <div className="flex items-center justify-center gap-2">
+                                <div className="w-6 h-[1px] bg-[#D4AF37]/40"></div>
+                                <HeartIcon className="w-2 h-2 text-[#D4AF37]" />
+                                <div className="w-6 h-[1px] bg-[#D4AF37]/40"></div>
+                            </div>
+                        </div>
                         
-                        <div className="space-y-4 sm:space-y-5 text-center">
-                             <div className="space-y-3 font-serif-classic italic">
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">I choose you in honesty and faith, for every lifetime we share.</p>
-                                <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
+                        <div className="space-y-6 text-center">
+                             <div className="space-y-0 font-serif-display italic">
+                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                    I choose you in honesty and faith, <br className="sm:hidden" /> for every lifetime we share.
+                                </p>
+                                <DecorativeDivider />
                                 
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">In joy and struggle, I will honor you.</p>
-                                <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
+                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                    In joy and struggle, I will honor you.
+                                </p>
+                                <DecorativeDivider />
                                 
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">I will be your light, your warmth, your steady place.</p>
-                                <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
+                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                    I will be your light, your warmth, <br className="sm:hidden" /> your steady place.
+                                </p>
+                                <DecorativeDivider />
                                 
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">Together we will build our dreams, and hold each other when we fall.</p>
-                                <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
+                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                    Together we will build our dreams, <br className="sm:hidden" /> and hold each other when we fall.
+                                </p>
+                                <DecorativeDivider />
                                 
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">I will love you beyond words—forever, and without end.</p>
+                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                    I will love you beyond words— <br className="sm:hidden" /> forever, and without end.
+                                </p>
                              </div>
 
-                             <div className="pt-6 mt-4">
-                                <p className="text-[10px] sm:text-[13px] font-black uppercase tracking-[0.2em] text-[#4A3D2E] font-sans italic">
-                                    These words bind us, now and for all our days.
-                                </p>
+                             <div className="pt-8 mt-4">
+                                <div className="relative inline-block px-8">
+                                    <div className="absolute top-1/2 left-0 w-6 h-[1px] bg-[#D4AF37]/20"></div>
+                                    <p className="text-[11px] sm:text-[14px] font-serif-classic font-bold uppercase tracking-[0.2em] text-[#4A3D2E]">
+                                        These words bind us, now and for all our days.
+                                    </p>
+                                    <div className="absolute top-1/2 right-0 w-6 h-[1px] bg-[#D4AF37]/20"></div>
+                                </div>
                              </div>
                         </div>
                     </div>
 
-                    {/* Signatures Section - Updated with Poetic Phrasing */}
-                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-10 gap-8">
-                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
-                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1">
-                                <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{recipientName}</span>
+                    {/* Signatures Section */}
+                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-12 gap-10">
+                        <div className="flex flex-col items-start text-left space-y-1.5 w-full max-w-[340px]">
+                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-2 relative">
+                                <span className="font-cursive text-3xl sm:text-5xl text-[#000000]">{recipientName}</span>
+                                <div className="absolute -bottom-1 left-0 w-12 h-[2px] bg-[#D4AF37]"></div>
                             </div>
-                            <span className="text-[11px] sm:text-[14px] italic font-medium text-[#B48F00] font-serif-classic leading-tight">
+                            <span className="text-[11px] sm:text-[15px] italic font-medium text-[#B48F00] font-serif-classic leading-tight tracking-wide">
                                 She, for whom my words exist
                             </span>
                         </div>
                         
-                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
-                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1">
-                                <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{senderName}</span>
+                        <div className="flex flex-col items-start text-left space-y-1.5 w-full max-w-[340px]">
+                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-2 relative">
+                                <span className="font-cursive text-3xl sm:text-5xl text-[#000000]">{senderName}</span>
+                                <div className="absolute -bottom-1 left-0 w-12 h-[2px] bg-[#D4AF37]"></div>
                             </div>
-                            <span className="text-[11px] sm:text-[14px] italic font-medium text-[#B48F00] font-serif-classic leading-tight">
+                            <span className="text-[11px] sm:text-[15px] italic font-medium text-[#B48F00] font-serif-classic leading-tight tracking-wide">
                                 I, who wrote them in truth
                             </span>
                         </div>
@@ -230,21 +269,21 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
         </div>
         
         {/* Actions UI */}
-        <div className="mt-8 flex flex-col items-center gap-4 z-10 no-print pb-20 w-full">
+        <div className="mt-12 flex flex-col items-center gap-4 z-10 no-print pb-24 w-full">
             <button 
                 onClick={handleDownload}
-                className="group flex items-center gap-3 px-12 sm:px-16 py-4 sm:py-5 bg-[#1A1A1A] text-[#F2ECE4] font-bold rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
+                className="group flex items-center gap-3 px-14 sm:px-20 py-5 sm:py-6 bg-[#1A1A1A] text-[#F2ECE4] font-bold rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
             >
                 <DownloadIcon className="w-5 h-5 group-hover:translate-y-1 transition-transform stroke-[3]" />
-                <span className="tracking-[0.2em] sm:tracking-[0.4em] text-[10px] sm:text-[12px] uppercase font-black">Save Your Promise</span>
+                <span className="tracking-[0.3em] sm:tracking-[0.5em] text-[11px] sm:text-[13px] uppercase font-black">Archive Your Promise</span>
             </button>
             
             <div className="flex flex-col items-center gap-2 px-4 text-center">
-                 <p className="text-[10px] sm:text-xs text-[#8A4A5D] font-serif-classic font-bold opacity-60 italic tracking-wide">Take a screenshot or print this page to keep forever.</p>
-                 <div className="flex items-center gap-4 opacity-40">
-                    <div className="w-8 h-[1px] bg-[#4A3D2E]"></div>
+                 <p className="text-[11px] sm:text-sm text-[#8A4A5D] font-serif-classic font-bold opacity-60 italic tracking-wide">Preserve this document as a testament to your journey.</p>
+                 <div className="flex items-center gap-4 opacity-40 mt-1">
+                    <div className="w-12 h-[1px] bg-[#4A3D2E]"></div>
                     <HeartIcon className="w-3 h-3 text-[#4A3D2E]" />
-                    <div className="w-8 h-[1px] bg-[#4A3D2E]"></div>
+                    <div className="w-12 h-[1px] bg-[#4A3D2E]"></div>
                 </div>
             </div>
         </div>
