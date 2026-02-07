@@ -4,6 +4,7 @@ import { HeartIcon, ClipboardIcon, LockIcon } from './Icons';
 
 interface SetupViewProps {
   onCreate: (details: { question: string, recipient: string, sender: string, password?: string }) => void;
+  onSkipToCertificate: (details: { question: string, recipient: string, sender: string, password?: string }) => void;
 }
 
 const FloatingHeart: React.FC<{ delay: number, left: number, size: number }> = ({ delay, left, size }) => (
@@ -21,7 +22,7 @@ const FloatingHeart: React.FC<{ delay: number, left: number, size: number }> = (
     </div>
 );
 
-const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
+const SetupView: React.FC<SetupViewProps> = ({ onCreate, onSkipToCertificate }) => {
     const sender = "Argho"; 
     const recipient = "Fatyha"; 
     const [question, setQuestion] = useState('Will you be mine forever?');
@@ -59,6 +60,10 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
 
     const handleGoToProposal = () => {
         onCreate({ question, recipient, sender, password: password || undefined });
+    };
+
+    const handleDirectSkip = () => {
+        onSkipToCertificate({ question, recipient, sender, password: password || undefined });
     };
     
     const handleCopy = () => {
@@ -118,12 +123,21 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
                             <HeartIcon className="w-5 h-5" />
                             PREVIEW PROPOSAL
                         </button>
-                        <button 
-                            onClick={() => setLink('')}
-                            className="text-pink-400 text-xs font-bold uppercase tracking-widest hover:text-pink-600 transition-colors"
-                        >
-                            Edit Your Message
-                        </button>
+                        
+                        <div className="flex flex-col gap-3 mt-4">
+                            <button 
+                                onClick={handleDirectSkip}
+                                className="text-[#FF8FA3] text-[10px] font-black uppercase tracking-[0.2em] hover:text-[#FF4D6D] transition-colors border border-pink-50 rounded-full py-2 px-4 inline-block mx-auto"
+                            >
+                                View Certificate Directly
+                            </button>
+                            <button 
+                                onClick={() => setLink('')}
+                                className="text-pink-300 text-[10px] font-bold uppercase tracking-widest hover:text-pink-400 transition-colors"
+                            >
+                                Edit Your Message
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

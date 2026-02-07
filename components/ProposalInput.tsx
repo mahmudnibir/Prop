@@ -11,6 +11,7 @@ interface ProposalViewProps {
   sender: string;
   password?: string;
   onAccept: () => void;
+  onSkipToCertificate?: () => void;
 }
 
 const noButtonResponses = [
@@ -102,7 +103,7 @@ const Modal: React.FC<{onClose: () => void}> = ({onClose}) => {
 
 type IntroStage = 'verify' | 'syncing' | 'decrypting' | 'countdown' | 'done';
 
-const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender, password, onAccept }) => {
+const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender, password, onAccept, onSkipToCertificate }) => {
   const [noButtonIndex, setNoButtonIndex] = useState(0);
   const [yesButtonScale, setYesButtonScale] = useState(1);
   const [noScale, setNoScale] = useState(1);
@@ -349,6 +350,18 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
       {/* Cinematic Letterboxing */}
       <div className="fixed top-0 left-0 w-full h-[8vh] bg-black z-50"></div>
       <div className="fixed bottom-0 left-0 w-full h-[8vh] bg-black z-50"></div>
+
+      {/* Direct Skip Control */}
+      {onSkipToCertificate && (
+        <div className="fixed top-[10vh] right-8 z-[60]">
+            <button 
+                onClick={onSkipToCertificate}
+                className="text-[10px] font-black uppercase tracking-[0.2em] text-pink-200/30 hover:text-pink-200 transition-colors border border-white/5 bg-white/5 backdrop-blur-md rounded-full px-6 py-2.5"
+            >
+                Skip to Certificate
+            </button>
+        </div>
+      )}
       
       <div className="absolute inset-0 bg-gradient-to-t from-[#1A050D] via-transparent to-black opacity-80 pointer-events-none"></div>
 

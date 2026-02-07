@@ -41,21 +41,23 @@ const App: React.FC = () => {
     setDetails(newDetails);
     setAppState('memory-lane');
   };
+
+  const handleSkipToCertificate = (newDetails?: ProposalDetails) => {
+    if (newDetails) setDetails(newDetails);
+    handleAccept();
+  };
   
   const handleStartProposal = () => {
     setAppState('proposal');
   };
   
   const handleAccept = () => {
-    // Update URL to include accepted state for shareable keepsake
     try {
       const params = new URLSearchParams(window.location.search);
       params.set('a', 'true');
-      // Using a relative query string to avoid origin mismatches in blob/sandboxed environments
       const newUrl = window.location.pathname + '?' + params.toString();
       window.history.replaceState({}, '', newUrl);
     } catch (e) {
-      // Silently fail or log warning if the environment (like a blob origin) prevents history manipulation
       console.warn("URL history state could not be updated due to environment restrictions.", e);
     }
     setAppState('accepted');
@@ -65,22 +67,35 @@ const App: React.FC = () => {
     switch (appState) {
       case 'memory-lane':
         if (details) {
-          return <MemoryLane recipient={details.recipient} sender={details.sender} onFinish={handleStartProposal} />;
+          return (
+            <MemoryLane 
+              recipient={details.recipient} 
+              sender={details.sender} 
+              onFinish={handleStartProposal} 
+              onSkipAll={() => handleSkipToCertificate()}
+            />
+          );
         }
-        return <SetupView onCreate={handleCreate} />;
+        return <SetupView onCreate={handleCreate} onSkipToCertificate={handleSkipToCertificate} />;
       case 'proposal':
         if (details) {
-          return <ProposalView {...details} onAccept={handleAccept} />;
+          return (
+            <ProposalView 
+              {...details} 
+              onAccept={handleAccept} 
+              onSkipToCertificate={handleAccept}
+            />
+          );
         }
-        return <SetupView onCreate={handleCreate} />; 
+        return <SetupView onCreate={handleCreate} onSkipToCertificate={handleSkipToCertificate} />; 
       case 'accepted':
         if (details) {
           return <AcceptedView recipientName={details.recipient} senderName={details.sender} />;
         }
-        return <SetupView onCreate={handleCreate} />; 
+        return <SetupView onCreate={handleCreate} onSkipToCertificate={handleSkipToCertificate} />; 
       case 'setup':
       default:
-        return <SetupView onCreate={handleCreate} />;
+        return <SetupView onCreate={handleCreate} onSkipToCertificate={handleSkipToCertificate} />;
     }
   };
 

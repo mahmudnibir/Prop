@@ -6,6 +6,7 @@ interface MemoryLaneProps {
     recipient: string;
     sender: string;
     onFinish: () => void;
+    onSkipAll?: () => void;
 }
 
 const slides = [
@@ -15,7 +16,7 @@ const slides = [
     { text: "And now, I have one question that will define our future...", delay: 4500 },
 ];
 
-const MemoryLane: React.FC<MemoryLaneProps> = ({ recipient, sender, onFinish }) => {
+const MemoryLane: React.FC<MemoryLaneProps> = ({ recipient, sender, onFinish, onSkipAll }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isExiting, setIsExiting] = useState(false);
     const [isEntering, setIsEntering] = useState(true);
@@ -46,6 +47,24 @@ const MemoryLane: React.FC<MemoryLaneProps> = ({ recipient, sender, onFinish }) 
             {/* Cinematic Letterboxing */}
             <div className="fixed top-0 left-0 w-full h-[10vh] bg-black z-50"></div>
             <div className="fixed bottom-0 left-0 w-full h-[10vh] bg-black z-50"></div>
+
+            {/* Skip Controls */}
+            <div className="fixed top-[12vh] right-8 z-[60] flex flex-col gap-4">
+                <button 
+                    onClick={onFinish}
+                    className="text-[10px] font-black uppercase tracking-[0.2em] text-pink-200/30 hover:text-pink-200 transition-colors border border-white/5 bg-white/5 backdrop-blur-md rounded-full px-6 py-2.5"
+                >
+                    Skip Intro
+                </button>
+                {onSkipAll && (
+                    <button 
+                        onClick={onSkipAll}
+                        className="text-[10px] font-black uppercase tracking-[0.2em] text-[#FF4D6D]/40 hover:text-[#FF4D6D] transition-colors border border-[#FF4D6D]/10 bg-white/5 backdrop-blur-md rounded-full px-6 py-2.5"
+                    >
+                        Skip to Certificate
+                    </button>
+                )}
+            </div>
 
             {/* Stardust Background Particles */}
             <div className="absolute inset-0 z-0">
