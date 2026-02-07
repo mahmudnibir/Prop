@@ -173,28 +173,28 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
 
                     {/* FORMAL CONDITIONS SECTION - Clean, Cluster-free Poetic Layout */}
                     <div className="relative py-6 px-4 sm:px-8 border-y-[1px] border-[#D4AF37]/40 bg-[#FCFAF7]/50 mx-1 sm:mx-6 mb-10">
-                        <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-[#B48F00] mb-6 font-sans text-center">Articles of the Heart</h3>
+                        <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-[#B48F00] mb-6 font-sans text-center">Pacts of Love</h3>
                         
                         <div className="space-y-4 sm:space-y-5 text-center">
                              <div className="space-y-3 font-serif-classic italic">
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To be honest, faithful, and loving partners for all of time.</p>
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">I choose you in honesty and faith, for every lifetime we share.</p>
                                 <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
                                 
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To honor and cherish one another through every grand adventure.</p>
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">In joy and struggle, I will honor you.</p>
                                 <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
                                 
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To be a guiding light in darkness and a warming comfort in the cold.</p>
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">I will be your light, your warmth, your steady place.</p>
                                 <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
                                 
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To build a future of shared dreams, catching one another if we stumble.</p>
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">Together we will build our dreams, and hold each other when we fall.</p>
                                 <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
                                 
-                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To love with a passion that transcends words, forever and always.</p>
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">I will love you beyond words—forever, and without end.</p>
                              </div>
 
                              <div className="pt-6 mt-4">
                                 <p className="text-[10px] sm:text-[13px] font-black uppercase tracking-[0.2em] text-[#4A3D2E] font-sans italic">
-                                    Bound by these terms for the rest of our lives.
+                                    These words bind us, now and for all our days.
                                 </p>
                              </div>
                         </div>
