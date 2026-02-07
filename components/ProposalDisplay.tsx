@@ -70,12 +70,12 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
     <div className="min-h-screen w-full bg-[#F2ECE4] flex flex-col items-center py-4 md:py-10 px-4 no-print-bg">
         
         {/* Certificate Wrapper */}
-        <div className="w-full max-w-xl flex flex-col items-center justify-start relative">
+        <div className="w-full max-w-2xl flex flex-col items-center justify-start relative">
             
             {/* Certificate Container */}
             <div 
               id="proposal-certificate" 
-              className={`relative w-full min-h-[680px] sm:min-h-[750px] h-auto aspect-auto sm:aspect-[1/1.41] bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-10 md:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
+              className={`relative w-full min-h-[850px] sm:min-h-[950px] h-auto aspect-auto bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-10 md:p-14 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
             >
                 
                 {/* Subtle Parchment Texture */}
@@ -86,7 +86,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
 
                 {/* GOLD FOIL SEAL */}
-                <div className="absolute top-[52%] right-2 sm:top-[58%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none">
+                <div className="absolute top-[52%] right-2 sm:top-[75%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none">
                     <div className={`relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 flex items-center justify-center transform transition-all duration-[600ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
                         ? 'scale-100 opacity-100 rotate-[-15deg]' 
@@ -167,14 +167,29 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* FORMAL CONDITIONS SECTION - Increased size and weight */}
-                    <div className="relative p-5 sm:p-8 border-[3px] border-double border-[#D4AF37]/60 bg-white/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-inner">
-                        <h3 className="text-[11px] sm:text-[14px] font-black uppercase tracking-[0.4em] text-[#B48F00] mb-4 font-sans text-center">Conditions of Agreement</h3>
-                        <div className="text-[13px] sm:text-[18px] text-[#2C241B] text-center italic font-bold leading-relaxed px-1 sm:px-6 tracking-tight">
-                            "By mutual consent, both parties commit to a partnership defined by unwavering support, shared laughter, and an infinite supply of affection. This agreement ensures that every joy is doubled and every burden is shared, remaining valid throughout all lifetimes and dimensions known and unknown. This covenant is sealed with a promise that transcends time itself."
+                    {/* FORMAL CONDITIONS SECTION - Updated Content and Styling */}
+                    <div className="relative p-5 sm:p-10 border-[3px] border-double border-[#D4AF37]/60 bg-white/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-inner">
+                        <h3 className="text-[11px] sm:text-[14px] font-black uppercase tracking-[0.4em] text-[#B48F00] mb-6 font-sans text-center">Conditions of Agreement</h3>
+                        
+                        <div className="space-y-6 text-[14px] sm:text-[18px] md:text-[20px] text-[#1A1A1A] font-serif-classic">
+                             <p className="text-center font-black italic mb-4">Now, I hereby agree to the following:</p>
+                             <ul className="space-y-4 font-bold text-center italic list-none">
+                                <li>• To be your honest, faithful, and loving partner for the rest of my days</li>
+                                <li>• To be a wonderful and adventurous lover in bed every time</li>
+                                <li>• To be your guiding light in the darkness, a warming comfort in the cold, and shoulder to lean on when life is too much to bear on your own</li>
+                                <li>• To honor, love, and cherish you through all life's adventures - wherever we go, we'll go together.</li>
+                                <li>• To build my dreams around yours and make them a reality</li>
+                                <li>• To be there to catch you if you should stumble, carry you over every threshold, and fall in love with you every day</li>
+                                <li>• To love you with my whole heart and with a passion that cannot be expressed in any words</li>
+                                <li>• To be here with you and for you, forever and always</li>
+                             </ul>
+                             <p className="text-center font-black italic mt-8 border-t border-[#D4AF37]/20 pt-6">
+                                I hereby agree to abide by these terms and conditions for the rest of my life.
+                             </p>
                         </div>
+
                         <div className="absolute top-0 right-0 p-1 opacity-[0.03]">
-                            <HeartIcon className="w-10 h-10 sm:w-16 sm:h-16" />
+                            <HeartIcon className="w-10 h-10 sm:w-24 sm:h-24" />
                         </div>
                     </div>
 
