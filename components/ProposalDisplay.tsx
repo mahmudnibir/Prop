@@ -200,20 +200,20 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </div>
 
-                    {/* Signatures Section */}
-                    <div className="mt-auto flex flex-col sm:flex-row items-center justify-between w-full px-4 sm:px-10 pb-6 gap-8 sm:gap-4">
-                        <div className="flex flex-col items-center sm:items-start text-center sm:text-left space-y-1 w-full sm:w-auto">
-                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full sm:min-w-[180px] pb-1">
+                    {/* Signatures Section - Both aligned to the left side for a formal look */}
+                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-10 gap-8">
+                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[240px]">
+                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1">
                                 <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{recipientName}</span>
                             </div>
-                            <span className="text-[8px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-[#B48F00] font-sans">Recipient</span>
+                            <span className="text-[8px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-[#B48F00] font-sans">Verified: The Recipient</span>
                         </div>
                         
-                        <div className="flex flex-col items-center sm:items-end text-center sm:text-right space-y-1 w-full sm:w-auto">
-                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full sm:min-w-[180px] pb-1">
+                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[240px]">
+                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1">
                                 <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{senderName}</span>
                             </div>
-                            <span className="text-[8px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-[#B48F00] font-sans">Sender</span>
+                            <span className="text-[8px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-[#B48F00] font-sans">Attested: The Sender</span>
                         </div>
                     </div>
                 </div>
