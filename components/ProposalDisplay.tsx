@@ -85,7 +85,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="absolute inset-2 sm:inset-4 border-[2px] border-[#D4AF37]/70 pointer-events-none"></div>
                 <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
 
-                {/* GOLD FOIL SEAL - Redesigned to be aligned with the golden theme */}
+                {/* GOLD FOIL SEAL */}
                 <div className="absolute top-[52%] right-2 sm:top-[58%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none">
                     <div className={`relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 flex items-center justify-center transform transition-all duration-[600ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
@@ -108,19 +108,14 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                                 </defs>
                                 
                                 <g filter="url(#goldGlow)">
-                                    {/* Outer Decorative Circles */}
                                     <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="1 3" opacity="0.6" />
                                     <circle cx="100" cy="100" r="88" fill="white" fillOpacity="0.05" stroke="currentColor" strokeWidth="4" />
                                     <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" strokeWidth="1" />
-                                    
-                                    {/* Circular Text */}
                                     <text className="fill-current text-[12px] font-black tracking-[0.25em] uppercase font-sans">
                                         <textPath href="#circlePathSeal" startOffset="0%">
                                             OFFICIALLY SEALED • ETERNAL PROMISE • OFFICIALLY SEALED •
                                         </textPath>
                                     </text>
-
-                                    {/* Center Design */}
                                     <circle cx="100" cy="100" r="60" fill="white" fillOpacity="0.1" stroke="currentColor" strokeWidth="1" />
                                     <path d="M70,100 L130,100" stroke="currentColor" strokeWidth="1" opacity="0.5" />
                                     <text x="100" y="92" textAnchor="middle" className="font-serif-display italic font-black uppercase tracking-[0.1em] text-[18px] sm:text-[22px] fill-current">
@@ -172,14 +167,14 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* FORMAL CONDITIONS SECTION */}
-                    <div className="relative p-5 sm:p-6 border border-double border-[#D4AF37]/50 bg-white/30 backdrop-blur-sm rounded-lg overflow-hidden">
-                        <h3 className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.3em] text-[#D4AF37] mb-2.5 font-sans text-center">Conditions of Agreement</h3>
-                        <div className="text-[11px] sm:text-[14px] text-[#4A3D2E] text-center italic font-medium leading-relaxed px-1 sm:px-4">
+                    {/* FORMAL CONDITIONS SECTION - Increased size and weight */}
+                    <div className="relative p-5 sm:p-8 border-[3px] border-double border-[#D4AF37]/60 bg-white/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-inner">
+                        <h3 className="text-[11px] sm:text-[14px] font-black uppercase tracking-[0.4em] text-[#B48F00] mb-4 font-sans text-center">Conditions of Agreement</h3>
+                        <div className="text-[13px] sm:text-[18px] text-[#2C241B] text-center italic font-bold leading-relaxed px-1 sm:px-6 tracking-tight">
                             "By mutual consent, both parties commit to a partnership defined by unwavering support, shared laughter, and an infinite supply of affection. This agreement ensures that every joy is doubled and every burden is shared, remaining valid throughout all lifetimes and dimensions known and unknown. This covenant is sealed with a promise that transcends time itself."
                         </div>
-                        <div className="absolute top-0 right-0 p-1 opacity-5">
-                            <HeartIcon className="w-5 h-5 sm:w-7 sm:h-7" />
+                        <div className="absolute top-0 right-0 p-1 opacity-[0.03]">
+                            <HeartIcon className="w-10 h-10 sm:w-16 sm:h-16" />
                         </div>
                     </div>
 
