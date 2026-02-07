@@ -200,20 +200,24 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </div>
 
-                    {/* Signatures Section - Both aligned to the left side for a formal look */}
+                    {/* Signatures Section - Updated with Poetic Phrasing */}
                     <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-10 gap-8">
-                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[240px]">
+                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
                             <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1">
                                 <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{recipientName}</span>
                             </div>
-                            <span className="text-[8px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-[#B48F00] font-sans">Verified: The Recipient</span>
+                            <span className="text-[11px] sm:text-[14px] italic font-medium text-[#B48F00] font-serif-classic leading-tight">
+                                She, for whom my words exist
+                            </span>
                         </div>
                         
-                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[240px]">
+                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
                             <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1">
                                 <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{senderName}</span>
                             </div>
-                            <span className="text-[8px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-[#B48F00] font-sans">Attested: The Sender</span>
+                            <span className="text-[11px] sm:text-[14px] italic font-medium text-[#B48F00] font-serif-classic leading-tight">
+                                I, who wrote them in truth
+                            </span>
                         </div>
                     </div>
                 </div>
