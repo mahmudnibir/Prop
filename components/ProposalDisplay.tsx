@@ -8,12 +8,12 @@ interface AcceptedViewProps {
 }
 
 const DecorativeDivider = () => (
-  <div className="flex items-center justify-center gap-3 my-2 opacity-40">
-    <div className="w-8 h-[0.5px] bg-[#D4AF37]"></div>
-    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div className="flex items-center justify-center gap-2 my-1 opacity-40">
+    <div className="w-6 h-[0.5px] bg-[#D4AF37]"></div>
+    <svg width="8" height="8" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="5" y="0" width="7.07" height="7.07" transform="rotate(45 5 0)" fill="#D4AF37" />
     </svg>
-    <div className="w-8 h-[0.5px] bg-[#D4AF37]"></div>
+    <div className="w-6 h-[0.5px] bg-[#D4AF37]"></div>
   </div>
 );
 
@@ -80,12 +80,12 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
     <div className="min-h-screen w-full bg-[#F2ECE4] flex flex-col items-center py-4 md:py-8 px-4 no-print-bg">
         
         {/* Certificate Wrapper */}
-        <div className="w-full max-w-2xl flex flex-col items-center justify-start relative">
+        <div className="w-full max-w-2xl flex flex-col items-center justify-start relative print:max-w-none">
             
             {/* Certificate Container */}
             <div 
               id="proposal-certificate" 
-              className={`relative w-full min-h-[850px] sm:min-h-[1000px] h-auto aspect-auto bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-8 md:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
+              className={`relative w-full min-h-[820px] sm:min-h-[950px] bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-8 md:p-10 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:m-0 print:border-none print:flex print:flex-col print:justify-center print:min-h-0 print:h-[297mm] ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
             >
                 
                 {/* Subtle Parchment Texture */}
@@ -96,8 +96,8 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
 
                 {/* GOLD FOIL SEAL */}
-                <div className="absolute top-[65%] right-2 sm:top-[78%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none">
-                    <div className={`relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center transform transition-all duration-[600ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
+                <div className="absolute top-[68%] right-2 sm:top-[75%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none print:top-[70%]">
+                    <div className={`relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center transform transition-all duration-[600ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
                         ? 'scale-100 opacity-100 rotate-[-15deg]' 
                         : 'scale-[8] opacity-0 rotate-[45deg] blur-3xl translate-y-[-300px]'}
@@ -142,119 +142,119 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </div>
 
                 {/* Content Body */}
-                <div className="relative z-10 flex flex-col h-full py-4 sm:py-6 print:py-0">
-                    <header className="text-center space-y-1 sm:space-y-4 pt-2 sm:pt-6 mb-6">
-                        <div className="space-y-0.5 sm:space-y-1.5">
-                            <h2 className="text-[10px] sm:text-[13px] font-black text-[#4A3D2E] uppercase tracking-[0.4em] sm:tracking-[0.7em] font-sans">Eternal Decree</h2>
-                            <div className="w-12 sm:w-20 h-[1px] sm:h-[2px] bg-[#D4AF37]/70 mx-auto"></div>
+                <div className="relative z-10 flex flex-col h-full py-4 sm:py-2 print:py-0">
+                    <header className="text-center space-y-1 sm:space-y-2 pt-2 sm:pt-4 mb-4 print:mb-2">
+                        <div className="space-y-0.5 sm:space-y-1">
+                            <h2 className="text-[10px] sm:text-[12px] font-black text-[#4A3D2E] uppercase tracking-[0.4em] sm:tracking-[0.6em] font-sans">Eternal Decree</h2>
+                            <div className="w-12 sm:w-16 h-[1px] sm:h-[1.5px] bg-[#D4AF37]/70 mx-auto"></div>
                         </div>
-                        <h1 className="text-2xl sm:text-5xl md:text-6xl font-cursive font-bold text-[#000000] tracking-tight leading-tight">
+                        <h1 className="text-2xl sm:text-4xl md:text-5xl font-cursive font-bold text-[#000000] tracking-tight leading-tight">
                             A Covenant of Love
                         </h1>
                     </header>
 
-                    <section className="space-y-3 sm:space-y-6 text-center mb-10">
-                        <p className="text-[11px] sm:text-lg text-[#1A1A1A] font-medium italic leading-relaxed max-w-[280px] sm:max-w-lg mx-auto opacity-80">
+                    <section className="space-y-2 sm:space-y-4 text-center mb-6 print:mb-4">
+                        <p className="text-[11px] sm:text-base text-[#1A1A1A] font-medium italic leading-relaxed max-w-[280px] sm:max-w-md mx-auto opacity-80">
                             Let it be known that on this day, the question of a lifetime was met with the most beautiful answer.
                         </p>
 
-                        <div className="space-y-2 sm:space-y-4">
+                        <div className="space-y-1 sm:space-y-3">
                             <div className="space-y-0.5">
-                                <p className="text-2xl sm:text-5xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
+                                <p className="text-2xl sm:text-4xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
                                     {recipientName}
                                 </p>
-                                <span className="text-[8px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.5em] text-[#B48F00] font-sans">The Beloved</span>
+                                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.25em] text-[#B48F00] font-sans">The Beloved</span>
                             </div>
                             
-                            <div className="text-[#D4AF37] font-serif italic text-xl sm:text-3xl font-bold flex items-center justify-center gap-4">
-                                <div className="w-8 sm:w-16 h-[1px] bg-[#D4AF37]/30"></div>
+                            <div className="text-[#D4AF37] font-serif italic text-lg sm:text-2xl font-bold flex items-center justify-center gap-3">
+                                <div className="w-8 sm:w-12 h-[1px] bg-[#D4AF37]/30"></div>
                                 <span>&</span>
-                                <div className="w-8 sm:w-16 h-[1px] bg-[#D4AF37]/30"></div>
+                                <div className="w-8 sm:w-12 h-[1px] bg-[#D4AF37]/30"></div>
                             </div>
 
                             <div className="space-y-0.5">
-                                <p className="text-2xl sm:text-5xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
+                                <p className="text-2xl sm:text-4xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
                                     {senderName}
                                 </p>
-                                <span className="text-[8px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.5em] text-[#B48F00] font-sans">The Devoted</span>
+                                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.25em] text-[#B48F00] font-sans">The Devoted</span>
                             </div>
                         </div>
                     </section>
 
-                    {/* REFINED PACTS OF LOVE SECTION */}
-                    <div className="relative py-8 px-6 sm:px-12 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-12 shadow-inner group">
+                    {/* REFINED PACTS OF LOVE SECTION - Spacing reduced for print safety */}
+                    <div className="relative py-6 px-5 sm:px-10 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-8 print:mb-6 shadow-inner group">
                         {/* Decorative Corner Accents */}
-                        <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[#D4AF37]/40"></div>
-                        <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#D4AF37]/40"></div>
-                        <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[#D4AF37]/40"></div>
-                        <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#D4AF37]/40"></div>
+                        <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#D4AF37]/40"></div>
+                        <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#D4AF37]/40"></div>
+                        <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#D4AF37]/40"></div>
+                        <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#D4AF37]/40"></div>
 
-                        <div className="text-center space-y-1 mb-8">
-                            <h3 className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.5em] text-[#4A3D2E] font-sans">Pacts of Love</h3>
-                            <div className="flex items-center justify-center gap-2">
-                                <div className="w-6 h-[1px] bg-[#D4AF37]/40"></div>
+                        <div className="text-center space-y-0.5 mb-4 sm:mb-6">
+                            <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-[#4A3D2E] font-sans">Pacts of Love</h3>
+                            <div className="flex items-center justify-center gap-1.5 opacity-60">
+                                <div className="w-4 h-[1px] bg-[#D4AF37]"></div>
                                 <HeartIcon className="w-2 h-2 text-[#D4AF37]" />
-                                <div className="w-6 h-[1px] bg-[#D4AF37]/40"></div>
+                                <div className="w-4 h-[1px] bg-[#D4AF37]"></div>
                             </div>
                         </div>
                         
-                        <div className="space-y-6 text-center">
+                        <div className="space-y-4 sm:space-y-5 text-center">
                              <div className="space-y-0 font-serif-display italic">
-                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
                                     I choose you in honesty and faith, <br className="sm:hidden" /> for every lifetime we share.
                                 </p>
                                 <DecorativeDivider />
                                 
-                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
                                     In joy and struggle, I will honor you.
                                 </p>
                                 <DecorativeDivider />
                                 
-                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
                                     I will be your light, your warmth, <br className="sm:hidden" /> your steady place.
                                 </p>
                                 <DecorativeDivider />
                                 
-                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
                                     Together we will build our dreams, <br className="sm:hidden" /> and hold each other when we fall.
                                 </p>
                                 <DecorativeDivider />
                                 
-                                <p className="text-[14px] sm:text-[20px] font-medium leading-relaxed text-[#1A1A1A] px-2">
+                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
                                     I will love you beyond words— <br className="sm:hidden" /> forever, and without end.
                                 </p>
                              </div>
 
-                             <div className="pt-8 mt-4">
-                                <div className="relative inline-block px-8">
-                                    <div className="absolute top-1/2 left-0 w-6 h-[1px] bg-[#D4AF37]/20"></div>
-                                    <p className="text-[11px] sm:text-[14px] font-serif-classic font-bold uppercase tracking-[0.2em] text-[#4A3D2E]">
+                             <div className="pt-4 sm:pt-6">
+                                <div className="relative inline-block px-6">
+                                    <div className="absolute top-1/2 left-0 w-4 h-[1px] bg-[#D4AF37]/20"></div>
+                                    <p className="text-[10px] sm:text-[12px] font-serif-classic font-bold uppercase tracking-[0.15em] text-[#4A3D2E]">
                                         These words bind us, now and for all our days.
                                     </p>
-                                    <div className="absolute top-1/2 right-0 w-6 h-[1px] bg-[#D4AF37]/20"></div>
+                                    <div className="absolute top-1/2 right-0 w-4 h-[1px] bg-[#D4AF37]/20"></div>
                                 </div>
                              </div>
                         </div>
                     </div>
 
-                    {/* Signatures Section */}
-                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-12 gap-10">
-                        <div className="flex flex-col items-start text-left space-y-1.5 w-full max-w-[340px]">
-                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-2 relative">
-                                <span className="font-cursive text-3xl sm:text-5xl text-[#000000]">{recipientName}</span>
-                                <div className="absolute -bottom-1 left-0 w-12 h-[2px] bg-[#D4AF37]"></div>
+                    {/* Signatures Section - Adjusted positioning */}
+                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-8 sm:pb-12 gap-6 sm:gap-8">
+                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
+                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1 relative">
+                                <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{recipientName}</span>
+                                <div className="absolute -bottom-1 left-0 w-8 h-[2px] bg-[#D4AF37]"></div>
                             </div>
-                            <span className="text-[11px] sm:text-[15px] italic font-medium text-[#B48F00] font-serif-classic leading-tight tracking-wide">
+                            <span className="text-[10px] sm:text-[13px] italic font-medium text-[#B48F00] font-serif-classic leading-tight tracking-wide">
                                 She, for whom my words exist
                             </span>
                         </div>
                         
-                        <div className="flex flex-col items-start text-left space-y-1.5 w-full max-w-[340px]">
-                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-2 relative">
-                                <span className="font-cursive text-3xl sm:text-5xl text-[#000000]">{senderName}</span>
-                                <div className="absolute -bottom-1 left-0 w-12 h-[2px] bg-[#D4AF37]"></div>
+                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
+                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1 relative">
+                                <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{senderName}</span>
+                                <div className="absolute -bottom-1 left-0 w-8 h-[2px] bg-[#D4AF37]"></div>
                             </div>
-                            <span className="text-[11px] sm:text-[15px] italic font-medium text-[#B48F00] font-serif-classic leading-tight tracking-wide">
+                            <span className="text-[10px] sm:text-[13px] italic font-medium text-[#B48F00] font-serif-classic leading-tight tracking-wide">
                                 I, who wrote them in truth
                             </span>
                         </div>
@@ -263,47 +263,66 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
 
                 {/* Background Decor */}
                 <div className="absolute bottom-1 left-1 sm:-bottom-10 sm:-left-10 text-[#EFE7DC] pointer-events-none opacity-[0.1] sm:opacity-[0.2] -rotate-12 z-0">
-                    <ScrollIcon className="w-24 h-24 sm:w-72 sm:h-72" />
+                    <ScrollIcon className="w-24 h-24 sm:w-64 sm:h-64" />
                 </div>
             </div>
         </div>
         
         {/* Actions UI */}
-        <div className="mt-12 flex flex-col items-center gap-4 z-10 no-print pb-24 w-full">
+        <div className="mt-10 flex flex-col items-center gap-4 z-10 no-print pb-24 w-full">
             <button 
                 onClick={handleDownload}
-                className="group flex items-center gap-3 px-14 sm:px-20 py-5 sm:py-6 bg-[#1A1A1A] text-[#F2ECE4] font-bold rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
+                className="group flex items-center gap-3 px-12 sm:px-16 py-4 sm:py-5 bg-[#1A1A1A] text-[#F2ECE4] font-bold rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
             >
                 <DownloadIcon className="w-5 h-5 group-hover:translate-y-1 transition-transform stroke-[3]" />
-                <span className="tracking-[0.3em] sm:tracking-[0.5em] text-[11px] sm:text-[13px] uppercase font-black">Archive Your Promise</span>
+                <span className="tracking-[0.3em] sm:tracking-[0.4em] text-[10px] sm:text-[12px] uppercase font-black">Archive Your Promise</span>
             </button>
             
             <div className="flex flex-col items-center gap-2 px-4 text-center">
-                 <p className="text-[11px] sm:text-sm text-[#8A4A5D] font-serif-classic font-bold opacity-60 italic tracking-wide">Preserve this document as a testament to your journey.</p>
+                 <p className="text-[10px] sm:text-xs text-[#8A4A5D] font-serif-classic font-bold opacity-60 italic tracking-wide">Preserve this document as a testament to your journey.</p>
                  <div className="flex items-center gap-4 opacity-40 mt-1">
-                    <div className="w-12 h-[1px] bg-[#4A3D2E]"></div>
+                    <div className="w-10 h-[1px] bg-[#4A3D2E]"></div>
                     <HeartIcon className="w-3 h-3 text-[#4A3D2E]" />
-                    <div className="w-12 h-[1px] bg-[#4A3D2E]"></div>
+                    <div className="w-10 h-[1px] bg-[#4A3D2E]"></div>
                 </div>
             </div>
         </div>
 
         <style dangerouslySetInnerHTML={{ __html: `
             @media print {
-                @page { size: portrait; margin: 0; }
-                html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: white !important; }
+                @page { 
+                    size: A4 portrait; 
+                    margin: 0; 
+                }
+                html, body { 
+                    margin: 0; 
+                    padding: 0; 
+                    width: 210mm; 
+                    height: 297mm; 
+                    background: white !important;
+                    overflow: hidden !important;
+                }
                 .no-print { display: none !important; }
-                .no-print-bg { background: white !important; padding: 0 !important; }
+                .no-print-bg { background: white !important; padding: 0 !important; height: 297mm !important; }
                 #proposal-certificate { 
-                    box-shadow: none !important; margin: 0 !important; 
-                    width: 100vw !important; height: 100vh !important;
-                    max-width: none !important; border: none !important;
-                    border-radius: 0 !important; padding: 1.5cm !important;
+                    box-shadow: none !important; 
+                    margin: 0 !important; 
+                    width: 210mm !important; 
+                    height: 297mm !important;
+                    max-width: none !important; 
+                    border: none !important;
+                    border-radius: 0 !important; 
+                    padding: 2cm !important;
                     display: flex !important;
                     flex-direction: column !important;
                     justify-content: center !important;
+                    background-color: #FCFAF7 !important;
+                    -webkit-print-color-adjust: exact;
                 }
-                .print\\:py-0 { padding-top: 0 !important; padding-bottom: 0 !important; }
+                .print\\:top-\\[70\\%\\] { top: 70% !important; }
+                .print\\:mb-2 { margin-bottom: 0.5cm !important; }
+                .print\\:mb-4 { margin-bottom: 1cm !important; }
+                .print\\:mb-6 { margin-bottom: 1.5cm !important; }
             }
         `}} />
     </div>
