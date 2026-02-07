@@ -75,7 +75,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             {/* Certificate Container */}
             <div 
               id="proposal-certificate" 
-              className={`relative w-full min-h-[820px] sm:min-h-[920px] h-auto aspect-auto bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-8 md:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
+              className={`relative w-full min-h-[820px] sm:min-h-[950px] h-auto aspect-auto bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-8 md:p-12 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:max-w-none print:w-[100vw] print:h-[100vh] print:m-0 print:border-none print:flex print:flex-col print:justify-center ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
             >
                 
                 {/* Subtle Parchment Texture */}
@@ -132,102 +132,115 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </div>
 
                 {/* Content Body */}
-                <div className="relative z-10 flex flex-col h-full space-y-3 sm:space-y-6 md:space-y-6 py-4 sm:py-6 print:py-0">
-                    <header className="text-center space-y-1 sm:space-y-3 pt-2 sm:pt-6">
+                <div className="relative z-10 flex flex-col h-full py-4 sm:py-6 print:py-0">
+                    <header className="text-center space-y-1 sm:space-y-4 pt-2 sm:pt-6 mb-6">
                         <div className="space-y-0.5 sm:space-y-1.5">
                             <h2 className="text-[10px] sm:text-[13px] font-black text-[#4A3D2E] uppercase tracking-[0.4em] sm:tracking-[0.7em] font-sans">Eternal Decree</h2>
                             <div className="w-12 sm:w-20 h-[1px] sm:h-[2px] bg-[#D4AF37]/70 mx-auto"></div>
                         </div>
-                        <h1 className="text-2xl sm:text-5xl md:text-5xl font-cursive font-bold text-[#000000] tracking-tight leading-tight">
+                        <h1 className="text-2xl sm:text-5xl md:text-6xl font-cursive font-bold text-[#000000] tracking-tight leading-tight">
                             A Covenant of Love
                         </h1>
                     </header>
 
-                    <section className="space-y-2 sm:space-y-4 text-center">
-                        <p className="text-[11px] sm:text-base text-[#1A1A1A] font-medium italic leading-relaxed max-w-[280px] sm:max-w-md mx-auto">
+                    <section className="space-y-3 sm:space-y-6 text-center mb-8">
+                        <p className="text-[11px] sm:text-lg text-[#1A1A1A] font-medium italic leading-relaxed max-w-[280px] sm:max-w-lg mx-auto opacity-80">
                             Let it be known that on this day, the question of a lifetime was met with the most beautiful answer.
                         </p>
 
-                        <div className="space-y-1 sm:space-y-3">
+                        <div className="space-y-2 sm:space-y-4">
                             <div className="space-y-0.5">
-                                <p className="text-xl sm:text-4xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
+                                <p className="text-2xl sm:text-5xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
                                     {recipientName}
                                 </p>
-                                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[#B48F00] font-sans">The Beloved</span>
+                                <span className="text-[8px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.5em] text-[#B48F00] font-sans">The Beloved</span>
                             </div>
                             
-                            <div className="text-[#D4AF37] font-serif italic text-lg sm:text-2xl font-bold">&</div>
+                            <div className="text-[#D4AF37] font-serif italic text-xl sm:text-3xl font-bold flex items-center justify-center gap-4">
+                                <div className="w-8 sm:w-16 h-[1px] bg-[#D4AF37]/30"></div>
+                                <span>&</span>
+                                <div className="w-8 sm:w-16 h-[1px] bg-[#D4AF37]/30"></div>
+                            </div>
 
                             <div className="space-y-0.5">
-                                <p className="text-xl sm:text-4xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
+                                <p className="text-2xl sm:text-5xl font-serif-display font-black text-[#000000] uppercase tracking-tighter">
                                     {senderName}
                                 </p>
-                                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em] text-[#B48F00] font-sans">The Devoted</span>
+                                <span className="text-[8px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.5em] text-[#B48F00] font-sans">The Devoted</span>
                             </div>
                         </div>
                     </section>
 
-                    {/* FORMAL CONDITIONS SECTION - Streamlined for PDF cluster-free look */}
-                    <div className="relative p-4 sm:p-6 md:p-8 border-[3px] border-double border-[#D4AF37]/60 bg-white/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-inner mx-1 sm:mx-4">
-                        <h3 className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.3em] text-[#B48F00] mb-3 font-sans text-center">Conditions of Agreement</h3>
+                    {/* FORMAL CONDITIONS SECTION - Clean, Cluster-free Poetic Layout */}
+                    <div className="relative py-6 px-4 sm:px-8 border-y-[1px] border-[#D4AF37]/40 bg-[#FCFAF7]/50 mx-1 sm:mx-6 mb-10">
+                        <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-[#B48F00] mb-6 font-sans text-center">Articles of the Heart</h3>
                         
-                        <div className="space-y-3 sm:space-y-4 text-[13px] sm:text-[16px] md:text-[17px] text-[#1A1A1A] font-serif-classic">
-                             <p className="text-center font-black italic mb-2">The parties hereby pledge and agree:</p>
-                             <ul className="space-y-2 font-bold text-center italic list-none leading-tight">
-                                <li>To be honest, faithful, and loving partners for all of time.</li>
-                                <li>To honor and cherish one another through every adventure, wherever the path may lead.</li>
-                                <li>To be a guiding light in the darkness and a warming comfort in the cold.</li>
-                                <li>To build a future centered on shared dreams, catching one another should we stumble.</li>
-                                <li>To love with a passion that transcends words, forever and always.</li>
-                             </ul>
-                             <p className="text-center font-black italic mt-4 border-t border-[#D4AF37]/20 pt-4 text-[13px] sm:text-[16px]">
-                                Bound by these terms for the rest of our lives.
-                             </p>
-                        </div>
+                        <div className="space-y-4 sm:space-y-5 text-center">
+                             <div className="space-y-3 font-serif-classic italic">
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To be honest, faithful, and loving partners for all of time.</p>
+                                <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
+                                
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To honor and cherish one another through every grand adventure.</p>
+                                <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
+                                
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To be a guiding light in darkness and a warming comfort in the cold.</p>
+                                <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
+                                
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To build a future of shared dreams, catching one another if we stumble.</p>
+                                <div className="w-1 h-1 rounded-full bg-[#D4AF37]/40 mx-auto"></div>
+                                
+                                <p className="text-[13px] sm:text-[18px] font-bold leading-tight text-[#1A1A1A]">To love with a passion that transcends words, forever and always.</p>
+                             </div>
 
-                        <div className="absolute top-0 right-0 p-1 opacity-[0.03] pointer-events-none">
-                            <HeartIcon className="w-8 h-8 sm:w-20 sm:h-20" />
+                             <div className="pt-6 mt-4">
+                                <p className="text-[10px] sm:text-[13px] font-black uppercase tracking-[0.2em] text-[#4A3D2E] font-sans italic">
+                                    Bound by these terms for the rest of our lives.
+                                </p>
+                             </div>
                         </div>
                     </div>
 
                     {/* Signatures Section */}
-                    <div className="flex flex-col items-center sm:items-start w-full mt-auto pb-4 sm:pb-6">
-                        <div className="w-full sm:w-2/3 space-y-4 sm:space-y-6 px-2 sm:px-4">
-                            <div className="border-b-[1px] border-[#D4AF37]/30 pb-1 w-full relative">
-                                <span className="text-[8px] sm:text-[11px] uppercase font-black text-[#2C241B] block mb-0.5 tracking-[0.1em] sm:tracking-[0.2em] font-sans opacity-60">Verified Acceptance</span>
-                                <span className="font-cursive text-xl sm:text-3xl text-[#000000] leading-tight block truncate pr-10">{recipientName}</span>
+                    <div className="mt-auto flex flex-col sm:flex-row items-center justify-between w-full px-4 sm:px-10 pb-6 gap-8 sm:gap-4">
+                        <div className="flex flex-col items-center sm:items-start text-center sm:text-left space-y-1 w-full sm:w-auto">
+                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full sm:min-w-[180px] pb-1">
+                                <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{recipientName}</span>
                             </div>
-                            <div className="border-b-[1px] border-[#D4AF37]/30 pb-1 w-full relative">
-                                <span className="text-[8px] sm:text-[11px] uppercase font-black text-[#2C241B] block mb-0.5 tracking-[0.1em] sm:tracking-[0.2em] font-sans opacity-60">Attested by</span>
-                                <span className="font-cursive text-xl sm:text-3xl text-[#000000] leading-tight block truncate pr-10">{senderName}</span>
+                            <span className="text-[8px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-[#B48F00] font-sans">Recipient</span>
+                        </div>
+                        
+                        <div className="flex flex-col items-center sm:items-end text-center sm:text-right space-y-1 w-full sm:w-auto">
+                            <div className="border-b-[1px] border-[#D4AF37]/50 w-full sm:min-w-[180px] pb-1">
+                                <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{senderName}</span>
                             </div>
+                            <span className="text-[8px] sm:text-[10px] uppercase font-black tracking-[0.2em] text-[#B48F00] font-sans">Sender</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Background Decor */}
                 <div className="absolute bottom-1 left-1 sm:-bottom-10 sm:-left-10 text-[#EFE7DC] pointer-events-none opacity-[0.1] sm:opacity-[0.2] -rotate-12 z-0">
-                    <ScrollIcon className="w-24 h-24 sm:w-64 sm:h-64" />
+                    <ScrollIcon className="w-24 h-24 sm:w-72 sm:h-72" />
                 </div>
             </div>
         </div>
         
         {/* Actions UI */}
-        <div className="mt-6 flex flex-col items-center gap-3 z-10 no-print pb-20 w-full">
+        <div className="mt-8 flex flex-col items-center gap-4 z-10 no-print pb-20 w-full">
             <button 
                 onClick={handleDownload}
-                className="group flex items-center gap-3 px-10 sm:px-14 py-3 sm:py-4 bg-[#1A1A1A] text-[#F2ECE4] font-bold rounded-sm shadow-xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
+                className="group flex items-center gap-3 px-12 sm:px-16 py-4 sm:py-5 bg-[#1A1A1A] text-[#F2ECE4] font-bold rounded-sm shadow-2xl hover:bg-[#000] transform transition-all active:scale-95 hover:-translate-y-1"
             >
-                <DownloadIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-y-1 transition-transform opacity-100 stroke-[3]" />
-                <span className="tracking-[0.2em] sm:tracking-[0.4em] text-[10px] sm:text-[12px] uppercase font-black">Secure Keepsake</span>
+                <DownloadIcon className="w-5 h-5 group-hover:translate-y-1 transition-transform stroke-[3]" />
+                <span className="tracking-[0.2em] sm:tracking-[0.4em] text-[10px] sm:text-[12px] uppercase font-black">Save Your Promise</span>
             </button>
             
-            <div className="flex flex-col items-center gap-1.5 sm:gap-3 px-4 text-center">
-                 <p className="text-[9px] sm:text-xs text-[#8A4A5D] font-serif-classic font-bold opacity-60 italic">Share this page to keep our moment alive.</p>
-                 <div className="flex items-center gap-2 sm:gap-4 opacity-70">
-                    <div className="w-5 sm:w-8 h-[1px] bg-[#4A3D2E]"></div>
-                    <span className="text-[8px] sm:text-[10px] font-black text-[#4A3D2E] uppercase tracking-[0.3em] sm:tracking-[0.5em]">A Legacy of Love</span>
-                    <div className="w-5 sm:w-8 h-[1px] bg-[#4A3D2E]"></div>
+            <div className="flex flex-col items-center gap-2 px-4 text-center">
+                 <p className="text-[10px] sm:text-xs text-[#8A4A5D] font-serif-classic font-bold opacity-60 italic tracking-wide">Take a screenshot or print this page to keep forever.</p>
+                 <div className="flex items-center gap-4 opacity-40">
+                    <div className="w-8 h-[1px] bg-[#4A3D2E]"></div>
+                    <HeartIcon className="w-3 h-3 text-[#4A3D2E]" />
+                    <div className="w-8 h-[1px] bg-[#4A3D2E]"></div>
                 </div>
             </div>
         </div>
@@ -235,7 +248,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
         <style dangerouslySetInnerHTML={{ __html: `
             @media print {
                 @page { size: portrait; margin: 0; }
-                html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+                html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: white !important; }
                 .no-print { display: none !important; }
                 .no-print-bg { background: white !important; padding: 0 !important; }
                 #proposal-certificate { 
