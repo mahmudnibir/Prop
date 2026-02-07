@@ -86,7 +86,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
 
                 {/* GOLD FOIL SEAL */}
-                <div className="absolute top-[68%] right-2 sm:top-[75%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none print:top-[70%]">
+                <div className="absolute top-[68%] right-2 sm:top-[75%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none print:top-[75%] print:right-10">
                     <div className={`relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center transform transition-all duration-[600ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
                         ? 'scale-100 opacity-100 rotate-[-15deg]' 
@@ -132,8 +132,8 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </div>
 
                 {/* Content Body */}
-                <div className="relative z-10 flex flex-col h-full py-4 sm:py-2 print:py-0">
-                    <header className="text-center space-y-1 sm:space-y-2 pt-2 sm:pt-4 mb-4 print:mb-2">
+                <div className="relative z-10 flex flex-col h-full py-4 sm:py-2 print:py-0 print:justify-between">
+                    <header className="text-center space-y-1 sm:space-y-2 pt-2 sm:pt-4 mb-4 print:mb-2 print:pt-6">
                         <div className="space-y-0.5 sm:space-y-1">
                             <h2 className="text-[10px] sm:text-[12px] font-black text-[#4A3D2E] uppercase tracking-[0.4em] sm:tracking-[0.6em] font-sans">Eternal Decree</h2>
                             <div className="w-12 sm:w-16 h-[1px] sm:h-[1.5px] bg-[#D4AF37]/70 mx-auto"></div>
@@ -171,15 +171,15 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* REFINED PACTS OF LOVE SECTION - Paragraph Layout */}
-                    <div className="relative py-8 px-6 sm:px-12 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-8 print:mb-6 shadow-inner group">
+                    {/* REFINED PACTS OF LOVE SECTION */}
+                    <div className="relative py-8 px-6 sm:px-12 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-8 print:mb-4 print:py-6 shadow-inner group">
                         {/* Decorative Corner Accents */}
                         <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#D4AF37]/40"></div>
                         <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#D4AF37]/40"></div>
                         <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#D4AF37]/40"></div>
                         <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#D4AF37]/40"></div>
 
-                        <div className="text-center space-y-0.5 mb-6">
+                        <div className="text-center space-y-0.5 mb-6 print:mb-3">
                             <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-[#4A3D2E] font-sans">Pacts of Love</h3>
                             <div className="flex items-center justify-center gap-1.5 opacity-60">
                                 <div className="w-4 h-[1px] bg-[#D4AF37]"></div>
@@ -190,12 +190,12 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         
                         <div className="text-center">
                              <div className="font-serif-classic italic tracking-wide text-[#1A1A1A]">
-                                <p className="text-[15px] sm:text-[22px] font-medium leading-[1.8] sm:leading-[2] max-w-prose mx-auto">
+                                <p className="text-[15px] sm:text-[22px] font-medium leading-[1.8] sm:leading-[2] max-w-prose mx-auto print:text-[18px] print:leading-[1.7]">
                                     I choose you in honesty and faith, for every lifetime we share. In joy and struggle, I will honor you with my whole heart. I will be your light in the darkness, your warmth in the cold, and your steady place when the world shifts. Together we will build our dreams, holding each other when we fall, and I will love you beyond words—forever, and without end.
                                 </p>
                              </div>
 
-                             <div className="pt-8">
+                             <div className="pt-8 print:pt-4">
                                 <div className="relative inline-block px-10">
                                     <div className="absolute top-1/2 left-0 w-6 h-[1px] bg-[#D4AF37]/30"></div>
                                     <p className="text-[10px] sm:text-[12px] font-serif-classic font-bold uppercase tracking-[0.25em] text-[#4A3D2E]">
@@ -208,7 +208,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     </div>
 
                     {/* Signatures Section */}
-                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-8 sm:pb-12 gap-6 sm:gap-8">
+                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-8 sm:pb-12 gap-6 sm:gap-8 print:pb-16 print:mt-4 print:gap-10">
                         <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
                             <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1 relative">
                                 <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{recipientName}</span>
@@ -232,7 +232,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </div>
 
                 {/* Background Decor */}
-                <div className="absolute bottom-1 left-1 sm:-bottom-10 sm:-left-10 text-[#EFE7DC] pointer-events-none opacity-[0.1] sm:opacity-[0.2] -rotate-12 z-0">
+                <div className="absolute bottom-1 left-1 sm:-bottom-10 sm:-left-10 text-[#EFE7DC] pointer-events-none opacity-[0.1] sm:opacity-[0.2] -rotate-12 z-0 print:bottom-[-2cm] print:left-[-2cm]">
                     <ScrollIcon className="w-24 h-24 sm:w-64 sm:h-64" />
                 </div>
             </div>
@@ -265,15 +265,17 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     margin: 0; 
                 }
                 html, body { 
-                    margin: 0; 
-                    padding: 0; 
-                    width: 210mm; 
-                    height: 297mm; 
+                    margin: 0 !important; 
+                    padding: 0 !important; 
+                    width: 210mm !important; 
+                    height: 297mm !important; 
                     background: white !important;
                     overflow: hidden !important;
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
                 }
                 .no-print { display: none !important; }
-                .no-print-bg { background: white !important; padding: 0 !important; height: 297mm !important; }
+                .no-print-bg { background: white !important; padding: 0 !important; height: 297mm !important; overflow: hidden !important; }
                 #proposal-certificate { 
                     box-shadow: none !important; 
                     margin: 0 !important; 
@@ -282,17 +284,22 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     max-width: none !important; 
                     border: none !important;
                     border-radius: 0 !important; 
-                    padding: 2cm !important;
+                    padding: 1.5cm 1.5cm 2cm 1.5cm !important;
                     display: flex !important;
                     flex-direction: column !important;
-                    justify-content: center !important;
+                    justify-content: flex-start !important;
                     background-color: #FCFAF7 !important;
-                    -webkit-print-color-adjust: exact;
+                    position: relative !important;
+                    overflow: hidden !important;
                 }
-                .print\\:top-\\[70\\%\\] { top: 70% !important; }
+                .print\\:top-\\[75\\%\\] { top: 75% !important; }
+                .print\\:right-10 { right: 1.5cm !important; }
                 .print\\:mb-2 { margin-bottom: 0.5cm !important; }
                 .print\\:mb-4 { margin-bottom: 1cm !important; }
-                .print\\:mb-6 { margin-bottom: 1.5cm !important; }
+                .print\\:pt-6 { padding-top: 1cm !important; }
+                .print\\:pb-16 { padding-bottom: 2cm !important; }
+                .print\\:mt-4 { margin-top: 1cm !important; }
+                .print\\:justify-between { justify-content: space-between !important; }
             }
         `}} />
     </div>
