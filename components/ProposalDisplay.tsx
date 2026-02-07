@@ -181,7 +181,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* REFINED PACTS OF LOVE SECTION - Spacing reduced for print safety */}
+                    {/* REFINED PACTS OF LOVE SECTION - Using Cormorant Garamond for the Pacts */}
                     <div className="relative py-6 px-5 sm:px-10 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-8 print:mb-6 shadow-inner group">
                         {/* Decorative Corner Accents */}
                         <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#D4AF37]/40"></div>
@@ -199,28 +199,28 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                         
                         <div className="space-y-4 sm:space-y-5 text-center">
-                             <div className="space-y-0 font-serif-display italic">
-                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
+                             <div className="space-y-0 font-serif-classic italic tracking-wide">
+                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
                                     I choose you in honesty and faith, <br className="sm:hidden" /> for every lifetime we share.
                                 </p>
                                 <DecorativeDivider />
                                 
-                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
+                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
                                     In joy and struggle, I will honor you.
                                 </p>
                                 <DecorativeDivider />
                                 
-                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
+                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
                                     I will be your light, your warmth, <br className="sm:hidden" /> your steady place.
                                 </p>
                                 <DecorativeDivider />
                                 
-                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
+                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
                                     Together we will build our dreams, <br className="sm:hidden" /> and hold each other when we fall.
                                 </p>
                                 <DecorativeDivider />
                                 
-                                <p className="text-[13px] sm:text-lg font-medium leading-tight text-[#1A1A1A]">
+                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
                                     I will love you beyond words— <br className="sm:hidden" /> forever, and without end.
                                 </p>
                              </div>
@@ -228,7 +228,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                              <div className="pt-4 sm:pt-6">
                                 <div className="relative inline-block px-6">
                                     <div className="absolute top-1/2 left-0 w-4 h-[1px] bg-[#D4AF37]/20"></div>
-                                    <p className="text-[10px] sm:text-[12px] font-serif-classic font-bold uppercase tracking-[0.15em] text-[#4A3D2E]">
+                                    <p className="text-[10px] sm:text-[12px] font-serif-classic font-bold uppercase tracking-[0.2em] text-[#4A3D2E]">
                                         These words bind us, now and for all our days.
                                     </p>
                                     <div className="absolute top-1/2 right-0 w-4 h-[1px] bg-[#D4AF37]/20"></div>
