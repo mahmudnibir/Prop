@@ -7,16 +7,6 @@ interface AcceptedViewProps {
   senderName: string;
 }
 
-const DecorativeDivider = () => (
-  <div className="flex items-center justify-center gap-2 my-1 opacity-40">
-    <div className="w-6 h-[0.5px] bg-[#D4AF37]"></div>
-    <svg width="8" height="8" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="5" y="0" width="7.07" height="7.07" transform="rotate(45 5 0)" fill="#D4AF37" />
-    </svg>
-    <div className="w-6 h-[0.5px] bg-[#D4AF37]"></div>
-  </div>
-);
-
 const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }) => {
   const [stamped, setStamped] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -181,15 +171,15 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* REFINED PACTS OF LOVE SECTION - Using Cormorant Garamond for the Pacts */}
-                    <div className="relative py-6 px-5 sm:px-10 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-8 print:mb-6 shadow-inner group">
+                    {/* REFINED PACTS OF LOVE SECTION - Paragraph Layout */}
+                    <div className="relative py-8 px-6 sm:px-12 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-8 print:mb-6 shadow-inner group">
                         {/* Decorative Corner Accents */}
                         <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#D4AF37]/40"></div>
                         <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#D4AF37]/40"></div>
                         <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#D4AF37]/40"></div>
                         <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#D4AF37]/40"></div>
 
-                        <div className="text-center space-y-0.5 mb-4 sm:mb-6">
+                        <div className="text-center space-y-0.5 mb-6">
                             <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-[#4A3D2E] font-sans">Pacts of Love</h3>
                             <div className="flex items-center justify-center gap-1.5 opacity-60">
                                 <div className="w-4 h-[1px] bg-[#D4AF37]"></div>
@@ -198,46 +188,26 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                             </div>
                         </div>
                         
-                        <div className="space-y-4 sm:space-y-5 text-center">
-                             <div className="space-y-0 font-serif-classic italic tracking-wide">
-                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
-                                    I choose you in honesty and faith, <br className="sm:hidden" /> for every lifetime we share.
-                                </p>
-                                <DecorativeDivider />
-                                
-                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
-                                    In joy and struggle, I will honor you.
-                                </p>
-                                <DecorativeDivider />
-                                
-                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
-                                    I will be your light, your warmth, <br className="sm:hidden" /> your steady place.
-                                </p>
-                                <DecorativeDivider />
-                                
-                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
-                                    Together we will build our dreams, <br className="sm:hidden" /> and hold each other when we fall.
-                                </p>
-                                <DecorativeDivider />
-                                
-                                <p className="text-[14px] sm:text-[21px] font-medium leading-relaxed text-[#1A1A1A]">
-                                    I will love you beyond words— <br className="sm:hidden" /> forever, and without end.
+                        <div className="text-center">
+                             <div className="font-serif-classic italic tracking-wide text-[#1A1A1A]">
+                                <p className="text-[15px] sm:text-[22px] font-medium leading-[1.8] sm:leading-[2] max-w-prose mx-auto">
+                                    I choose you in honesty and faith, for every lifetime we share. In joy and struggle, I will honor you with my whole heart. I will be your light in the darkness, your warmth in the cold, and your steady place when the world shifts. Together we will build our dreams, holding each other when we fall, and I will love you beyond words—forever, and without end.
                                 </p>
                              </div>
 
-                             <div className="pt-4 sm:pt-6">
-                                <div className="relative inline-block px-6">
-                                    <div className="absolute top-1/2 left-0 w-4 h-[1px] bg-[#D4AF37]/20"></div>
-                                    <p className="text-[10px] sm:text-[12px] font-serif-classic font-bold uppercase tracking-[0.2em] text-[#4A3D2E]">
-                                        These words bind us, now and for all our days.
+                             <div className="pt-8">
+                                <div className="relative inline-block px-10">
+                                    <div className="absolute top-1/2 left-0 w-6 h-[1px] bg-[#D4AF37]/30"></div>
+                                    <p className="text-[10px] sm:text-[12px] font-serif-classic font-bold uppercase tracking-[0.25em] text-[#4A3D2E]">
+                                        Bound by these words through all our days
                                     </p>
-                                    <div className="absolute top-1/2 right-0 w-4 h-[1px] bg-[#D4AF37]/20"></div>
+                                    <div className="absolute top-1/2 right-0 w-6 h-[1px] bg-[#D4AF37]/30"></div>
                                 </div>
                              </div>
                         </div>
                     </div>
 
-                    {/* Signatures Section - Adjusted positioning */}
+                    {/* Signatures Section */}
                     <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-8 sm:pb-12 gap-6 sm:gap-8">
                         <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
                             <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1 relative">
