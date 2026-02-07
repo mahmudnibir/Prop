@@ -75,7 +75,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
             {/* Certificate Container */}
             <div 
               id="proposal-certificate" 
-              className={`relative w-full min-h-[820px] sm:min-h-[950px] bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-8 md:p-10 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:m-0 print:border-none print:flex print:flex-col print:justify-center print:min-h-0 print:h-[297mm] ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
+              className={`relative w-full min-h-[850px] sm:min-h-[1050px] bg-[#FCFAF7] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-sm border-[1px] border-[#D4AF37]/60 p-6 sm:p-8 md:p-10 font-serif-classic text-[#1A1A1A] leading-relaxed overflow-hidden transition-all duration-75 print:shadow-none print:m-0 print:border-none print:flex print:flex-col print:min-h-0 print:h-[297mm] ${stamped ? 'animate-[shake_0.2s_ease-out]' : ''}`}
             >
                 
                 {/* Subtle Parchment Texture */}
@@ -85,8 +85,20 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 <div className="absolute inset-2 sm:inset-4 border-[2px] border-[#D4AF37]/70 pointer-events-none"></div>
                 <div className="absolute inset-4 sm:inset-6 border-[1px] border-[#D4AF37]/40 pointer-events-none"></div>
 
+                {/* CENTRAL WATERMARK */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
+                    <div className="relative flex items-center justify-center opacity-[0.03] sm:opacity-[0.05] transform rotate-[-15deg] scale-150 sm:scale-100">
+                        <HeartIcon className="w-[500px] h-[500px] text-[#D4AF37]" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-[#D4AF37] font-serif-display italic font-black text-[80px] sm:text-[120px] uppercase tracking-[0.5em] leading-none">
+                                ETERNAL
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 {/* GOLD FOIL SEAL */}
-                <div className="absolute top-[68%] right-2 sm:top-[75%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none print:top-[75%] print:right-10">
+                <div className="absolute bottom-[20%] right-2 sm:bottom-[15%] sm:right-6 md:right-10 z-[50] pointer-events-none select-none print:bottom-[15%] print:right-1.5cm">
                     <div className={`relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center transform transition-all duration-[600ms] ease-[cubic-bezier(0.175, 0.885, 0.32, 1.275)]
                       ${stamped 
                         ? 'scale-100 opacity-100 rotate-[-15deg]' 
@@ -132,8 +144,8 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </div>
 
                 {/* Content Body */}
-                <div className="relative z-10 flex flex-col h-full py-4 sm:py-2 print:py-0 print:justify-between">
-                    <header className="text-center space-y-1 sm:space-y-2 pt-2 sm:pt-4 mb-4 print:mb-2 print:pt-6">
+                <div className="relative z-10 flex flex-col h-full print:justify-between">
+                    <header className="text-center space-y-1 sm:space-y-2 pt-2 sm:pt-4 mb-4 print:mb-2 print:pt-4">
                         <div className="space-y-0.5 sm:space-y-1">
                             <h2 className="text-[10px] sm:text-[12px] font-black text-[#4A3D2E] uppercase tracking-[0.4em] sm:tracking-[0.6em] font-sans">Eternal Decree</h2>
                             <div className="w-12 sm:w-16 h-[1px] sm:h-[1.5px] bg-[#D4AF37]/70 mx-auto"></div>
@@ -143,7 +155,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </h1>
                     </header>
 
-                    <section className="space-y-2 sm:space-y-4 text-center mb-6 print:mb-4">
+                    <section className="space-y-2 sm:space-y-4 text-center mb-6 print:mb-2">
                         <p className="text-[11px] sm:text-base text-[#1A1A1A] font-medium italic leading-relaxed max-w-[280px] sm:max-w-md mx-auto opacity-80">
                             Let it be known that on this day, the question of a lifetime was met with the most beautiful answer.
                         </p>
@@ -172,14 +184,14 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     </section>
 
                     {/* REFINED PACTS OF LOVE SECTION */}
-                    <div className="relative py-8 px-6 sm:px-12 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2] mx-1 sm:mx-6 mb-8 print:mb-4 print:py-6 shadow-inner group">
+                    <div className="relative py-6 px-6 sm:px-12 border-[1px] border-[#D4AF37]/30 bg-[#FCF8F2]/60 backdrop-blur-[2px] mx-1 sm:mx-6 mb-6 print:mb-2 print:py-4 shadow-inner group">
                         {/* Decorative Corner Accents */}
                         <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#D4AF37]/40"></div>
                         <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#D4AF37]/40"></div>
                         <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#D4AF37]/40"></div>
                         <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#D4AF37]/40"></div>
 
-                        <div className="text-center space-y-0.5 mb-6 print:mb-3">
+                        <div className="text-center space-y-0.5 mb-4 print:mb-2">
                             <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-[#4A3D2E] font-sans">Pacts of Love</h3>
                             <div className="flex items-center justify-center gap-1.5 opacity-60">
                                 <div className="w-4 h-[1px] bg-[#D4AF37]"></div>
@@ -190,15 +202,15 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         
                         <div className="text-center">
                              <div className="font-serif-classic italic tracking-wide text-[#1A1A1A]">
-                                <p className="text-[15px] sm:text-[22px] font-medium leading-[1.8] sm:leading-[2] max-w-prose mx-auto print:text-[18px] print:leading-[1.7]">
+                                <p className="text-[14px] sm:text-[20px] font-medium leading-[1.6] sm:leading-[1.8] max-w-prose mx-auto print:text-[17px] print:leading-[1.6]">
                                     I choose you in honesty and faith, for every lifetime we share. In joy and struggle, I will honor you with my whole heart. I will be your light in the darkness, your warmth in the cold, and your steady place when the world shifts. Together we will build our dreams, holding each other when we fall, and I will love you beyond words—forever, and without end.
                                 </p>
                              </div>
 
-                             <div className="pt-8 print:pt-4">
+                             <div className="pt-6 print:pt-2">
                                 <div className="relative inline-block px-10">
                                     <div className="absolute top-1/2 left-0 w-6 h-[1px] bg-[#D4AF37]/30"></div>
-                                    <p className="text-[10px] sm:text-[12px] font-serif-classic font-bold uppercase tracking-[0.25em] text-[#4A3D2E]">
+                                    <p className="text-[9px] sm:text-[11px] font-serif-classic font-bold uppercase tracking-[0.25em] text-[#4A3D2E]">
                                         Bound by these words through all our days
                                     </p>
                                     <div className="absolute top-1/2 right-0 w-6 h-[1px] bg-[#D4AF37]/30"></div>
@@ -208,8 +220,8 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     </div>
 
                     {/* Signatures Section */}
-                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-8 sm:pb-12 gap-6 sm:gap-8 print:pb-16 print:mt-4 print:gap-10">
-                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
+                    <div className="mt-auto flex flex-col items-start w-full px-6 sm:px-14 pb-8 sm:pb-12 gap-5 sm:gap-8 print:pb-1cm print:mt-4 print:gap-6">
+                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[280px] sm:max-w-[320px]">
                             <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1 relative">
                                 <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{recipientName}</span>
                                 <div className="absolute -bottom-1 left-0 w-8 h-[2px] bg-[#D4AF37]"></div>
@@ -219,7 +231,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                             </span>
                         </div>
                         
-                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[320px]">
+                        <div className="flex flex-col items-start text-left space-y-1 w-full max-w-[280px] sm:max-w-[320px]">
                             <div className="border-b-[1px] border-[#D4AF37]/50 w-full pb-1 relative">
                                 <span className="font-cursive text-2xl sm:text-4xl text-[#000000]">{senderName}</span>
                                 <div className="absolute -bottom-1 left-0 w-8 h-[2px] bg-[#D4AF37]"></div>
@@ -232,7 +244,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                 </div>
 
                 {/* Background Decor */}
-                <div className="absolute bottom-1 left-1 sm:-bottom-10 sm:-left-10 text-[#EFE7DC] pointer-events-none opacity-[0.1] sm:opacity-[0.2] -rotate-12 z-0 print:bottom-[-2cm] print:left-[-2cm]">
+                <div className="absolute bottom-1 left-1 sm:-bottom-10 sm:-left-10 text-[#EFE7DC] pointer-events-none opacity-[0.1] sm:opacity-[0.2] -rotate-12 z-0 print:bottom-[-1cm] print:left-[-1cm]">
                     <ScrollIcon className="w-24 h-24 sm:w-64 sm:h-64" />
                 </div>
             </div>
@@ -254,7 +266,7 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     <div className="w-10 h-[1px] bg-[#4A3D2E]"></div>
                     <HeartIcon className="w-3 h-3 text-[#4A3D2E]" />
                     <div className="w-10 h-[1px] bg-[#4A3D2E]"></div>
-                </div>
+                 </div>
             </div>
         </div>
 
@@ -284,22 +296,17 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                     max-width: none !important; 
                     border: none !important;
                     border-radius: 0 !important; 
-                    padding: 1.5cm 1.5cm 2cm 1.5cm !important;
+                    padding: 1cm 1.5cm 1.5cm 1.5cm !important;
                     display: flex !important;
                     flex-direction: column !important;
-                    justify-content: flex-start !important;
+                    justify-content: space-between !important;
                     background-color: #FCFAF7 !important;
                     position: relative !important;
                     overflow: hidden !important;
                 }
-                .print\\:top-\\[75\\%\\] { top: 75% !important; }
-                .print\\:right-10 { right: 1.5cm !important; }
-                .print\\:mb-2 { margin-bottom: 0.5cm !important; }
-                .print\\:mb-4 { margin-bottom: 1cm !important; }
-                .print\\:pt-6 { padding-top: 1cm !important; }
-                .print\\:pb-16 { padding-bottom: 2cm !important; }
-                .print\\:mt-4 { margin-top: 1cm !important; }
                 .print\\:justify-between { justify-content: space-between !important; }
+                .print\\:pb-1cm { padding-bottom: 1cm !important; }
+                .print\\:right-1\\.5cm { right: 1.5cm !important; }
             }
         `}} />
     </div>
