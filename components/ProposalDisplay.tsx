@@ -167,24 +167,21 @@ const AcceptedView: React.FC<AcceptedViewProps> = ({ recipientName, senderName }
                         </div>
                     </section>
 
-                    {/* FORMAL CONDITIONS SECTION - Optimized content and size for PDF fitting */}
+                    {/* FORMAL CONDITIONS SECTION - Streamlined for PDF cluster-free look */}
                     <div className="relative p-4 sm:p-6 md:p-8 border-[3px] border-double border-[#D4AF37]/60 bg-white/40 backdrop-blur-sm rounded-xl overflow-hidden shadow-inner mx-1 sm:mx-4">
-                        <h3 className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.3em] text-[#B48F00] mb-4 font-sans text-center">Conditions of Agreement</h3>
+                        <h3 className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.3em] text-[#B48F00] mb-3 font-sans text-center">Conditions of Agreement</h3>
                         
-                        <div className="space-y-3 sm:space-y-4 text-[12px] sm:text-[15px] md:text-[16px] text-[#1A1A1A] font-serif-classic">
-                             <p className="text-center font-black italic mb-2">Now, I hereby agree to the following:</p>
+                        <div className="space-y-3 sm:space-y-4 text-[13px] sm:text-[16px] md:text-[17px] text-[#1A1A1A] font-serif-classic">
+                             <p className="text-center font-black italic mb-2">The parties hereby pledge and agree:</p>
                              <ul className="space-y-2 font-bold text-center italic list-none leading-tight">
-                                <li>To be your honest, faithful, and loving partner for the rest of my days</li>
-                                <li>To be a wonderful and adventurous lover in bed every time</li>
-                                <li>To be your guiding light in the darkness, a warming comfort in the cold, and shoulder to lean on when life is too much to bear on your own</li>
-                                <li>To honor, love, and cherish you through all life's adventures - wherever we go, we'll go together.</li>
-                                <li>To build my dreams around yours and make them a reality</li>
-                                <li>To be there to catch you if you should stumble, carry you over every threshold, and fall in love with you every day</li>
-                                <li>To love you with my whole heart and with a passion that cannot be expressed in any words</li>
-                                <li>To be here with you and for you, forever and always</li>
+                                <li>To be honest, faithful, and loving partners for all of time.</li>
+                                <li>To honor and cherish one another through every adventure, wherever the path may lead.</li>
+                                <li>To be a guiding light in the darkness and a warming comfort in the cold.</li>
+                                <li>To build a future centered on shared dreams, catching one another should we stumble.</li>
+                                <li>To love with a passion that transcends words, forever and always.</li>
                              </ul>
                              <p className="text-center font-black italic mt-4 border-t border-[#D4AF37]/20 pt-4 text-[13px] sm:text-[16px]">
-                                I hereby agree to abide by these terms and conditions for the rest of my life.
+                                Bound by these terms for the rest of our lives.
                              </p>
                         </div>
 
