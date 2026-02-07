@@ -14,7 +14,7 @@ interface ProposalViewProps {
 }
 
 const noButtonResponses = [
-  "No", "Petni, really?", "Think again ❤️", "Error: Try Yes", "So close!", "Not possible!", "Try again!", "Just give up", "Yes is better!", "Stop it! 😂", "Wait... no!", "Click Yes pls", "You can't catch me", "Almost had it!"
+  "No", "Fatyha, really?", "Think again ❤️", "Error: Try Yes", "So close!", "Not possible!", "Try again!", "Just give up", "Yes is better!", "Stop it! 😂", "Wait... no!", "Click Yes pls", "You can't catch me", "Almost had it!"
 ];
 
 const Stardust: React.FC = () => (
@@ -75,7 +75,7 @@ const Modal: React.FC<{onClose: () => void}> = ({onClose}) => {
     <div className="fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-[100] p-6">
         <div className="bg-[#1A050D] rounded-[2.5rem] shadow-2xl p-8 text-center max-w-sm w-full modal-fade-in relative overflow-hidden border border-pink-500/20 min-h-[300px] flex flex-col justify-center">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
-            <h2 className="text-3xl font-serif-display italic font-bold text-[#FFE5EC]">Petni, wait!</h2>
+            <h2 className="text-3xl font-serif-display italic font-bold text-[#FFE5EC]">Fatyha, wait!</h2>
             <p className="mt-4 text-pink-200/60 text-lg font-serif-classic">Are you absolutely sure? This could be the most beautiful "Yes" ever!</p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4">
                 <button 
@@ -284,7 +284,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
                         <path d="M0 30 L50 30 L60 10 L80 50 L100 20 L120 40 L130 30 L250 30" stroke="#FF4D6D" strokeWidth="3" fill="none" className="ekg-path" />
                     </svg>
                     <div className="px-8 py-3 bg-white/5 backdrop-blur-md rounded-full border border-white/5">
-                        <p className="text-[10px] text-pink-100/40 font-mono tracking-[0.4em]">PETNI_VIBRATION_MATCH</p>
+                        <p className="text-[10px] text-pink-100/40 font-mono tracking-[0.4em]">FATYHA_VIBRATION_MATCH</p>
                     </div>
                 </div>
             );
@@ -298,7 +298,7 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
         case 'countdown':
              return (
                 <div className="fade-in-up text-center p-6 flex flex-col items-center">
-                    <p className="text-lg md:text-xl mb-16 text-pink-200/30 font-serif-classic italic tracking-[0.3em]">Ready for your destiny, Petni?</p>
+                    <p className="text-lg md:text-xl mb-16 text-pink-200/30 font-serif-classic italic tracking-[0.3em]">Ready for your destiny, Fatyha?</p>
                     <div className="w-48 h-48 md:w-64 md:h-64 rounded-full flex items-center justify-center relative">
                          <div className="absolute inset-0 bg-white/5 rounded-full blur-2xl border border-white/10 scale-110"></div>
                          <p className="text-8xl md:text-9xl font-serif-display italic font-extrabold text-white relative z-10 transition-all duration-500 scale-125 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
@@ -356,12 +356,12 @@ const ProposalView: React.FC<ProposalViewProps> = ({ question, recipient, sender
       <HeartShower heartKey={heartKey} />
       
       <div className="absolute inset-0 pointer-events-none opacity-[0.05] flex items-center justify-center overflow-hidden select-none">
-          <span className="text-[22vw] font-serif-display italic font-black text-white whitespace-nowrap blur-[2px]">PETNI ❤️ {sender.toUpperCase()}</span>
+          <span className="text-[22vw] font-serif-display italic font-black text-white whitespace-nowrap blur-[2px]">FATYHA ❤️ {sender.toUpperCase()}</span>
       </div>
 
       <div className="z-10 flex flex-col items-center w-full max-w-4xl px-2">
         <div className="mb-10 py-2.5 px-8 bg-white/5 backdrop-blur-md rounded-full border border-white/10 inline-block transform hover:scale-105 transition-all shadow-xl">
-             <span className="text-[10px] md:text-xs font-bold text-pink-300/60 tracking-[0.5em] uppercase">For our eternal Petni</span>
+             <span className="text-[10px] md:text-xs font-bold text-pink-300/60 tracking-[0.5em] uppercase">For our eternal Fatyha</span>
         </div>
         
         <p className="text-lg md:text-3xl text-pink-100/60 font-serif-classic italic leading-relaxed mb-8 px-4 tracking-wide">

@@ -23,7 +23,7 @@ const FloatingHeart: React.FC<{ delay: number, left: number, size: number }> = (
 
 const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
     const sender = "Argho"; 
-    const recipient = "Petni"; 
+    const recipient = "Fatyha"; 
     const [question, setQuestion] = useState('Will you be mine forever?');
     const [password, setPassword] = useState('');
     const [link, setLink] = useState('');
@@ -148,7 +148,7 @@ const SetupView: React.FC<SetupViewProps> = ({ onCreate }) => {
                     <h1 className="text-5xl font-serif-display italic font-bold text-[#5C1D2E] tracking-tight">The Proposal</h1>
                     <div className="flex items-center justify-center gap-3 mt-4">
                         <div className="h-[1px] w-8 bg-pink-200"></div>
-                        <p className="text-[#8A4A5D] font-serif-classic italic text-lg uppercase tracking-widest">For our beautiful Petni</p>
+                        <p className="text-[#8A4A5D] font-serif-classic italic text-lg uppercase tracking-widest">For our beautiful Fatyha</p>
                         <div className="h-[1px] w-8 bg-pink-200"></div>
                     </div>
                 </div>
